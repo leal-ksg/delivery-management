@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+}
+
+enum OrderStatus {
+  PENDING
+  IN_PROGRESS
+  READY_FOR_DELIVERY
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum ProductType {
+  SALE
+  PURCHASE
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String
+  surname   String
+  email     String     @unique
+  password  String
+  active    Boolean    @default(true)
+  role      Role       @default(EMPLOYEE)
+  purchases Purchase[]
+}
+
+model ProductCategory {
+  id       Int         @id @default(autoincrement())
+  name     String      @unique
+  type     ProductType
+  products Product[]
+}
+
+model Product {
+  id               Int               @id @default(autoincrement())
+  name             String
+  description      String?
+  unitPrice        Float
+  categoryId       Int
+  minStock         Int               @default(0)
+  category         ProductCategory   @relation(fields: [categoryId], references: [id])
+  createdAt        DateTime          @default(now())
+  orderProducts    OrderProduct[]
+  purchaseProducts PurchaseProduct[]
+  stock            Stock?
+}
+
+model Order {
+  id            Int            @id @default(autoincrement())
+  customerId    Int
+  customer      Customer       @relation(fields: [customerId], references: [id])
+  status        OrderStatus    @default(PENDING)
+  createdAt     DateTime       @default(now())
+  orderProducts OrderProduct[]
+}
+
+model OrderProduct {
+  orderId   Int
+  productId Int
+  quantity  Int     @default(1)
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+}
+
+model Purchase {
+  id               Int               @id @default(autoincrement())
+  createdAt        DateTime          @default(now())
+  userId           Int
+  user             User              @relation(fields: [userId], references: [id])
+  purchaseProducts PurchaseProduct[]
+}
+
+model PurchaseProduct {
+  purchaseId Int
+  productId  Int
+  quantity   Int      @default(1)
+  purchase   Purchase @relation(fields: [purchaseId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@id([purchaseId, productId])
+}
+
+model Customer {
+  id           Int     @id @default(autoincrement())
+  name         String
+  surname      String
+  phone        String  @unique
+  street       String
+  city         String
+  state        String
+  neighborhood String
+  complement   String?
+  orders       Order[]
+}
+
+model Stock {
+  id        Int     @id @default(autoincrement())
+  productId Int     @unique
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(0)
+}
