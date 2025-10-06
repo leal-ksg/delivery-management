@@ -1,17 +1,19 @@
+import type { HttpResponse } from "../../core/http-response.js";
+import type { Result } from "../../core/result.js";
 import type { User } from "../../models/user.js";
 
 export interface IUserRepository {
-  findAll(): Promise<User[]>;
-  findById(id: string): Promise<User>;
-  create(user: Omit<User, "id">): Promise<User>;
-  update(id: string, user: Omit<User, "id">): Promise<User>;
-  delete(id: string): Promise<void>;
+  findAll(): Promise<Result<User[]>>;
+  findById(id: string): Promise<Result<User>>;
+  create(user: Omit<User, "id">): Promise<Result<User>>;
+  update(id: string, user: Omit<User, "id">): Promise<Result<User>>;
+  delete(id: string): Promise<Result<void>>;
 }
 
 export interface IUserController {
-  getAllUsers(): Promise<User[]>;
-  getUserById(id: string): Promise<User | null>;
-  createUser(user: Omit<User, "id">): Promise<User>;
-  updateUser(id: string, user: Omit<User, "id">): Promise<User>;
-  deleteUser(id: string): Promise<void>;
+  getAllUsers(): Promise<HttpResponse<User[]>>;
+  getUserById(id: string): Promise<HttpResponse<User | null>>;
+  createUser(user: Omit<User, "id">): Promise<HttpResponse<User>>;
+  updateUser(id: string, user: Omit<User, "id">): Promise<HttpResponse<User>>;
+  deleteUser(id: string): Promise<HttpResponse<void>>;
 }
