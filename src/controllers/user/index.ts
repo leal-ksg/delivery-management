@@ -1,29 +1,40 @@
+import { toHttpResponse, type HttpResponse } from "../../core/http-response";
 import type { User } from "../../models/user.js";
 import type { IUserController, IUserRepository } from "./interfaces.js";
 
 export class UserController implements IUserController {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async getAllUsers(): Promise<User[]> {
-    return this.userRepository.findAll() 
+  async getAllUsers(): Promise<HttpResponse<User[]>> {
+    const result = await this.userRepository.findAll();
+
+    return toHttpResponse(result);
   }
 
-  async getUserById(id: string): Promise<User | null> {
-    const user = await this.userRepository.findById(id)
+  async getUserById(id: string): Promise<HttpResponse<User | null>> {
+    const result = await this.userRepository.findById(id);
 
-    return user
+    return toHttpResponse(result);
   }
-  async createUser(user: Omit<User, "id">): Promise<User> {
-    const newUser = await this.userRepository.create(user)
 
-    return newUser
-  }
-  async updateUser(id: string, user: Omit<User, "id">): Promise<User> {
-    const updatedUser = await this.userRepository.update(id, user)
+  async createUser(user: Omit<User, "id">): Promise<HttpResponse<User>> {
+    const result = await this.userRepository.create(user);
 
-    return updatedUser
+    return toHttpResponse(result, 201);
   }
-  async deleteUser(id: string): Promise<void> {
-    return await this.userRepository.delete(id)
+
+  async updateUser(
+    id: string,
+    user: Omit<User, "id">
+  ): Promise<HttpResponse<User>> {
+    const result = await this.userRepository.update(id, user);
+
+    return toHttpResponse(result);
+  }
+
+  async deleteUser(id: string): Promise<HttpResponse<void>> {
+    const result = await this.userRepository.delete(id)
+
+    return toHttpResponse(result)
   }
 }
