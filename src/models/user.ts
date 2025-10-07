@@ -1,7 +1,4 @@
-enum Role {
-  ADMIN = "ADMIN",
-  EMPLOYEE = "EMPLOYEE",
-}
+import { Role } from "../../generated/prisma";
 
 export interface User {
   id: string;
