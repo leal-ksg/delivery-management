@@ -3,7 +3,7 @@ import { prisma } from "../../core/prisma";
 import { Result } from "../../core/result";
 import type { User } from "../../models/user";
 
-export class MongoUserRepository implements IUserRepository {
+export class PostgresUserRepository implements IUserRepository {
   async findAll(): Promise<Result<User[]>> {
     try {
       const users = await prisma.user.findMany();
