@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { UserController } from "../controllers/user";
-import { PostgresUserRepository } from "../repositories/postgres/postgres-user-repository";
+import { PostgresUserRepository } from "../repositories/postgres/user-repository";
 
 const userRepository = new PostgresUserRepository();
 const userController = new UserController(userRepository);
@@ -22,7 +22,7 @@ userRouter.post("/", async (req: Request, res: Response) => {
   return res.status(statusCode).json(body);
 });
 
-userRouter.put("/:id", async (req: Request, res: Response) => {
+userRouter.patch("/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await userController.updateUser(req.params.id!, req.body);
   return res.status(statusCode).json(body);
 });

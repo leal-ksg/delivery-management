@@ -14,6 +14,6 @@ export interface IUserController {
   getAllUsers(): Promise<HttpResponse<User[]>>;
   getUserById(id: string): Promise<HttpResponse<User | null>>;
   createUser(user: Omit<User, "id">): Promise<HttpResponse<User>>;
-  updateUser(id: string, user: Omit<User, "id">): Promise<HttpResponse<User>>;
+  updateUser(id: string, user: Partial<User>): Promise<HttpResponse<User>>;
   deleteUser(id: string): Promise<HttpResponse<void>>;
 }
