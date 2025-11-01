@@ -25,6 +25,8 @@ export class PostgresUserRepository implements IUserRepository {
   }
 
   async create(user: Omit<User, "id">): Promise<Result<User>> {
+
+    console.log(user)
     try {
       const createdUser = await prisma.user.create({ data: user });
       return { ok: true, body: createdUser };

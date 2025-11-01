@@ -27,7 +27,7 @@ userRouter.put("/:id", async (req: Request, res: Response) => {
   return res.status(statusCode).json(body);
 });
 
-userRouter.put("/:id", async (req: Request, res: Response) => {
+userRouter.delete("/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await userController.deleteUser(req.params.id!);
   return res.status(statusCode).json(body);
 });
