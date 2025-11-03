@@ -5,13 +5,13 @@ import type { IUserController, IUserRepository } from "./interfaces.js";
 export class UserController implements IUserController {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async getAllUsers(): Promise<HttpResponse<User[]>> {
+  async getAllUsers(): Promise<HttpResponse<Omit<User, 'password'>[]>> {
     const result = await this.userRepository.findAll();
 
     return toHttpResponse(result);
   }
 
-  async getUserById(id: string): Promise<HttpResponse<User | null>> {
+  async getUserById(id: string): Promise<HttpResponse<Omit<User, 'password'> | null>> {
     const result = await this.userRepository.findById(id);
 
     return toHttpResponse(result);

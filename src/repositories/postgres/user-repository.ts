@@ -5,9 +5,10 @@ import type { User } from "../../models/user";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 
 export class PostgresUserRepository implements IUserRepository {
-  async findAll(): Promise<Result<User[]>> {
+  async findAll(): Promise<Result<Omit<User, 'password'>[]>> {
     try {
-      const users = await prisma.user.findMany();
+      const users = await prisma.user.findMany({ omit: { password: true } });
+
       return { ok: true, body: users };
     } catch (err) {
       return { ok: false, error: parseDatabaseErrorMessage(err, "Usuário") };
@@ -18,7 +19,9 @@ export class PostgresUserRepository implements IUserRepository {
     try {
       const user = (await prisma.user.findUnique({
         where: { id },
-      })) as unknown as User;
+        omit: { password: true },
+      })) as User;
+    
       return { ok: true, body: user };
     } catch (err) {
       return { ok: false, error: parseDatabaseErrorMessage(err, "Usuário") };
@@ -29,6 +32,7 @@ export class PostgresUserRepository implements IUserRepository {
     console.log(user);
     try {
       const createdUser = await prisma.user.create({ data: user });
+
       return { ok: true, body: createdUser };
     } catch (err) {
       return { ok: false, error: parseDatabaseErrorMessage(err, "Usuário") };
