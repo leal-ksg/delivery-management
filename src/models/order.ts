@@ -2,6 +2,7 @@ import { OrderStatus } from "../../generated/prisma";
 
 export interface Order {
   id: number;
+  comment: string | null;
   customerId: string;
   status: OrderStatus;
   createdAt: Date;
@@ -16,5 +17,10 @@ export interface OrderProduct {
 export interface CreateOrderDTO {
   customerId: string;
   userId: string;
-  products: OrderProduct[]
+  comment: string | null;
+  products: OrderProduct[];
+}
+
+export interface UpdateOrderDTO extends Omit<Order, "createdAt"> {
+  products: OrderProduct[];
 }
