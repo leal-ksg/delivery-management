@@ -1,3 +1,4 @@
+import { Prisma } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
 import { Result } from "../../core/result";
 import { Stock } from "../../models/stock";
@@ -5,7 +6,7 @@ import { Stock } from "../../models/stock";
 export interface IStockRepository {
     findAll(): Promise<Result<Stock[]>>
     findById(productId: string): Promise<Result<Stock | null>>
-    create(data: Stock): Promise<Result<Stock>>
+    create(data: Stock, transaction: Prisma.TransactionClient): Promise<Result<Stock>>
     update(data: Stock): Promise<Result<Stock>>
     delete(productId: string): Promise<Result<void>>
 }

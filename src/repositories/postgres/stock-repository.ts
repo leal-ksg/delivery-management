@@ -1,3 +1,4 @@
+import { PrismaClient } from "../../../generated/prisma";
 import { IStockRepository } from "../../controllers/stock/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
@@ -33,7 +34,7 @@ export class StockRepository implements IStockRepository {
     }
   }
 
-  async create(data: Stock): Promise<Result<Stock>> {
+  async create(data: Stock, transaction: PrismaClient): Promise<Result<Stock>> {
     try {
       const createdStock = await prisma.stock.create({ data });
 

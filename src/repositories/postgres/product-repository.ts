@@ -1,8 +1,9 @@
+import { PrismaClient } from "../../../generated/prisma";
 import { IProductRepository } from "../../controllers/product/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
-import { Product } from "../../models/product";
+import { CreateProductDTO, Product } from "../../models/product";
 
 export class PostgresProductRepository implements IProductRepository {
   async findAll(): Promise<Result<Product[]>> {
@@ -25,9 +26,12 @@ export class PostgresProductRepository implements IProductRepository {
     }
   }
 
-  async create(product: Omit<Product, "id">): Promise<Result<Product>> {
+  async create(
+    product: CreateProductDTO,
+    transaction: PrismaClient
+  ): Promise<Result<Product>> {
     try {
-      const createdProduct = await prisma.product.create({ data: product });
+      const createdProduct = await transaction.product.create({ data: product });
 
       return { ok: true, body: createdProduct };
     } catch (error) {
