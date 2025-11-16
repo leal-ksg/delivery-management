@@ -18,19 +18,19 @@ export function parseDatabaseErrorMessage(err: unknown, entity: string) {
         break;
 
       case "P2003":
-        message = `Relacionamento inválido para ${entity}`;
+        message = `Relacionamento inválido para ${entity.toLowerCase()}`;
         break;
 
       case "P2005":
-        message = `Existe um campo de ${entity} com tipo inválido`;
+        message = `Existe um campo de ${entity.toLowerCase()} com tipo inválido`;
         break;
 
       case "P2011":
-        message = `Não foi possível inserir nulo em um campo de ${entity}`;
+        message = `Não foi possível inserir nulo em um campo de ${entity.toLowerCase()}`;
         break;
 
       case "P2012":
-        message = `Um campo obrigatório de ${entity} não foi enviado`;
+        message = `Um campo obrigatório de ${entity.toLowerCase()} não foi enviado`;
         break;
 
       case "P2016":

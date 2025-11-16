@@ -4,7 +4,7 @@ import { Result } from "../../core/result";
 import type { User } from "../../models/user";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 
-export class PostgresUserRepository implements IUserRepository {
+export class UserRepository implements IUserRepository {
   async findAll(): Promise<Result<Omit<User, 'password'>[]>> {
     try {
       const users = await prisma.user.findMany({ omit: { password: true } });

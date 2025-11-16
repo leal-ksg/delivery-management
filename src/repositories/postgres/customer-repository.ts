@@ -4,7 +4,7 @@ import { Customer } from "../../models/customer";
 import { prisma } from "../../database/prisma";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 
-export class PostgresCustomerRepository implements ICustomerRepository {
+export class CustomerRepository implements ICustomerRepository {
   async findAll(): Promise<Result<Customer[]>> {
     try {
       const customers = await prisma.customer.findMany();

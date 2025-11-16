@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
 import { UserController } from "../controllers/user";
-import { PostgresUserRepository } from "../repositories/postgres/user-repository";
+import { UserRepository } from "../repositories/postgres/user-repository";
 
-const userRepository = new PostgresUserRepository();
+const userRepository = new UserRepository();
 const userController = new UserController(userRepository);
 
 export const userRouter = Router();

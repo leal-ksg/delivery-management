@@ -5,7 +5,7 @@ import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
 import { CreateProductDTO, Product } from "../../models/product";
 
-export class PostgresProductRepository implements IProductRepository {
+export class ProductRepository implements IProductRepository {
   async findAll(): Promise<Result<Product[]>> {
     try {
       const products = await prisma.product.findMany();

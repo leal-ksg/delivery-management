@@ -1,9 +1,9 @@
 import { Request, Response, Router } from "express";
 import { CustomerController } from "../controllers/customer";
-import { PostgresCustomerRepository } from "../repositories/postgres/customer-repository";
+import { CustomerRepository } from "../repositories/postgres/customer-repository";
 
 export const customerRouter = Router();
-const customerRepository = new PostgresCustomerRepository();
+const customerRepository = new CustomerRepository();
 const customerController = new CustomerController(customerRepository);
 
 customerRouter.get("/", async (req: Request, res: Response) => {
