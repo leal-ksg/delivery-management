@@ -1,4 +1,5 @@
-import { PrismaClient } from "../../../generated/prisma";
+import { parse } from "path";
+import { Prisma, PrismaClient } from "../../../generated/prisma";
 import { IStockRepository } from "../../controllers/stock/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
@@ -20,7 +21,7 @@ export class StockRepository implements IStockRepository {
     }
   }
 
-  async findById(productId: string): Promise<Result<Stock | null>> {
+  async findById(productId: string): Promise<Result<Stock>> {
     try {
       const productStock = await prisma.stock.findUnique({
         where: {
@@ -28,7 +29,7 @@ export class StockRepository implements IStockRepository {
         },
       });
 
-      return { ok: true, body: productStock };
+      return { ok: true, body: productStock || { productId, quantity: 0 } };
     } catch (error) {
       return { ok: false, error: parseDatabaseErrorMessage(error, "Estoque") };
     }
@@ -44,28 +45,41 @@ export class StockRepository implements IStockRepository {
     }
   }
 
-  async update(data: Stock): Promise<Result<Stock>> {
+  async increase(
+    data: Stock,
+    transaction: Prisma.TransactionClient
+  ): Promise<Result<Stock>> {
     try {
-      const updatedStock = await prisma.stock.update({
-        where: {
-          productId: data.productId,
-        },
+      const stock = await transaction.stock.update({
+        where: { productId: data.productId },
         data: {
-          quantity: data.quantity,
+          quantity: {
+            increment: data.quantity,
+          },
         },
       });
 
-      return { ok: true, body: updatedStock };
+      return { ok: true, body: stock };
     } catch (error) {
       return { ok: false, error: parseDatabaseErrorMessage(error, "Estoque") };
     }
   }
 
-  async delete(productId: string): Promise<Result<void>> {
+  async decrease(
+    data: Stock,
+    transaction: Prisma.TransactionClient
+  ): Promise<Result<Stock>> {
     try {
-      await prisma.stock.delete({ where: { productId } });
+      const stock = await transaction.stock.update({
+        where: { productId: data.productId },
+        data: {
+          quantity: {
+            decrement: data.quantity,
+          },
+        },
+      });
 
-      return { ok: true, body: undefined };
+      return { ok: true, body: stock };
     } catch (error) {
       return { ok: false, error: parseDatabaseErrorMessage(error, "Estoque") };
     }
