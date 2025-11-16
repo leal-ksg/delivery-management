@@ -12,15 +12,16 @@ export interface Order {
 export interface OrderProduct {
   productId: string;
   quantity: number;
+  orderId: number;
 }
 
 export interface CreateOrderDTO {
   customerId: string;
   userId: string;
   comment: string | null;
-  products: OrderProduct[];
+  products: Omit<OrderProduct, "orderId">[];
 }
 
 export interface UpdateOrderDTO extends Omit<Order, "createdAt"> {
-  products: OrderProduct[];
+  products: Omit<OrderProduct, "orderId">[];
 }
