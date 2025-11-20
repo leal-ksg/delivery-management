@@ -22,6 +22,6 @@ export interface CreateOrderDTO {
   products: Omit<OrderProduct, "orderId">[];
 }
 
-export interface UpdateOrderDTO extends Omit<Order, "createdAt"> {
-  products: Omit<OrderProduct, "orderId">[];
+export interface UpdateOrderDTO extends Partial<Omit<Order, "createdAt">> {
+  products: OrderProduct[];
 }

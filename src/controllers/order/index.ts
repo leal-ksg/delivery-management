@@ -4,9 +4,11 @@ import { CreateOrderDTO, UpdateOrderDTO } from "../../models/order";
 import { OrderService } from "../../services/order-service";
 import { ICustomerRepository } from "../customer/interfaces";
 import { IProductRepository } from "../product/interfaces";
+import { IStockRepository } from "../stock/interfaces";
 import { IUserRepository } from "../user/interfaces";
 import {
   IOrderController,
+  IOrderProductRepository,
   IOrderRepository,
   IOrderService,
 } from "./interfaces";
@@ -16,16 +18,19 @@ export class OrderController implements IOrderController {
 
   constructor(
     private readonly orderRepository: IOrderRepository,
+    private readonly orderProductRepository: IOrderProductRepository,
     private readonly userRepository: IUserRepository,
     private readonly productRepository: IProductRepository,
-    private readonly customerRepository: ICustomerRepository
-    // TODO: private readonly stockRepo: IStockRepository,
+    private readonly customerRepository: ICustomerRepository,
+    private readonly stockRepository: IStockRepository
   ) {
     this.service = new OrderService(
       userRepository,
       orderRepository,
+      orderProductRepository,
       productRepository,
-      customerRepository
+      customerRepository,
+      stockRepository
     );
   }
 
@@ -44,7 +49,7 @@ export class OrderController implements IOrderController {
   async createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<Order>> {
     const orderResult = await this.service.createOrder(newOrder);
 
-    return toHttpResponse(orderResult)
+    return toHttpResponse(orderResult);
   }
 
   async updateOrder(
@@ -56,8 +61,15 @@ export class OrderController implements IOrderController {
     return toHttpResponse(result);
   }
 
-  async cancelOrder(id: number): Promise<HttpResponse<Order>> {
-    const result = await this.orderRepository.update(id, {status: 'CANCELLED'});
+  async cancelOrder(
+    orderId: number,
+    order: { userId: string; customerId: string }
+  ): Promise<HttpResponse<Order>> {
+    const result = await this.service.updateOrder(orderId, {
+      ...order,
+      status: "CANCELLED",
+      products: [],
+    });
 
     return toHttpResponse(result);
   }
