@@ -1,6 +1,11 @@
 import { PrismaClient } from "../../generated/prisma";
 
-export const prisma = new PrismaClient();
+export const prisma = new PrismaClient({
+  transactionOptions: {
+    maxWait: 5000,
+    timeout: 15000,
+  },
+});
 
 export async function connectDb() {
   try {

@@ -37,7 +37,7 @@ export class StockRepository implements IStockRepository {
 
   async create(data: Stock, transaction: PrismaClient): Promise<Result<Stock>> {
     try {
-      const createdStock = await prisma.stock.create({ data });
+      const createdStock = await transaction.stock.create({ data });
 
       return { ok: true, body: createdStock };
     } catch (error) {

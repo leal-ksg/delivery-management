@@ -31,7 +31,9 @@ export class ProductRepository implements IProductRepository {
     transaction: PrismaClient
   ): Promise<Result<Product>> {
     try {
-      const createdProduct = await transaction.product.create({ data: product });
+      const createdProduct = await transaction.product.create({
+        data: product,
+      });
 
       return { ok: true, body: createdProduct };
     } catch (error) {
@@ -57,7 +59,7 @@ export class ProductRepository implements IProductRepository {
 
   async delete(id: string): Promise<Result<void>> {
     try {
-      await prisma.product.delete({ where: { id } });
+      await prisma.product.update({ where: { id }, data: { active: false } });
 
       return { ok: true, body: undefined };
     } catch (error) {

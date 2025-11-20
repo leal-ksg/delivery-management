@@ -9,7 +9,7 @@ export function parseDatabaseErrorMessage(err: unknown, entity: string) {
 
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     switch (err.code) {
-      case "P2001":
+      case "P2023":
         message = `${entity} não existe`;
         break;
 

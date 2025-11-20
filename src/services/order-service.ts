@@ -51,6 +51,11 @@ export class OrderService implements IOrderService {
         message: "Cliente não encontrado para finalizar o pedido",
       };
 
+    if (!order.products || !order.products.length) {
+      const message = `Não foi informado nenhum produto para o pedido`;
+      return { succeed: false, message };
+    }
+
     for (const orderProduct of order.products) {
       const productResult = await this.productRepo.findById(
         orderProduct.productId
