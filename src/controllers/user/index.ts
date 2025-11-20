@@ -1,24 +1,32 @@
 import { toHttpResponse, type HttpResponse } from "../../core/http-response";
 import type { User } from "../../models/user.js";
 import type { IUserController, IUserRepository } from "./interfaces.js";
+import bcrypt from "bcrypt";
 
 export class UserController implements IUserController {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async getAllUsers(): Promise<HttpResponse<Omit<User, 'password'>[]>> {
+  async getAllUsers(): Promise<HttpResponse<Omit<User, "password">[]>> {
     const result = await this.userRepository.findAll();
 
     return toHttpResponse(result);
   }
 
-  async getUserById(id: string): Promise<HttpResponse<Omit<User, 'password'> | null>> {
+  async getUserById(
+    id: string
+  ): Promise<HttpResponse<Omit<User, "password"> | null>> {
     const result = await this.userRepository.findById(id);
 
     return toHttpResponse(result);
   }
 
   async createUser(user: Omit<User, "id">): Promise<HttpResponse<User>> {
-    const result = await this.userRepository.create(user);
+    const { password, ...rest } = user;
+    const hash = await bcrypt.hash(password, 10);
+    const result = await this.userRepository.create({
+      password: hash,
+      ...rest,
+    });
 
     return toHttpResponse(result, 201);
   }
@@ -27,14 +35,22 @@ export class UserController implements IUserController {
     id: string,
     user: Omit<User, "id">
   ): Promise<HttpResponse<User>> {
-    const result = await this.userRepository.update(id, user);
+    let updateUser = user
+
+    if ("password" in user) {
+      const { password, ...rest } = user;
+      const hash = await bcrypt.hash(password, 10);
+      updateUser = { password: hash, ...rest };
+    }
+
+    const result = await this.userRepository.update(id, updateUser);
 
     return toHttpResponse(result);
   }
 
   async deleteUser(id: string): Promise<HttpResponse<void>> {
-    const result = await this.userRepository.delete(id)
+    const result = await this.userRepository.delete(id);
 
-    return toHttpResponse(result)
+    return toHttpResponse(result);
   }
 }
