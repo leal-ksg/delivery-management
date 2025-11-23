@@ -6,9 +6,31 @@ import { prisma } from "../../database/prisma";
 import { OrderProduct } from "../../models/order";
 
 export class OrderProductRepository implements IOrderProductRepository {
+  async findById(
+    orderId: number,
+    productId: string
+  ): Promise<Result<OrderProduct | null>> {
+    try {
+      const orderProduct = await prisma.orderProduct.findUnique({
+        where: {
+          orderId_productId: {
+            orderId,
+            productId,
+          },
+        },
+      });
+
+      return {ok: true, body: orderProduct}
+    } catch (error) {
+      return {ok: false, error: parseDatabaseErrorMessage(error, "Produto do pedido")}
+    }
+  }
+
   async findMany(orderId: number): Promise<Result<OrderProduct[]>> {
     try {
-      const orderProducts = await prisma.orderProduct.findMany({ where: { orderId } });
+      const orderProducts = await prisma.orderProduct.findMany({
+        where: { orderId },
+      });
 
       return { ok: true, body: orderProducts };
     } catch (err) {

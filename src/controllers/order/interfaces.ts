@@ -12,6 +12,11 @@ export interface IOrderService {
     newOrder: CreateOrderDTO
   ): Promise<{ succeed: boolean; message: string | null }>;
   createOrder(newOrder: CreateOrderDTO): Promise<Result<Order>>;
+  checkProductStock(
+    productId: string,
+    orderedQuantity: number,
+    orderId?: number
+  ): Promise<Result<{ available: boolean }>>;
   updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<Order>>;
 }
 
@@ -41,6 +46,10 @@ export interface IOrderController {
 }
 
 export interface IOrderProductRepository {
+  findById(
+    orderId: number,
+    productId: string
+  ): Promise<Result<OrderProduct | null>>;
   findMany(orderId: number): Promise<Result<OrderProduct[]>>;
   createMany(
     products: OrderProduct[],
