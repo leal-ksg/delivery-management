@@ -2,8 +2,8 @@ import { PrismaClient } from "../../generated/prisma";
 
 export const prisma = new PrismaClient({
   transactionOptions: {
-    maxWait: 5000,
-    timeout: 15000,
+    maxWait: 10000,
+    timeout: 30000,
   },
 });
 

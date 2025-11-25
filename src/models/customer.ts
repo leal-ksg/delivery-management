@@ -4,6 +4,7 @@ export interface Customer {
   surname: string;
   phone: string;
   street: string;
+  streetNumber: string;
   city: string;
   state: string;
   neighborhood: string;

@@ -31,26 +31,32 @@ export class OrderService implements IOrderService {
     order: CreateOrderDTO | UpdateOrderDTO,
     orderId?: number
   ): Promise<ValidationResult> {
-    const userResult = await this.userRepo.findById(order.userId!);
+    if (order.userId) {
+      const userResult = await this.userRepo.findById(order.userId!);
 
-    if (!userResult.ok) return { succeed: false, message: userResult.error };
+      if (!userResult.ok) return { succeed: false, message: userResult.error };
 
-    if (!userResult.body)
-      return {
-        succeed: false,
-        message: "Usuário não encontrado para finalizar o pedido",
-      };
+      if (!userResult.body)
+        return {
+          succeed: false,
+          message: "Usuário não encontrado para finalizar o pedido",
+        };
+    }
 
-    const customerResult = await this.customerRepo.findById(order.customerId!);
+    if (order.customerId) {
+      const customerResult = await this.customerRepo.findById(
+        order.customerId!
+      );
 
-    if (!customerResult.ok)
-      return { succeed: false, message: customerResult.error };
+      if (!customerResult.ok)
+        return { succeed: false, message: customerResult.error };
 
-    if (!customerResult.body)
-      return {
-        succeed: false,
-        message: "Cliente não encontrado para finalizar o pedido",
-      };
+      if (!customerResult.body)
+        return {
+          succeed: false,
+          message: "Cliente não encontrado para finalizar o pedido",
+        };
+    }
 
     if (!order.products || !order.products.length) {
       const message = `Não foi informado nenhum produto para o pedido`;

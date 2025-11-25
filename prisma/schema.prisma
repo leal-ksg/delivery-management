@@ -125,6 +125,7 @@ model Customer {
   surname      String
   phone        String  @unique
   street       String
+  streetNumber String
   city         String
   state        String
   neighborhood String

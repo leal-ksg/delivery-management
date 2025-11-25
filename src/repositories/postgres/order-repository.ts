@@ -3,7 +3,7 @@ import { IOrderRepository } from "../../controllers/order/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
-import { CreateOrderDTO } from "../../models/order";
+import { CreateOrderDTO, UpdateOrderDTO } from "../../models/order";
 
 export class OrderRepository implements IOrderRepository {
   async findAll(): Promise<Result<Order[]>> {
@@ -43,13 +43,18 @@ export class OrderRepository implements IOrderRepository {
 
   async update(
     id: number,
-    order: Partial<Order>,
+    order: UpdateOrderDTO,
     transaction: PrismaClient
   ): Promise<Result<Order>> {
     try {
+      const { products: _products, ...data } = order;
+
+      if (Object.keys(data).length === 0)
+        return { ok: true, body: {} as Order };
+
       const updatedOrder = await transaction.order.update({
         where: { id },
-        data: order,
+        data,
       });
 
       return { ok: true, body: updatedOrder };

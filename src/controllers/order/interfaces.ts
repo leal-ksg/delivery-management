@@ -29,7 +29,7 @@ export interface IOrderRepository {
   ): Promise<Result<Order>>;
   update(
     id: number,
-    order: Partial<Order>,
+    order: UpdateOrderDTO,
     transaction: Prisma.TransactionClient
   ): Promise<Result<Order>>;
 }
@@ -38,7 +38,7 @@ export interface IOrderController {
   getAllOrders(): Promise<HttpResponse<Order[]>>;
   getOrderById(id: number): Promise<HttpResponse<Order | null>>;
   createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<Order>>;
-  updateOrder(id: number, order: Partial<Order>): Promise<HttpResponse<Order>>;
+  updateOrder(id: number, order: UpdateOrderDTO): Promise<HttpResponse<Order>>;
   cancelOrder(
     id: number,
     order: { userId: string; customerId: string }
