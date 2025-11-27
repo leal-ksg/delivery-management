@@ -13,7 +13,12 @@ export interface ICustomerRepository {
 export interface ICustomerController {
   getAllCustomers(): Promise<HttpResponse<Customer[]>>;
   getCustomerById(id: string): Promise<HttpResponse<Customer | null>>;
-  createCustomer(customer: Omit<Customer, 'id'>): Promise<HttpResponse<Customer>>
-  updateCustomer(id: string, customer: Customer): Promise<HttpResponse<Customer>>
-  deleteCustomer(id: string): Promise<HttpResponse<void>>
+  createCustomer(
+    customer: Omit<Customer, "id">
+  ): Promise<HttpResponse<Customer>>;
+  updateCustomer(
+    id: string,
+    customer: Customer
+  ): Promise<HttpResponse<Customer>>;
+  deleteCustomer(id: string): Promise<HttpResponse<void>>;
 }

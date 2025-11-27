@@ -214,7 +214,7 @@ export class OrderService implements IOrderService {
             orderUpdateResult.error ?? "Ocorreu um erro ao atualizar o pedido"
           );
 
-        if (!order.products.length) return orderUpdateResult;
+        if (!order.products?.length) return orderUpdateResult;
 
         const orderProductsResult = await this.orderProductRepo.findMany(id);
 

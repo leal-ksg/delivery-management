@@ -9,7 +9,8 @@ import {
 
 export interface IOrderService {
   validate(
-    newOrder: CreateOrderDTO
+    order: CreateOrderDTO | UpdateOrderDTO,
+    orderId?: number
   ): Promise<{ succeed: boolean; message: string | null }>;
   createOrder(newOrder: CreateOrderDTO): Promise<Result<Order>>;
   checkProductStock(

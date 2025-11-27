@@ -23,5 +23,5 @@ export interface CreateOrderDTO {
 }
 
 export interface UpdateOrderDTO extends Partial<Omit<Order, "createdAt">> {
-  products: OrderProduct[];
+  products?: OrderProduct[];
 }
