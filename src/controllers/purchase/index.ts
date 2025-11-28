@@ -1,9 +1,31 @@
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
-import { Purchase } from "../../models/purchase";
-import { IPurchaseController, IPurchaseRepository } from "./interfaces";
+import { CreatePurchaseDTO, Purchase } from "../../models/purchase";
+import { PurchaseService } from "../../services/purchase-service";
+import { IStockRepository } from "../stock/interfaces";
+import { IUserRepository } from "../user/interfaces";
+import {
+  IPurchaseController,
+  IPurchaseProductRepository,
+  IPurchaseRepository,
+  IPurchaseService,
+} from "./interfaces";
 
 export class PurchaseController implements IPurchaseController {
-  constructor(private readonly purchaseRepository: IPurchaseRepository) {}
+  private readonly _purchaseService: IPurchaseService;
+
+  constructor(
+    private readonly purchaseRepository: IPurchaseRepository,
+    private readonly userRepository: IUserRepository,
+    private readonly purchaseProductRepository: IPurchaseProductRepository,
+    private readonly stockRepository: IStockRepository
+  ) {
+    this._purchaseService = new PurchaseService(
+      userRepository,
+      purchaseRepository,
+      purchaseProductRepository,
+      stockRepository
+    );
+  }
 
   async getAllPurchases(): Promise<HttpResponse<Purchase[]>> {
     const result = await this.purchaseRepository.findAll();
@@ -18,9 +40,9 @@ export class PurchaseController implements IPurchaseController {
   }
 
   async createPurchase(
-    purchase: Omit<Purchase, "id">
+    purchase: CreatePurchaseDTO
   ): Promise<HttpResponse<Purchase>> {
-    const result = await this.purchaseRepository.create(purchase);
+    const result = await this._purchaseService.createPurchase(purchase);
 
     return toHttpResponse(result);
   }

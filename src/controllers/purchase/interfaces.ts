@@ -44,7 +44,7 @@ export interface IPurchaseProductRepository {
     purchaseId: number,
     productId: string
   ): Promise<Result<PurchaseProduct | null>>;
-  findMany(orderId: number): Promise<Result<PurchaseProduct[]>>;
+  findMany(purchaseId: number): Promise<Result<PurchaseProduct[]>>;
   createMany(
     products: PurchaseProduct[],
     transaction: Prisma.TransactionClient

@@ -1,20 +1,26 @@
 import {
+  IPurchaseProductRepository,
   IPurchaseRepository,
   IPurchaseService,
 } from "../controllers/purchase/interfaces";
+import { IStockRepository } from "../controllers/stock/interfaces";
 import { IUserRepository } from "../controllers/user/interfaces";
+import { parseDatabaseErrorMessage } from "../core/parse-database-error-message";
 import { Result } from "../core/result";
 import { prisma } from "../database/prisma";
 import {
   CreatePurchaseDTO,
   Purchase,
+  PurchaseProduct,
   UpdatePurchaseDTO,
 } from "../models/purchase";
 
 export class PurchaseService implements IPurchaseService {
   constructor(
     private readonly userRepo: IUserRepository,
-    private readonly purchaseRepo: IPurchaseRepository
+    private readonly purchaseRepo: IPurchaseRepository,
+    private readonly purchaseProductRepo: IPurchaseProductRepository,
+    private readonly stockRepo: IStockRepository
   ) {}
 
   async validate(
@@ -44,23 +50,58 @@ export class PurchaseService implements IPurchaseService {
     if (!validationResult.succeed)
       return { ok: false, error: validationResult.message! };
 
-    const creationResult = await prisma.$transaction(async (transaction) => {
-      const purchaseCreationResult = await this.purchaseRepo.create(
-        newPurchase.userId,
-        transaction
-      );
+    try {
+      const creationResult = await prisma.$transaction(async (transaction) => {
+        const purchaseCreationResult = await this.purchaseRepo.create(
+          newPurchase.userId,
+          transaction
+        );
 
-      if (!purchaseCreationResult.ok) return purchaseCreationResult;
+        if (!purchaseCreationResult.ok)
+          throw new Error(
+            purchaseCreationResult.error ??
+              "Não foi possível registrar a compra"
+          );
 
-      for (const product of newPurchase.products) {
-        // const purchaseProductResult = await this
-      }
+        const products: PurchaseProduct[] = [];
 
+        for (const product of newPurchase.products) {
+          products.push({
+            purchaseId: purchaseCreationResult.body.id,
+            ...product,
+          });
 
-      return purchaseCreationResult;
-    });
+          const stockResult = await this.stockRepo.increase(
+            {
+              productId: product.productId,
+              quantity: product.quantity,
+            },
+            transaction
+          );
 
-    return creationResult;
+          if (!stockResult.ok)
+            throw new Error(
+              stockResult.error ??
+                "Não foi possível atualizar o estoque de um item da compra"
+            );
+        }
+
+        const productsCreationResult =
+          await this.purchaseProductRepo.createMany(products, transaction);
+
+        if (!productsCreationResult.ok)
+          throw new Error(
+            productsCreationResult.error ??
+              "Não foi possível gravar um produto da compra"
+          );
+
+        return purchaseCreationResult;
+      });
+
+      return creationResult;
+    } catch (err) {
+      return { ok: false, error: parseDatabaseErrorMessage(err, "Compra") };
+    }
   }
 
   async updatePurchase(
