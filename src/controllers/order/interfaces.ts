@@ -12,7 +12,7 @@ export interface IOrderService {
     order: CreateOrderDTO | UpdateOrderDTO,
     orderId?: number
   ): Promise<{ succeed: boolean; message: string | null }>;
-  createOrder(newOrder: CreateOrderDTO): Promise<Result<Order>>;
+  createOrder(newOrder: CreateOrderDTO): Promise<Result<void>>;
   checkProductStock(
     productId: string,
     orderedQuantity: number,
@@ -25,9 +25,8 @@ export interface IOrderRepository {
   findAll(): Promise<Result<Order[]>>;
   findById(id: number): Promise<Result<Order | null>>;
   create(
-    newOrder: CreateOrderDTO,
-    transaction: Prisma.TransactionClient
-  ): Promise<Result<Order>>;
+    newOrder: CreateOrderDTO
+  ): Promise<Result<void>>;
   update(
     id: number,
     order: UpdateOrderDTO,

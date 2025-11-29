@@ -127,61 +127,16 @@ export class OrderService implements IOrderService {
     return { ok: true, body: { available: true } };
   }
 
-  async createOrder(newOrder: CreateOrderDTO): Promise<Result<Order>> {
+  async createOrder(newOrder: CreateOrderDTO): Promise<Result<void>> {
     const validationResult = await this.validate(newOrder);
 
     if (!validationResult.succeed) {
       return { ok: false, error: validationResult.message! };
     }
 
-    try {
-      const creationResult = await prisma.$transaction(async (transaction) => {
-        const orderResult = await this.orderRepo.create(newOrder, transaction);
+    const orderResult = await this.orderRepo.create(newOrder);
 
-        if (!orderResult.ok)
-          throw new Error(
-            orderResult.error ?? "Não foi possível criar o pedido"
-          );
-
-        const orderProducts: OrderProduct[] = [];
-
-        for (const { productId, quantity } of newOrder.products) {
-          orderProducts.push({
-            productId,
-            quantity,
-            orderId: orderResult.body.id,
-          });
-
-          const stockResult = await this.stockRepo.decrease(
-            { productId, quantity },
-            transaction
-          );
-
-          if (!stockResult.ok)
-            throw new Error(
-              stockResult.error ??
-                "Não foi possível atualizar o estoque de um produto"
-            );
-        }
-
-        const orderProductsResult = await this.orderProductRepo.createMany(
-          orderProducts,
-          transaction
-        );
-
-        if (!orderProductsResult.ok)
-          throw new Error(
-            orderProductsResult.error ??
-              "Não foi possível salvar os produtos do pedido"
-          );
-
-        return orderResult;
-      });
-
-      return creationResult;
-    } catch (err) {
-      return { ok: false, error: parseDatabaseErrorMessage(err, "Pedido") };
-    }
+    return orderResult
   }
 
   async updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<Order>> {

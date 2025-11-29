@@ -27,15 +27,33 @@ export class OrderRepository implements IOrderRepository {
   }
 
   async create(
-    newOrder: CreateOrderDTO,
-    transaction: PrismaClient
-  ): Promise<Result<Order>> {
+    newOrder: CreateOrderDTO
+  ): Promise<Result<void>> {
     try {
-      const { products: _products, ...order } = newOrder;
+      await prisma.$transaction(async (transaction) => {
+        const productsJson = JSON.stringify(newOrder.products)
 
-      const createdOrder = await transaction.order.create({ data: order });
+        await transaction.$executeRaw`
+        select create_order(
+          row(
+            ${newOrder.customerId}::uuid,
+            ${newOrder.userId}::uuid,
+            ${newOrder.comment}::text,
+            (
+              select array_agg(
+                row(
+                  p."productId"::uuid,
+                  p."quantity"::int
+                )::orderProduct
+              )
+              from jsonb_to_recordset(${productsJson}::jsonb) 
+              as p("productId" text, "quantity" text)
+            )
+          )::orderCreationDTO
+        )`;
+      });
 
-      return { ok: true, body: createdOrder };
+      return { ok: true, body: undefined };
     } catch (err) {
       return { ok: false, error: parseDatabaseErrorMessage(err, "Pedido") };
     }
