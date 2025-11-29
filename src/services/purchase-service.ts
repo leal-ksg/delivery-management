@@ -1,3 +1,4 @@
+import { Prisma } from "../../generated/prisma";
 import {
   IPurchaseProductRepository,
   IPurchaseRepository,
@@ -52,8 +53,14 @@ export class PurchaseService implements IPurchaseService {
 
     try {
       const creationResult = await prisma.$transaction(async (transaction) => {
+        const totalAmount = newPurchase.products.reduce(
+          (acm: Prisma.Decimal, product) => acm.plus(product.unitPrice),
+          new Prisma.Decimal(0)
+        );
+
         const purchaseCreationResult = await this.purchaseRepo.create(
           newPurchase.userId,
+          totalAmount,
           transaction
         );
 

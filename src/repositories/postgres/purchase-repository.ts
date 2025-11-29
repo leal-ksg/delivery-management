@@ -28,11 +28,12 @@ export class PurchaseRepository implements IPurchaseRepository {
 
   async create(
     userId: string,
+    totalAmount: Prisma.Decimal,
     transaction: Prisma.TransactionClient
   ): Promise<Result<Purchase>> {
     try {
       const newPurchase = await transaction.purchase.create({
-        data: { userId, totalAmount: 0 },
+        data: { userId, totalAmount },
       });
 
       return { ok: true, body: newPurchase };

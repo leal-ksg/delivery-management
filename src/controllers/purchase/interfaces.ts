@@ -12,7 +12,7 @@ import {
 export interface IPurchaseRepository {
   findAll(): Promise<Result<Purchase[]>>;
   findById(id: number): Promise<Result<Purchase | null>>;
-  create(userId: string, transaction: Prisma.TransactionClient): Promise<Result<Purchase>>;
+  create(userId: string, totalAmount: Prisma.Decimal, transaction: Prisma.TransactionClient): Promise<Result<Purchase>>;
   update(id: number, purchase: Partial<Purchase>): Promise<Result<Purchase>>;
 }
 
