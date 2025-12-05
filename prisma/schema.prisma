@@ -27,6 +27,11 @@ enum ProductType {
   PURCHASE
 }
 
+enum ConsumptionType {
+  PRODUCTION
+  SALE
+}
+
 enum UnitMeasure {
   UNIT
   GRAM
@@ -41,7 +46,7 @@ enum PurchaseStatus {
 }
 
 model User {
-  id        String        @id @default(uuid()) @db.Uuid
+  id        String     @id @default(uuid()) @db.Uuid
   name      String
   surname   String
   email     String     @unique
@@ -53,8 +58,8 @@ model User {
 }
 
 model ProductCategory {
-  id       Int         @id @default(autoincrement())
-  name     String      @unique
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
   products Product[]
 }
 
@@ -65,7 +70,8 @@ model Product {
   description      String?
   unitPrice        Decimal           @db.Decimal(10, 2)
   categoryId       Int
-  type             ProductType       @default(PURCHASE) 
+  type             ProductType       @default(PURCHASE)
+  consumptionType  ConsumptionType   @default(PRODUCTION)
   minStock         Int               @default(0)
   category         ProductCategory   @relation(fields: [categoryId], references: [id])
   createdAt        DateTime          @default(now())
@@ -78,7 +84,7 @@ model Product {
 model Order {
   id            Int            @id @default(autoincrement())
   customerId    String         @db.Uuid
-  comment       String?         
+  comment       String?
   customer      Customer       @relation(fields: [customerId], references: [id])
   status        OrderStatus    @default(PENDING)
   createdAt     DateTime       @default(now())
