@@ -44,10 +44,11 @@ export class PurchaseRepository implements IPurchaseRepository {
 
   async update(
     id: number,
-    purchase: Partial<Purchase>
+    purchase: Partial<Purchase>,
+    transaction: Prisma.TransactionClient
   ): Promise<Result<Purchase>> {
     try {
-      const updatedPurchase = await prisma.purchase.update({
+      const updatedPurchase = await transaction.purchase.update({
         where: { id },
         data: purchase,
       });

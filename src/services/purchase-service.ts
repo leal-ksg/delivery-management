@@ -25,7 +25,7 @@ export class PurchaseService implements IPurchaseService {
   ) {}
 
   async validate(
-    purchase: CreatePurchaseDTO,
+    purchase: CreatePurchaseDTO | UpdatePurchaseDTO,
     purchaseId?: number
   ): Promise<{ succeed: boolean; message: string | null }> {
     if (purchase.userId) {
@@ -37,6 +37,19 @@ export class PurchaseService implements IPurchaseService {
         return {
           succeed: false,
           message: "Usuário não encontrado para finalizar a compra",
+        };
+    }
+
+    if (purchaseId) {
+      const purchaseResult = await this.purchaseRepo.findById(purchaseId);
+
+      if (!purchaseResult.ok)
+        return { succeed: false, message: purchaseResult.error };
+
+      if (!purchaseResult.body)
+        return {
+          succeed: false,
+          message: "Compra não encontrada para atualização",
         };
     }
 
@@ -113,8 +126,83 @@ export class PurchaseService implements IPurchaseService {
 
   async updatePurchase(
     id: number,
-    order: UpdatePurchaseDTO
+    purchase: UpdatePurchaseDTO
   ): Promise<Result<Purchase>> {
-    throw new Error("Method not implemented.");
+    const validationResult = await this.validate(purchase, id);
+
+    if (!validationResult.succeed)
+      return { ok: false, error: validationResult.message! };
+
+    try {
+      const updateResult = await prisma.$transaction(async (transaction) => {
+        const purchaseResult = await this.purchaseRepo.update(
+          id,
+          purchase,
+          transaction
+        );
+
+        if (!purchaseResult.ok)
+          throw new Error(
+            purchaseResult.error ?? "Não foi possível atualizar a compra"
+          );
+
+        if (purchase.products && purchase.products.length) {
+          const oldPurchaseProductsResult =
+            await this.purchaseProductRepo.findMany(id);
+
+          if (!oldPurchaseProductsResult.ok)
+            throw new Error(
+              oldPurchaseProductsResult.error ??
+                "Não foi possível estornar os produtos comprados anteriormente"
+            );
+
+          for (const oldProduct of oldPurchaseProductsResult.body) {
+            const stockDecreaseResult = await this.stockRepo.decrease(
+              {
+                productId: oldProduct.productId,
+                quantity: oldProduct.quantity,
+              },
+              transaction
+            );
+
+            if (!stockDecreaseResult.ok)
+              throw new Error(
+                stockDecreaseResult.error ??
+                  "Não foi possível estornar os produtos comprados anteriormente"
+              );
+          }
+
+          for (const product of purchase.products) {
+            const stockResult = await this.stockRepo.increase(
+              {
+                productId: product.productId,
+                quantity: product.quantity,
+              },
+              transaction
+            );
+
+            if (!stockResult.ok)
+              throw new Error(
+                stockResult.error ??
+                  "Não foi possível atualizar o estoque de um item da compra"
+              );
+          }
+
+          const newPurchaseProductsResult = await this.purchaseProductRepo.replace(id, purchase.products, transaction)
+          
+          if (!newPurchaseProductsResult.ok)
+              throw new Error(
+                newPurchaseProductsResult.error ??
+                  "Não foi possível atualizar os itens da compra"
+              );
+        }
+
+        return purchaseResult;
+      });
+
+      return updateResult;
+    } catch (err) {
+      return { ok: false, error: parseDatabaseErrorMessage(err, "Compra") };
+    }
   }
 }

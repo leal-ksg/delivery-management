@@ -13,7 +13,7 @@ export interface IPurchaseRepository {
   findAll(): Promise<Result<Purchase[]>>;
   findById(id: number): Promise<Result<Purchase | null>>;
   create(userId: string, totalAmount: Prisma.Decimal, transaction: Prisma.TransactionClient): Promise<Result<Purchase>>;
-  update(id: number, purchase: Partial<Purchase>): Promise<Result<Purchase>>;
+  update(id: number, purchase: Partial<Purchase>, transaction: Prisma.TransactionClient): Promise<Result<Purchase>>;
 }
 
 export interface IPurchaseController {
@@ -29,13 +29,13 @@ export interface IPurchaseController {
 
 export interface IPurchaseService {
   validate(
-    purchase: CreatePurchaseDTO,
+    purchase: CreatePurchaseDTO | UpdatePurchaseDTO,
     purchaseId?: number
   ): Promise<{ succeed: boolean; message: string | null }>;
   createPurchase(newPurchase: CreatePurchaseDTO): Promise<Result<Purchase>>;
   updatePurchase(
     id: number,
-    order: UpdatePurchaseDTO
+    purchase: UpdatePurchaseDTO
   ): Promise<Result<Purchase>>;
 }
 
