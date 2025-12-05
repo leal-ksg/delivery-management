@@ -51,13 +51,13 @@ export class PurchaseController implements IPurchaseController {
     id: number,
     purchase: Partial<Purchase>
   ): Promise<HttpResponse<Purchase>> {
-    const result = await this.purchaseRepository.update(id, purchase);
+    const result = await this._purchaseService.updatePurchase(id, purchase);
 
     return toHttpResponse(result);
   }
 
   async cancelPurchase(id: number): Promise<HttpResponse<Purchase>> {
-    const result = await this.purchaseRepository.update(id, {
+    const result = await this._purchaseService.updatePurchase(id, {
       status: "CANCELLED",
     });
 
