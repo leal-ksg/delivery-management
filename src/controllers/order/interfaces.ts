@@ -13,11 +13,6 @@ export interface IOrderService {
     orderId?: number
   ): Promise<{ succeed: boolean; message: string | null }>;
   createOrder(newOrder: CreateOrderDTO): Promise<Result<void>>;
-  checkProductStock(
-    productId: string,
-    orderedQuantity: number,
-    orderId?: number
-  ): Promise<Result<{ available: boolean }>>;
   updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<Order>>;
 }
 

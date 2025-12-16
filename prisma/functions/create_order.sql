@@ -15,9 +15,10 @@ returns void
 language plpgsql
 as $$
 declare
-  product  orderProduct;
-  order_id int;
-  
+  product          orderProduct;
+  order_id         int;
+  stock_quantity   int;
+  product_name     text;
 begin
   
   insert into "Order" ("userId", "customerId", "comment") 
@@ -30,6 +31,18 @@ begin
 
   foreach product in array new_order.products
   loop
+
+    select s.quantity, p.name
+      into stock_quantity, product_name
+      from "Stock" as s
+     inner join "Product" as p
+        on p.id = s.productId
+     where s."productId" = product.productId
+       for update;
+
+    if stock_quantity < product.quantity then
+      raise exception 'Produto % não tem estoque suficiente para o pedido', product_name;
+    end if;
   
     insert into "OrderProduct" ("orderId", "productId", "quantity") 
     values (

@@ -11,7 +11,7 @@ import { IUserRepository } from "../controllers/user/interfaces";
 import { parseDatabaseErrorMessage } from "../core/parse-database-error-message";
 import { Result } from "../core/result";
 import { prisma } from "../database/prisma";
-import { CreateOrderDTO, OrderProduct, UpdateOrderDTO } from "../models/order";
+import { CreateOrderDTO, UpdateOrderDTO } from "../models/order";
 
 type ValidationResult =
   | { succeed: true; message: null }
@@ -28,8 +28,7 @@ export class OrderService implements IOrderService {
   ) {}
 
   async validate(
-    order: CreateOrderDTO | UpdateOrderDTO,
-    orderId?: number
+    order: CreateOrderDTO | UpdateOrderDTO
   ): Promise<ValidationResult> {
     if (order.userId) {
       const userResult = await this.userRepo.findById(order.userId!);
@@ -77,54 +76,9 @@ export class OrderService implements IOrderService {
           message:
             "Não foi possível encontrar um dos produtos para finalizar o pedido",
         };
-
-      const product = productResult.body;
-
-      const checkStockResult = await this.checkProductStock(
-        orderProduct.productId,
-        orderProduct.quantity,
-        orderId
-      );
-
-      if (!checkStockResult.ok)
-        return { succeed: false, message: checkStockResult.error };
-
-      if (!checkStockResult.body?.available) {
-        const message = `O produto ${product.name} não tem estoque suficiente para esse pedido`;
-        return { succeed: false, message };
-      }
     }
 
     return { succeed: true, message: null };
-  }
-
-  async checkProductStock(
-    productId: string,
-    orderedQuantity: number,
-    orderId?: number
-  ): Promise<Result<{ available: boolean }>> {
-    const stockResult = await this.stockRepo.findById(productId);
-
-    if (!stockResult.ok) return { ok: false, error: stockResult.error };
-
-    let availableQuantity = stockResult.body?.quantity ?? 0;
-
-    if (orderId) {
-      const orderProductResult = await this.orderProductRepo.findById(
-        orderId,
-        productId
-      );
-
-      if (!orderProductResult.ok)
-        return { ok: false, error: orderProductResult.error };
-
-      availableQuantity += orderProductResult.body?.quantity ?? 0;
-    }
-
-    if (availableQuantity < orderedQuantity)
-      return { ok: true, body: { available: false } };
-
-    return { ok: true, body: { available: true } };
   }
 
   async createOrder(newOrder: CreateOrderDTO): Promise<Result<void>> {
@@ -140,7 +94,7 @@ export class OrderService implements IOrderService {
   }
 
   async updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<Order>> {
-    const validationResult = await this.validate(order, id);
+    const validationResult = await this.validate(order);
 
     if (!validationResult.succeed) {
       return { ok: false, error: validationResult.message };
