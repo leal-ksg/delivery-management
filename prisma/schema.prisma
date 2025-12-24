@@ -79,6 +79,8 @@ model Product {
   purchaseProducts PurchaseProduct[]
   stock            Stock?
   productionLogs   ProductionLog[]
+  materialTreeChild MaterialTree[] @relation("MaterialTreeChild")
+  materialTreeParent MaterialTree[] @relation("MaterialTreeParent")
 }
 
 model Order {
@@ -158,4 +160,16 @@ model GeneralLog {
   id          Int      @id @default(autoincrement())
   description String
   date        DateTime @default(now())
+}
+
+model MaterialTree {
+  parentId    String   @db.Uuid
+  parent      Product  @relation("MaterialTreeParent", fields: [parentId], references: [id])
+  
+  childId     String   @db.Uuid
+  child       Product  @relation("MaterialTreeChild", fields: [childId], references: [id])
+
+  childQuantity   Int
+
+  @@id([childId, parentId])
 }
