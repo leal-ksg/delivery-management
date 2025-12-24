@@ -1,12 +1,13 @@
 import { Prisma } from "../../generated/prisma";
 
 export function parseDatabaseErrorMessage(err: unknown, entity: string) {
-  let message: string | undefined =
+  let message: string =
     "Ocorreu um erro desconhecido no banco de dados";
 
   if (err instanceof Error && "message" in err) {
     const match = err.message.match(/Message:\s*`([^`]*)`/);
-    message = match ? match[1] : err.message;
+
+    message = match && match.length ? match[1]! : err.message
   }
 
   if (err instanceof Prisma.PrismaClientKnownRequestError) {

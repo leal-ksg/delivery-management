@@ -46,7 +46,7 @@ export class OrderController implements IOrderController {
     return toHttpResponse(result);
   }
 
-  async createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<Order>> {
+  async createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<void>> {
     const orderResult = await this.service.createOrder(newOrder);
 
     return toHttpResponse(orderResult);

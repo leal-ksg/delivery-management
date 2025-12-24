@@ -32,7 +32,7 @@ export interface IOrderRepository {
 export interface IOrderController {
   getAllOrders(): Promise<HttpResponse<Order[]>>;
   getOrderById(id: number): Promise<HttpResponse<Order | null>>;
-  createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<Order>>;
+  createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<void>>;
   updateOrder(id: number, order: UpdateOrderDTO): Promise<HttpResponse<Order>>;
   cancelOrder(
     id: number,
