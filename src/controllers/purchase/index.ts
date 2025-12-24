@@ -64,22 +64,3 @@ export class PurchaseController implements IPurchaseController {
     return toHttpResponse(result);
   }
 }
-
-/* 
-Lasanha de frango:
-  - 2 Embalagem pra lasanha
-  - 2 Etiqueta de lasanha de frango
-  - 2 Saco de Kraft
-
-Embalagem pra lasanha
-  - 6 grampos
-
-Etiqueta de lasanha de frango:
-  - 2 Carimbo
-
-Saco de Kraft:
-  - 2 Adesivo
-  - 2 grampo
-  - 2 Carimbo
-
-*/
