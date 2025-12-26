@@ -13,7 +13,7 @@ export interface IOrderService {
     orderId?: number
   ): Promise<{ succeed: boolean; message: string | null }>;
   createOrder(newOrder: CreateOrderDTO): Promise<Result<void>>;
-  updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<Order>>;
+  updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<void>>;
 }
 
 export interface IOrderRepository {
@@ -24,9 +24,8 @@ export interface IOrderRepository {
   ): Promise<Result<void>>;
   update(
     id: number,
-    order: UpdateOrderDTO,
-    transaction: Prisma.TransactionClient
-  ): Promise<Result<Order>>;
+    order: UpdateOrderDTO
+  ): Promise<Result<void>>;
 }
 
 export interface IOrderController {

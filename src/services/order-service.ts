@@ -28,7 +28,8 @@ export class OrderService implements IOrderService {
   ) {}
 
   async validate(
-    order: CreateOrderDTO | UpdateOrderDTO
+    order: CreateOrderDTO | UpdateOrderDTO,
+    orderId?: number
   ): Promise<ValidationResult> {
     if (order.userId) {
       const userResult = await this.userRepo.findById(order.userId!);
@@ -57,12 +58,12 @@ export class OrderService implements IOrderService {
         };
     }
 
-    if (!order.products || !order.products.length) {
+    if ((!order.products || !order.products.length) && !orderId) {
       const message = `Não foi informado nenhum produto para o pedido`;
       return { succeed: false, message };
     }
 
-    for (const orderProduct of order.products) {
+    for (const orderProduct of order.products ?? []) {
       const productResult = await this.productRepo.findById(
         orderProduct.productId
       );
@@ -90,18 +91,17 @@ export class OrderService implements IOrderService {
 
     const orderResult = await this.orderRepo.create(newOrder);
 
-    return orderResult
+    return orderResult;
   }
 
-  async updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<Order>> {
-    const validationResult = await this.validate(order);
+  async updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<void>> {
+    const validationResult = await this.validate(order, id);
 
     if (!validationResult.succeed) {
       return { ok: false, error: validationResult.message };
     }
 
     try {
-      const updateResult = await prisma.$transaction(async (transaction) => {
         const orderInfoResult = await this.orderRepo.findById(id);
 
         if (!orderInfoResult.ok)
@@ -112,69 +112,15 @@ export class OrderService implements IOrderService {
 
         if (!orderInfoResult.body) throw new Error("Esse pedido não existe");
 
-        const orderUpdateResult = await this.orderRepo.update(
-          id,
-          order,
-          transaction
-        );
+        const orderUpdateResult = await this.orderRepo.update(id, order);
 
         if (!orderUpdateResult.ok)
           throw new Error(
             orderUpdateResult.error ?? "Ocorreu um erro ao atualizar o pedido"
           );
 
-        if (!order.products?.length) return orderUpdateResult;
-
-        const orderProductsResult = await this.orderProductRepo.findMany(id);
-
-        if (!orderProductsResult.ok)
-          throw new Error(
-            orderProductsResult.error ??
-              "Ocorreu um erro ao buscar os produtos do pedido"
-          );
-
-        for (const { productId, quantity } of orderProductsResult.body) {
-          const stockIncreaseResult = await this.stockRepo.increase(
-            { productId, quantity },
-            transaction
-          );
-
-          if (!stockIncreaseResult.ok)
-            throw new Error(
-              stockIncreaseResult.error ??
-                "Não foi possível atualizar o estoque de um produto"
-            );
-        }
-
-        for (const { productId, quantity } of order.products) {
-          const stockDecreaseResult = await this.stockRepo.decrease(
-            { productId, quantity },
-            transaction
-          );
-
-          if (!stockDecreaseResult.ok)
-            throw new Error(
-              stockDecreaseResult.error ??
-                "Não foi possível atualizar o estoque de um produto"
-            );
-        }
-
-        const orderProductsReplaceResult = await this.orderProductRepo.replace(
-          id,
-          order.products,
-          transaction
-        );
-
-        if (!orderProductsReplaceResult.ok)
-          throw new Error(
-            orderProductsReplaceResult.error ??
-              "Não foi possível salvar os produtos do pedido"
-          );
-
         return orderUpdateResult;
-      });
-
-      return updateResult;
+   
     } catch (err) {
       return { ok: false, error: parseDatabaseErrorMessage(err, "Pedido") };
     }

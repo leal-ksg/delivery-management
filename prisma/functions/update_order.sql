@@ -1,23 +1,14 @@
-create type orderStatus as enum (
-  'PENDING',
-  'IN_PROGRESS',
-  'READY_FOR_DELIVERY',
-  'OUT_FOR_DELIVERY',
-  'DELIVERED',
-  'CANCELLED'
-);
-
 create type orderProduct as (
   productId UUID,
    quantity INT
 );
 
 create type orderUpdateDTO as (
-  id         INT;
-  comment    TEXT;
-  customerId UUID;
-  status     orderStatus;
-  userId     TEXT;
+  id         INT,
+  comment    TEXT,
+  customerId UUID,
+  status     "OrderStatus",
+  userId     UUID,
   products   orderProduct[]
 );
 
@@ -38,7 +29,6 @@ declare
   child_quantity   int;
 
 begin
-
   
   for order_product_id, order_product_quantity in 
     select "productId", "quantity"
@@ -88,10 +78,21 @@ begin
 
   end loop;
 
+  update "Order"
+     set "comment" = coalesce(order_data.comment, "comment"),
+         "customerId" = coalesce(order_data.customerId, "customerId"),
+         "status" = coalesce(order_data.status, "status")
+    where "id" = order_data.id;
+
+  if   order_data.status = 'CANCELLED'
+    then
+       return;
+  end if;
+
   delete
     from "OrderProduct"
    where "orderId" = order_data.id;
-  
+
   foreach product in array order_data.products
   loop
   
@@ -163,12 +164,6 @@ begin
     );
 
   end loop;
-  
-  update "Order"
-     set "comment" = coalesce(order_data.comment, "comment"),
-         "customerId" = coalesce(order_data.customerId, "customerId"),
-         "status" = coalesce(order_data.status, "status")
-    where "id" = order_data.id;
   
 end;
 $$

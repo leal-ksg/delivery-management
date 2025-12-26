@@ -1,4 +1,4 @@
-import { Order, PrismaClient } from "../../../generated/prisma";
+import { Order } from "../../../generated/prisma";
 import { IOrderRepository } from "../../controllers/order/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
@@ -61,21 +61,43 @@ export class OrderRepository implements IOrderRepository {
 
   async update(
     id: number,
-    order: UpdateOrderDTO,
-    transaction: PrismaClient
-  ): Promise<Result<Order>> {
+    order: UpdateOrderDTO
+  ): Promise<Result<void>> {
     try {
       const { products: _products, ...data } = order;
 
       if (Object.keys(data).length === 0)
-        return { ok: true, body: {} as Order };
+        return { ok: true, body: undefined };
 
-      const updatedOrder = await transaction.order.update({
-        where: { id },
-        data,
+      await prisma.$transaction(async (transaction) => {
+        const productsJson = JSON.stringify(_products ?? [])
+
+        await transaction.$executeRaw`
+        select update_order(
+          row(
+            ${id}::int,
+            ${data.comment}::text,
+            ${data.customerId}::uuid,
+            ${data.status},
+            ${data.userId}::uuid,
+            (
+              select coalesce(
+                array_agg(
+                  row(
+                    p."productId"::uuid,
+                    p."quantity"::int
+                  )::orderProduct
+                ),
+                array[]::orderProduct[]
+              )
+              from jsonb_to_recordset(${productsJson}::jsonb) 
+              as p("productId" text, "quantity" text)
+            )
+          )::orderUpdateDTO
+        )`;
       });
 
-      return { ok: true, body: updatedOrder };
+      return { ok: true, body: undefined };
     } catch (err) {
       return { ok: false, error: parseDatabaseErrorMessage(err, "Pedido") };
     }
