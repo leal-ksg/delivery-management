@@ -78,7 +78,7 @@ model Product {
   orderProducts    OrderProduct[]
   purchaseProducts PurchaseProduct[]
   stock            Stock?
-  productionLogs   ProductionLog[]
+  production  Production[]
   materialTreeChild MaterialTree[] @relation("MaterialTreeChild")
   materialTreeParent MaterialTree[] @relation("MaterialTreeParent")
 }
@@ -148,7 +148,7 @@ model Stock {
   quantity  Int     @default(0)
 }
 
-model ProductionLog {
+model Production {
   id        Int      @id @default(autoincrement())
   productId String   @db.Uuid
   quantity  Int
