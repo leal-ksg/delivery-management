@@ -1,5 +1,5 @@
+import { Customer } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
-import { Customer } from "../../models/customer";
 import { ICustomerController, ICustomerRepository } from "./interfaces";
 
 export class CustomerController implements ICustomerController {

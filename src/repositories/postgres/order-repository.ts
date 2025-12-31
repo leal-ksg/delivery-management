@@ -1,9 +1,8 @@
 import { Order } from "../../../generated/prisma";
-import { IOrderRepository } from "../../controllers/order/interfaces";
+import { CreateOrderDTO, IOrderRepository, UpdateOrderDTO } from "../../controllers/order/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
-import { CreateOrderDTO, UpdateOrderDTO } from "../../models/order";
 
 export class OrderRepository implements IOrderRepository {
   async findAll(): Promise<Result<Order[]>> {

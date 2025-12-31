@@ -1,8 +1,8 @@
 import { ICustomerRepository } from "../../controllers/customer/interfaces";
 import { Result } from "../../core/result";
-import { Customer } from "../../models/customer";
 import { prisma } from "../../database/prisma";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
+import { Customer } from "../../../generated/prisma";
 
 export class CustomerRepository implements ICustomerRepository {
   async findAll(): Promise<Result<Customer[]>> {

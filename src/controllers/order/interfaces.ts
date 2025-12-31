@@ -1,17 +1,23 @@
-import { Order, Prisma } from "../../../generated/prisma";
+import { Order, Prisma, OrderProduct } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
-import { Result } from "../../core/result";
-import {
-  CreateOrderDTO,
-  OrderProduct,
-  UpdateOrderDTO,
-} from "../../models/order";
+import { Result, ValidationResult } from "../../core/result";
+
+export interface CreateOrderDTO {
+  customerId: string;
+  userId: string;
+  comment: string | null;
+  products: Omit<OrderProduct, "orderId">[];
+}
+
+export interface UpdateOrderDTO extends Partial<Omit<Order, "createdAt">> {
+  products?: OrderProduct[];
+}
 
 export interface IOrderService {
   validate(
     order: CreateOrderDTO | UpdateOrderDTO,
     orderId?: number
-  ): Promise<{ succeed: boolean; message: string | null }>;
+  ): Promise<ValidationResult>;
   createOrder(newOrder: CreateOrderDTO): Promise<Result<void>>;
   updateOrder(id: number, order: UpdateOrderDTO): Promise<Result<void>>;
 }
@@ -32,11 +38,11 @@ export interface IOrderController {
   getAllOrders(): Promise<HttpResponse<Order[]>>;
   getOrderById(id: number): Promise<HttpResponse<Order | null>>;
   createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<void>>;
-  updateOrder(id: number, order: UpdateOrderDTO): Promise<HttpResponse<Order>>;
+  updateOrder(id: number, order: UpdateOrderDTO): Promise<HttpResponse<void>>;
   cancelOrder(
     id: number,
     order: { userId: string; customerId: string }
-  ): Promise<HttpResponse<Order>>;
+  ): Promise<HttpResponse<void>>;
 }
 
 export interface IOrderProductRepository {

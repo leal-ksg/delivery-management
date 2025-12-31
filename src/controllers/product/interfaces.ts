@@ -1,7 +1,14 @@
-import { Prisma } from "../../../generated/prisma";
+import { Prisma, Product } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
 import { Result } from "../../core/result";
-import { CreateProductDTO, Product } from "../../models/product";
+
+export interface CreateProductDTO {
+  name: string;
+  description: string  | null;
+  unitPrice: Prisma.Decimal;
+  categoryId: number;
+  minStock: number;
+}
 
 export interface IProductRepository {
   findAll(): Promise<Result<Product[]>>;

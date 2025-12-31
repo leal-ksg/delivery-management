@@ -1,9 +1,8 @@
-import { PrismaClient } from "../../../generated/prisma";
-import { IProductRepository } from "../../controllers/product/interfaces";
+import { PrismaClient, Product } from "../../../generated/prisma";
+import { CreateProductDTO, IProductRepository } from "../../controllers/product/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
-import { CreateProductDTO, Product } from "../../models/product";
 
 export class ProductRepository implements IProductRepository {
   async findAll(): Promise<Result<Product[]>> {

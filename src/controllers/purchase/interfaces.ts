@@ -1,13 +1,15 @@
-import { Prisma } from "../../../generated/prisma";
+import { Prisma, Purchase, PurchaseProduct } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
 import { Result } from "../../core/result";
-import { PurchaseProduct } from "../../models/purchase";
 
-import {
-  CreatePurchaseDTO,
-  Purchase,
-  UpdatePurchaseDTO,
-} from "../../models/purchase";
+export interface CreatePurchaseDTO {
+  userId: string;
+  products: Omit<PurchaseProduct, "purchaseId">[];
+}
+
+export interface UpdatePurchaseDTO extends Partial<Omit<Purchase, "createdAt" >> {
+  products?: PurchaseProduct[];
+}
 
 export interface IPurchaseRepository {
   findAll(): Promise<Result<Purchase[]>>;

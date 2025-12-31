@@ -1,8 +1,8 @@
 import type { IUserRepository } from "../../controllers/user/interfaces";
 import { prisma } from "../../database/prisma";
 import { Result } from "../../core/result";
-import type { User } from "../../models/user";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
+import { User } from "../../../generated/prisma";
 
 export class UserRepository implements IUserRepository {
   async findAll(): Promise<Result<User[]>> {

@@ -1,9 +1,10 @@
+import { Purchase } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
-import { CreatePurchaseDTO, Purchase } from "../../models/purchase";
 import { PurchaseService } from "../../services/purchase-service";
 import { IStockRepository } from "../stock/interfaces";
 import { IUserRepository } from "../user/interfaces";
 import {
+  CreatePurchaseDTO,
   IPurchaseController,
   IPurchaseProductRepository,
   IPurchaseRepository,

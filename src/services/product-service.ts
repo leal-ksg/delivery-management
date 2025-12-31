@@ -1,5 +1,6 @@
 import { Product } from "../../generated/prisma";
 import {
+  CreateProductDTO,
   IProductRepository,
   IProductService,
 } from "../controllers/product/interfaces";
@@ -7,7 +8,6 @@ import { IStockRepository } from "../controllers/stock/interfaces";
 import { parseDatabaseErrorMessage } from "../core/parse-database-error-message";
 import { Result } from "../core/result";
 import { prisma } from "../database/prisma";
-import { CreateProductDTO } from "../models/product";
 
 export class ProductService implements IProductService {
   constructor(

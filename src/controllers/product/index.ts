@@ -1,9 +1,9 @@
 import { Product } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
-import { CreateProductDTO } from "../../models/product";
 import { ProductService } from "../../services/product-service";
 import { IStockRepository } from "../stock/interfaces";
 import {
+  CreateProductDTO,
   IProductController,
   IProductRepository,
   IProductService,

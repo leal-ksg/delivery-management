@@ -1,4 +1,3 @@
-import { parse } from "path";
 import { Prisma, PrismaClient } from "../../../generated/prisma";
 import { IStockRepository } from "../../controllers/stock/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";

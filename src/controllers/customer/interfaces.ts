@@ -1,6 +1,6 @@
+import { Customer } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
 import { Result } from "../../core/result";
-import { Customer } from "../../models/customer";
 
 export interface ICustomerRepository {
   findAll(): Promise<Result<Customer[]>>;

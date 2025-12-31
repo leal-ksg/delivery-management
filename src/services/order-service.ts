@@ -1,22 +1,15 @@
-import { Order } from "../../generated/prisma";
 import { ICustomerRepository } from "../controllers/customer/interfaces";
 import {
+  CreateOrderDTO,
   IOrderProductRepository,
   IOrderRepository,
   IOrderService,
+  UpdateOrderDTO,
 } from "../controllers/order/interfaces";
 import { IProductRepository } from "../controllers/product/interfaces";
 import { IStockRepository } from "../controllers/stock/interfaces";
 import { IUserRepository } from "../controllers/user/interfaces";
-import { parseDatabaseErrorMessage } from "../core/parse-database-error-message";
-import { Result } from "../core/result";
-import { prisma } from "../database/prisma";
-import { CreateOrderDTO, UpdateOrderDTO } from "../models/order";
-
-type ValidationResult =
-  | { succeed: true; message: null }
-  | { succeed: false; message: string };
-
+import { Result, ValidationResult } from "../core/result";
 export class OrderService implements IOrderService {
   constructor(
     private readonly userRepo: IUserRepository,
@@ -101,28 +94,25 @@ export class OrderService implements IOrderService {
       return { ok: false, error: validationResult.message };
     }
 
-    try {
-        const orderInfoResult = await this.orderRepo.findById(id);
+    const orderInfoResult = await this.orderRepo.findById(id);
 
-        if (!orderInfoResult.ok)
-          throw new Error(
-            orderInfoResult.error ??
-              "Não foi possível buscar o pedido para atualização"
-          );
+    if (!orderInfoResult.ok) return orderInfoResult;
 
-        if (!orderInfoResult.body) throw new Error("Esse pedido não existe");
+    if (!orderInfoResult.body)
+      return { ok: false, error: "Esse pedido não existe" };
 
-        const orderUpdateResult = await this.orderRepo.update(id, order);
+    if (
+      orderInfoResult.body.status !== "PENDING" &&
+      orderInfoResult.body.status !== "IN_PROGRESS" &&
+      orderInfoResult.body.status !== "READY_FOR_DELIVERY"
+    )
+      return {
+        ok: false,
+        error: "Não é possível alterar pedidos após a saída para entrega",
+      };
 
-        if (!orderUpdateResult.ok)
-          throw new Error(
-            orderUpdateResult.error ?? "Ocorreu um erro ao atualizar o pedido"
-          );
+    const orderUpdateResult = await this.orderRepo.update(id, order);
 
-        return orderUpdateResult;
-   
-    } catch (err) {
-      return { ok: false, error: parseDatabaseErrorMessage(err, "Pedido") };
-    }
+    return orderUpdateResult;
   }
 }
