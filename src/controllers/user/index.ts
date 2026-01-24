@@ -1,5 +1,5 @@
+import { User } from "../../../generated/prisma";
 import { toHttpResponse, type HttpResponse } from "../../core/http-response";
-import type { User } from "../../models/user.js";
 import type { IUserController, IUserRepository } from "./interfaces.js";
 import bcrypt from "bcrypt";
 

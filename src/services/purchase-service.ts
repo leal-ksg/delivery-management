@@ -1,20 +1,16 @@
-import { Prisma } from "../../generated/prisma";
+import { Prisma, Purchase, PurchaseProduct } from "../../generated/prisma";
 import {
+  CreatePurchaseDTO,
   IPurchaseProductRepository,
   IPurchaseRepository,
   IPurchaseService,
+  UpdatePurchaseDTO,
 } from "../controllers/purchase/interfaces";
 import { IStockRepository } from "../controllers/stock/interfaces";
 import { IUserRepository } from "../controllers/user/interfaces";
 import { parseDatabaseErrorMessage } from "../core/parse-database-error-message";
 import { Result } from "../core/result";
 import { prisma } from "../database/prisma";
-import {
-  CreatePurchaseDTO,
-  Purchase,
-  PurchaseProduct,
-  UpdatePurchaseDTO,
-} from "../models/purchase";
 
 export class PurchaseService implements IPurchaseService {
   constructor(

@@ -1,5 +1,9 @@
 import { Production } from "../../../generated/prisma";
-import { CreateProductionDTO, IProductionRepository, UpdateProductionDTO } from "../../controllers/production/interfaces";
+import {
+  CreateProductionDTO,
+  IProductionRepository,
+  UpdateProductionDTO,
+} from "../../controllers/production/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
@@ -27,7 +31,14 @@ export class ProductionRepository implements IProductionRepository {
 
   async create(production: CreateProductionDTO): Promise<Result<void>> {
     try {
-      await prisma.production.create({ data: production });
+      await prisma.$executeRaw`
+        select create_production(
+          row(
+            ${production.productId}::uuid,
+            ${production.quantity}::int
+          )::create_production_dto
+        )
+      `;
 
       return { ok: true, body: undefined };
     } catch (err) {
@@ -35,9 +46,12 @@ export class ProductionRepository implements IProductionRepository {
     }
   }
 
-  async update(id: number, production: UpdateProductionDTO): Promise<Result<void>> {
+  async update(
+    id: number,
+    production: UpdateProductionDTO
+  ): Promise<Result<void>> {
     try {
-      await prisma.production.update({ data: production, where: {id} });
+      await prisma.production.update({ data: production, where: { id } });
 
       return { ok: true, body: undefined };
     } catch (err) {

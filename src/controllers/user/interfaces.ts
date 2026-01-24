@@ -1,6 +1,6 @@
+import { User } from "../../../generated/prisma/index.js";
 import type { HttpResponse } from "../../core/http-response.js";
 import type { Result } from "../../core/result.js";
-import type { User } from "../../models/user.js";
 
 export interface IUserRepository {
   findAll(): Promise<Result<User[]>>;

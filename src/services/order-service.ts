@@ -34,6 +34,12 @@ export class OrderService implements IOrderService {
           succeed: false,
           message: "Usuário não encontrado para finalizar o pedido",
         };
+
+      if (!userResult.body.active)
+        return {
+          succeed: false,
+          message: `Usuário ${userResult.body.name} ${userResult.body.surname} não está ativo`,
+        };
     }
 
     if (order.customerId) {
@@ -69,6 +75,13 @@ export class OrderService implements IOrderService {
           succeed: false,
           message:
             "Não foi possível encontrar um dos produtos para finalizar o pedido",
+        };
+
+      if (!productResult.body.active)
+        return {
+          succeed: false,
+          message:
+            `O produto ${productResult.body.name} não está ativo`,
         };
     }
 

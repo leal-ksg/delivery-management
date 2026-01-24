@@ -7,8 +7,8 @@ export type CreateProductionDTO = Omit<Production, "id" | "date">;
 export type UpdateProductionDTO = Partial<Omit<Production, "id">>;
 
 export interface IProductionController {
-    findAllProductions(): Promise<HttpResponse<Production[]>>
-    findProductionById(id: number): Promise<HttpResponse<Production  | null>>
+    getAllProductions(): Promise<HttpResponse<Production[]>>
+    getProductionById(id: number): Promise<HttpResponse<Production  | null>>
     createProduction(production: CreateProductionDTO): Promise<HttpResponse<void>>
     updateProduction(id: number, production: UpdateProductionDTO): Promise<HttpResponse<void>>
 }
@@ -21,5 +21,7 @@ export interface IProductionRepository {
 }
 
 export interface IProductionService {
-  validate(production: CreateProductionDTO | UpdateProductionDTO): Promise<ValidationResult>
+  validate(production: CreateProductionDTO | UpdateProductionDTO): Promise<ValidationResult>;
+  create(production: CreateProductionDTO): Promise<Result<void>>
+  update(id: number, production: UpdateProductionDTO): Promise<Result<void>>
 }

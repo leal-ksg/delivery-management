@@ -25,6 +25,7 @@ enum OrderStatus {
 enum ProductType {
   SALE
   PURCHASE
+  PACKAGING
 }
 
 enum ConsumptionType {

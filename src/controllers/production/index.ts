@@ -1,33 +1,56 @@
 import { Production } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
-import { CreateProductionDTO, IProductionController, IProductionRepository, UpdateProductionDTO } from "./interfaces";
+import { ProductionService } from "../../services/production-service";
+import { IProductRepository } from "../product/interfaces";
+import {
+  CreateProductionDTO,
+  IProductionController,
+  IProductionRepository,
+  IProductionService,
+  UpdateProductionDTO,
+} from "./interfaces";
 
 export class ProductionController implements IProductionController {
+  private readonly service: IProductionService;
 
-    constructor(private readonly productionRepository: IProductionRepository){}
+  constructor(
+    private readonly productRepository: IProductRepository,
+    private readonly productionRepository: IProductionRepository
+  ) {
+    this.service = new ProductionService(
+      productRepository,
+      productionRepository
+    );
+  }
 
-    async findAllProductions(): Promise<HttpResponse<Production[]>> {
-        const result = await this.productionRepository.findAll()
+  async getAllProductions(): Promise<HttpResponse<Production[]>> {
+    const result = await this.productionRepository.findAll();
 
-        return toHttpResponse(result)
-    }
+    return toHttpResponse(result);
+  }
 
-    async findProductionById(id: number): Promise<HttpResponse<Production | null>> {
-        const result = await this.productionRepository.findById(id)
+  async getProductionById(
+    id: number
+  ): Promise<HttpResponse<Production | null>> {
+    const result = await this.productionRepository.findById(id);
 
-        return toHttpResponse(result)
-    }
+    return toHttpResponse(result);
+  }
 
-    async createProduction(production: CreateProductionDTO): Promise<HttpResponse<void>> {
-        const result = await this.productionRepository.create(production)
+  async createProduction(
+    production: CreateProductionDTO
+  ): Promise<HttpResponse<void>> {
+    const result = await this.service.create(production);
 
-        return toHttpResponse(result)
-    }
+    return toHttpResponse(result);
+  }
 
-    async updateProduction(id: number, production: UpdateProductionDTO): Promise<HttpResponse<void>> {
-        const result = await this.productionRepository.update(id, production)
+  async updateProduction(
+    id: number,
+    production: UpdateProductionDTO
+  ): Promise<HttpResponse<void>> {
+    const result = await this.productionRepository.update(id, production);
 
-        return toHttpResponse(result)
-    }
-
+    return toHttpResponse(result);
+  }
 }

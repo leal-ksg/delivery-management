@@ -11,16 +11,17 @@ export class StockController implements IStockController {
         return toHttpResponse(result)
     }
 
-    async getProductStockById(productId: string): Promise<HttpResponse<Stock | null>> {
+    async getProductStockById(productId: string): Promise<HttpResponse<Stock>> {
         const result = await this.stockRepository.findById(productId)
 
         return toHttpResponse(result)
     }
 
     async updateStock(data: Stock): Promise<HttpResponse<Stock>> {
-        const result = await this.stockRepository.update(data)
+        throw new Error("Method not implemented yet")
+        // const result = await this.stockRepository.update(data)
 
-        return toHttpResponse(result)
+        // return toHttpResponse(result)
     }
 
 }
