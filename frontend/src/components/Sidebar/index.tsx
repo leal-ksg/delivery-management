@@ -127,7 +127,7 @@ export const Sidebar = () => {
             )}
           </div>
 
-          <div className="flex-1 w-full px-3 pb-4 overflow-y-auto no-scrollbar">
+          <div className="flex-1 w-full px-3 pb-4 overflow-y-auto overflow-x-hidden no-scrollbar">
             <LinkWrapper title="Início" isOpen={isOpen}>
               <SidebarLink
                 icon={Home}
