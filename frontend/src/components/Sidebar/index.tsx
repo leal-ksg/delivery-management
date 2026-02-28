@@ -1,38 +1,174 @@
-"use server";
+"use client";
 
-import { LucideIcon, Home } from "lucide-react";
+import {
+  LucideIcon,
+  Home,
+  ShoppingCart,
+  HandCoins,
+  Menu,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 interface SidebarLinkProps {
   icon?: LucideIcon;
   text: string;
   href: string;
+  isOpen: boolean;
 }
 
-const SidebarLink = ({ icon: Icon, text, href }: SidebarLinkProps) => {
+interface LinkWrapperProps {
+  title: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+}
+
+const SidebarLink = ({ icon: Icon, text, href, isOpen }: SidebarLinkProps) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
   return (
     <Link
       href={href}
-      className={`flex items-center justify-center gap-2 bg-secondary h-7 w-full max-h-45 rounded-lg px-4 duration-300 hover:bg-slate-600 transition-colors`}
+      className={`
+        relative flex items-center h-10 w-full rounded-lg
+        transition-colors duration-200
+        ${isActive ? "bg-secondary/80" : "hover:bg-slate-700/50"}
+      `}
     >
-      {Icon && (
-        <Icon size={20} className="text-light-foreground" strokeWidth={3} />
-      )}
-      <p className="font-semibold text-light-foreground">{text}</p>
+      <div
+        className={`items-center w-full h-full ${isOpen ? "flex px-4" : "hidden md:flex md:justify-center"}`}
+      >
+        {Icon && (
+          <Icon
+            size={20}
+            className={`shrink-0 ${isActive ? "text-white" : "text-cyan-400"}`}
+          />
+        )}
+        <span
+          className={`
+            whitespace-nowrap text-sm text-slate-200
+            absolute left-12
+            ${isOpen ? "block" : "hidden"}
+          `}
+        >
+          {text}
+        </span>
+      </div>
     </Link>
   );
 };
 
-export const Sidebar = async () => {
+const LinkWrapper = ({ title, children, isOpen }: LinkWrapperProps) => {
   return (
-    <aside className="flex flex-col items-center p-2 rounded-tr-2xl rounded-br-2xl bg-slate-900 h-full w-52">
-      <Image src="/logo_kairos.png" alt="logo" width={118} height={124} />
-
-      <p className="text-xs self-start font-semibold text-gray-600">CADASTROS</p>
-      <div className="w-full max-h-45 mt-24">
-        <SidebarLink icon={Home} href="/" text="Home" />
+    <div className="w-full">
+      <div
+        className={`h-8 mt-6 mb-2 items-center px-4 relative ${isOpen ? "flex" : "hidden md:flex"}`}
+      >
+        {isOpen ? (
+          <span className="text-[10px] font-bold text-slate-500 tracking-widest uppercase whitespace-nowrap">
+            {title}
+          </span>
+        ) : (
+          <div className="absolute left-1/2 -translate-x-1/2 h-px w-4 bg-slate-700" />
+        )}
       </div>
-    </aside>
+      <div className="flex flex-col gap-1">{children}</div>
+    </div>
+  );
+};
+
+export const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      {!isOpen && (
+        <button
+          onClick={() => setIsOpen(true)}
+          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 rounded-lg text-slate-400 border border-slate-800"
+        >
+          <Menu size={22} />
+        </button>
+      )}
+
+      <aside
+        className={`h-dvh transition-[width] duration-300 ease-in-out z-50
+          ${isOpen ? "w-52" : "w-0 md:w-20"}`}
+      >
+        <div className="flex flex-col bg-slate-900 rounded-tr-2xl rounded-br-2xl h-full overflow-hidden border-r border-slate-800">
+          <div className="relative h-36 w-full shrink-0">
+            <div
+              className={`absolute top-4 transition-all duration-300 ${isOpen ? "right-2" : "left-1/2 -translate-x-1/2"}`}
+            >
+              <button
+                onClick={() => setIsOpen((v) => !v)}
+                className={`p-2 rounded-lg hover:bg-slate-800 text-slate-400 focus:outline-none 
+                  ${!isOpen && "hidden md:block"}`}
+              >
+                {isOpen ? <X size={20} /> : <Menu size={22} />}
+              </button>
+            </div>
+
+            {isOpen && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                <Image
+                  src="/logo_kairos.png"
+                  alt="logo"
+                  width={110}
+                  height={40}
+                  priority
+                  className="object-contain translate-y-2"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1 w-full px-3 pb-4 overflow-y-auto no-scrollbar">
+            <LinkWrapper title="Início" isOpen={isOpen}>
+              <SidebarLink
+                icon={Home}
+                href="/"
+                text="Dashboard"
+                isOpen={isOpen}
+              />
+            </LinkWrapper>
+
+            <LinkWrapper title="Movimentações" isOpen={isOpen}>
+              <SidebarLink
+                icon={HandCoins}
+                href="/sales"
+                text="Vendas"
+                isOpen={isOpen}
+              />
+              <SidebarLink
+                icon={ShoppingCart}
+                href="/purchases"
+                text="Compras"
+                isOpen={isOpen}
+              />
+            </LinkWrapper>
+
+            <LinkWrapper title="Cadastros" isOpen={isOpen}>
+              <SidebarLink
+                icon={HandCoins}
+                href="/customers"
+                text="Clientes"
+                isOpen={isOpen}
+              />
+              <SidebarLink
+                icon={ShoppingCart}
+                href="/products"
+                text="Produtos"
+                isOpen={isOpen}
+              />
+            </LinkWrapper>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 };

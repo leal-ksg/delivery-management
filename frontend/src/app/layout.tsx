@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 const raleway = Raleway({
   subsets: ["latin"],
   variable: "--font-raleway",
@@ -34,9 +33,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased font-sans`}
       >
-        <Sidebar/>
-
-        {children}
+        <div className="flex h-full">
+          <Sidebar />
+          <main className="flex-1 transition-all duration-300">{children}</main>
+        </div>
       </body>
     </html>
   );
