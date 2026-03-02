@@ -82,24 +82,24 @@ const LinkWrapper = ({ title, children, isOpen }: LinkWrapperProps) => {
 };
 
 export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <>
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 rounded-lg text-slate-400 border border-slate-800"
+          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900/10 rounded-lg text-slate-400 "
         >
           <Menu size={22} />
         </button>
       )}
 
       <aside
-        className={`h-dvh transition-[width] duration-300 ease-in-out z-50
+        className={`h-dvh transition-[width] duration-300 ease-in-out z-50 min-h-full fixed md:relative top-0 left-0
           ${isOpen ? "w-52" : "w-0 md:w-20"}`}
       >
-        <div className="flex flex-col bg-slate-900 rounded-tr-2xl rounded-br-2xl h-full overflow-hidden border-r border-slate-800">
+        <div className="flex flex-col bg-slate-900 rounded-tr-2xl rounded-br-2xl min-h-full overflow-hidden">
           <div className="relative h-36 w-full shrink-0">
             <div
               className={`absolute top-4 transition-all duration-300 ${isOpen ? "right-2" : "left-1/2 -translate-x-1/2"}`}

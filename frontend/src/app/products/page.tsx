@@ -5,6 +5,7 @@ import {
   ProductType,
 } from "@/src/domains/product/types";
 import { productColumns } from "./columns";
+import TableContainer from "@/src/components/TableContainer";
 
 function ProductsPage() {
   const mockProducts: Product[] = [
@@ -141,13 +142,13 @@ function ProductsPage() {
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center w-full min-h-full">
       {/* Header com titulo */}
 
       {/* Tabela de CRUD */}
-      <div className="w-[80%]">
+      <TableContainer>
         <DataTable columns={productColumns} data={mockProducts} />
-      </div>
+      </TableContainer>
     </div>
   );
 }

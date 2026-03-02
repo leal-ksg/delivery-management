@@ -33,9 +33,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased font-sans`}
       >
-        <div className="flex h-full">
+        <div className="flex h-dvh overflow-hidden">
           <Sidebar />
-          <main className="flex-1 transition-all duration-300">{children}</main>
+          <main className="flex-1 overflow-y-auto transition-all duration-300">
+            {children}
+          </main>
         </div>
       </body>
     </html>
