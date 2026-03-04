@@ -83,7 +83,7 @@ export function DataTable<TData, TValue>({
 
       <div className="overflow-x-auto rounded-md shadow-md">
         <Table>
-          <TableHeader className="bg-secondary/20">
+          <TableHeader className="bg-secondary/40">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow className="hover:bg-secondary/10" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -106,14 +106,17 @@ export function DataTable<TData, TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, index) => (
                 <TableRow
                   className="text-gray-600"
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"}`}
+                      key={cell.id}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
