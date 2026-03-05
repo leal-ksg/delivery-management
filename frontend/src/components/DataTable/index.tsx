@@ -20,7 +20,6 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import ActionButton from "../ActionButton";
 import { EditIcon, PlusIcon, Trash2Icon } from "lucide-react";
-import { on } from "events";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -33,6 +32,9 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
+  onCreate,
+  onDelete,
+  onEdit,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState<string>("");
 
@@ -50,30 +52,32 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between">
+      <div className="flex flex-col-reverse md:flex-row gap-2 justify-between">
         <Input
           type="text"
-          placeholder="Busque por qualquer coluna..."
-          className="w-1/2 placeholder:text-gray-400"
+          placeholder="Busque por qualquer informação..."
+          className="w-full md:w-[80%] placeholder:text-gray-400"
           value={globalFilter}
           onChange={(e) => setGlobalFilter(String(e.target.value))}
         />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 self-end">
           <ActionButton
-            disabled={true}
+            disabled={!onCreate}
             className="text-green-500"
             onClick={() => {}}
             icon={PlusIcon}
           />
 
           <ActionButton
+            disabled={!onEdit}
             className="text-violet-500"
             onClick={() => {}}
             icon={EditIcon}
           />
 
           <ActionButton
+            disabled={!onDelete}
             className="text-red-500"
             onClick={() => {}}
             icon={Trash2Icon}

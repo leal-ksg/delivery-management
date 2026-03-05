@@ -20,7 +20,7 @@ export default function ActionButton({
         {...props}
         onClick={onClick}
         className={cn(
-          "w-9 h-9 bg-white hover:bg-neutral-100 cursor-pointer text-foreground rounded-full shadow-md border-input",
+          "w-9 h-9 bg-white hover:bg-neutral-100 cursor-pointer text-foreground rounded-full shadow-md border-input disabled:text-gray-500",
           className,
         )}
       >
