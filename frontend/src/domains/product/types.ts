@@ -21,4 +21,5 @@ export type Product = {
   minStock: number;
   category: string;
   createdAt: Date;
+  status?: string
 };

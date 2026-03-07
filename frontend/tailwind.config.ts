@@ -7,6 +7,7 @@ const config: Config = {
       colors: {
         primary: "rgb(var(--color-primary), 1)",
         secondary: "rgb(var(--color-secondary), 1)",
+        selection: "rgb(var(--color-selection), 1)",
       },
       fontFamily: {
         sans: ["var(--font-raleway)", "sans-serif"],

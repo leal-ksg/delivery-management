@@ -1,3 +1,5 @@
+"use client";
+
 import { DataTable } from "@/src/components/DataTable";
 import {
   ConsumptionType,
@@ -5,7 +7,8 @@ import {
   ProductType,
 } from "@/src/domains/product/types";
 import { productColumns } from "./columns";
-import TableContainer from "@/src/components/TableContainer";
+import { TableContainer } from "@/src/components/TableContainer";
+import { Toolbar } from "@/src/components/Toolbar";
 
 function ProductsPage() {
   const mockProducts: Product[] = [
@@ -19,6 +22,7 @@ function ProductsPage() {
       type: ProductType.SALE,
       consumptionType: ConsumptionType.SALE,
       minStock: 10,
+      status: "Alô",
       category: "EQUIPAMENTOS PARA GUITARRA",
       createdAt: new Date("2023-10-01T10:00:00Z"),
     },
@@ -144,10 +148,15 @@ function ProductsPage() {
   return (
     <div className="flex flex-col items-center w-full min-h-full">
       {/* Header com titulo */}
+      <Toolbar description="Produtos" showGoBack/>
 
       {/* Tabela de CRUD */}
       <TableContainer>
-        <DataTable columns={productColumns} data={mockProducts} />
+        <DataTable
+          columns={productColumns}
+          data={mockProducts}
+          onDelete={() => "teste"}
+        />
       </TableContainer>
     </div>
   );

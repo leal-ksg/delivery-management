@@ -7,7 +7,7 @@
 :root {
   --foreground-dark: #171717;
   --foreground-light: #fdfdfd;
-  --color-primary: #12171c;
+  --color-primary: #0f172b;
   --color-secondary: #4d82b8;
   width: 100%;
   height: 100%;
@@ -52,6 +52,7 @@
 @theme inline {
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
+  --color-selection: red
   --color-background: var(--background);
   --color-dark-foreground: var(--foreground-dark);
   --color-light-foreground: var(--foreground-light);

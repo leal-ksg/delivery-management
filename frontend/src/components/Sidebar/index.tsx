@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsMobile } from "@/hooks/use-mobile";
 import {
   LucideIcon,
   Home,
@@ -26,7 +27,7 @@ interface LinkWrapperProps {
   isOpen: boolean;
 }
 
-const SidebarLink = ({ icon: Icon, text, href, isOpen }: SidebarLinkProps) => {
+function SidebarLink({ icon: Icon, text, href, isOpen }: SidebarLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href;
 
@@ -60,9 +61,9 @@ const SidebarLink = ({ icon: Icon, text, href, isOpen }: SidebarLinkProps) => {
       </div>
     </Link>
   );
-};
+}
 
-const LinkWrapper = ({ title, children, isOpen }: LinkWrapperProps) => {
+function LinkWrapper({ title, children, isOpen }: LinkWrapperProps) {
   return (
     <div className="w-full">
       <div
@@ -79,19 +80,20 @@ const LinkWrapper = ({ title, children, isOpen }: LinkWrapperProps) => {
       <div className="flex flex-col gap-1">{children}</div>
     </div>
   );
-};
+}
 
-export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+export function Sidebar() {
+  const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(!!isMobile);
 
   return (
     <>
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900/10 rounded-lg text-slate-400 "
+          className="md:hidden absolute top-2.5 left-4 z-50 p-2 bg-gray-200/10 rounded-lg text-slate-200 "
         >
-          <Menu size={22} />
+          <Menu size={22} strokeWidth={2} />
         </button>
       )}
 
@@ -106,10 +108,10 @@ export const Sidebar = () => {
             >
               <button
                 onClick={() => setIsOpen((v) => !v)}
-                className={`p-2 rounded-lg hover:bg-slate-800 text-slate-400 focus:outline-none 
+                className={`p-2 rounded-lg hover:bg-slate-800 text-slate-200 focus:outline-none 
                   ${!isOpen && "hidden md:block"}`}
               >
-                {isOpen ? <X size={20} /> : <Menu size={22} />}
+                {isOpen ? <X size={20} /> : <Menu size={22} strokeWidth={2} />}
               </button>
             </div>
 
@@ -171,4 +173,4 @@ export const Sidebar = () => {
       </aside>
     </>
   );
-};
+}
