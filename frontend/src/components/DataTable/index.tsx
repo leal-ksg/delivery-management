@@ -24,9 +24,9 @@ import { EditIcon, PlusIcon, Trash2Icon } from "lucide-react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onDelete?: (row: TData) => void;
-  onEdit?: (row: TData) => void;
-  onCreate?: (row: TData) => void;
+  onDelete?: () => void;
+  onEdit?: () => void;
+  onCreate?: () => void;
 }
 
 export function DataTable<TData, TValue>({
@@ -37,6 +37,7 @@ export function DataTable<TData, TValue>({
   onEdit,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState<string>("");
+  const [rowSelection, setRowSelection] = useState({});
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -45,10 +46,15 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
     state: {
       globalFilter,
+      rowSelection,
     },
   });
+
+  const isAnyRowSelected =
+    table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected();
 
   return (
     <div className="space-y-4">
@@ -65,28 +71,28 @@ export function DataTable<TData, TValue>({
           <ActionButton
             disabled={!onCreate}
             className="text-green-500"
-            onClick={() => {}}
+            onClick={onCreate ? onCreate : () => {}}
             icon={PlusIcon}
           />
 
           <ActionButton
-            disabled={!onEdit}
+            disabled={!onEdit || !isAnyRowSelected}
             className="text-violet-500"
-            onClick={() => {}}
+            onClick={onCreate ? onCreate : () => {}}
             icon={EditIcon}
           />
 
           <ActionButton
-            disabled={!onDelete}
+            disabled={!onDelete || !isAnyRowSelected}
             className="text-red-500"
-            onClick={() => {}}
+            onClick={onDelete ? onDelete : () => {}}
             icon={Trash2Icon}
           />
         </div>
       </div>
 
       <div className="overflow-x-auto rounded-md shadow-md">
-        <Table>
+        <Table className="table-auto">
           <TableHeader className="bg-secondary/40">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow className="hover:bg-secondary/10" key={headerGroup.id}>
