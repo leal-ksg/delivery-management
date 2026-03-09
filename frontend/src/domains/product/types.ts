@@ -1,12 +1,12 @@
 export enum ProductType {
-  SALE,
-  PURCHASE,
-  PACKAGING
+  SALE = "SALE",
+  PURCHASE = "PURCHASE",
+  PACKAGING = "PACKAGING",
 }
 
 export enum ConsumptionType {
   PRODUCTION,
-  SALE
+  SALE,
 }
 
 export type Product = {
@@ -21,5 +21,5 @@ export type Product = {
   minStock: number;
   category: string;
   createdAt: Date;
-  status?: string
+  status?: string;
 };

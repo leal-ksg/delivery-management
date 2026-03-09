@@ -1,5 +1,8 @@
 import { PrismaClient, Product } from "../../../generated/prisma";
-import { CreateProductDTO, IProductRepository } from "../../controllers/product/interfaces";
+import {
+  CreateProductDTO,
+  IProductRepository,
+} from "../../controllers/product/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
@@ -7,7 +10,9 @@ import { prisma } from "../../database/prisma";
 export class ProductRepository implements IProductRepository {
   async findAll(): Promise<Result<Product[]>> {
     try {
-      const products = await prisma.product.findMany();
+      const products = await prisma.product.findMany({
+        orderBy: { name: "asc" },
+      });
 
       return { ok: true, body: products };
     } catch (error) {
@@ -27,7 +32,7 @@ export class ProductRepository implements IProductRepository {
 
   async create(
     product: CreateProductDTO,
-    transaction: PrismaClient
+    transaction: PrismaClient,
   ): Promise<Result<Product>> {
     try {
       const createdProduct = await transaction.product.create({
@@ -42,7 +47,7 @@ export class ProductRepository implements IProductRepository {
 
   async update(
     id: string,
-    product: Partial<Product>
+    product: Partial<Product>,
   ): Promise<Result<Product>> {
     try {
       const updatedProduct = await prisma.product.update({

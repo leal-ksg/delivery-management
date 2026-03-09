@@ -1,7 +1,8 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { Product } from "@/src/domains/product/types";
+import { productTypeTranslation } from "@/lib/field-translations";
+import { Product, ProductType } from "@/src/domains/product/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const productColumns: ColumnDef<Product>[] = [
@@ -32,8 +33,11 @@ export const productColumns: ColumnDef<Product>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "active",
     header: "Status",
+    cell: ({ cell }) => {
+      return cell.getValue() ? "Ativo" : "Inativo";
+    },
   },
   {
     accessorKey: "name",
@@ -50,5 +54,9 @@ export const productColumns: ColumnDef<Product>[] = [
   {
     accessorKey: "type",
     header: "Tipo",
+    cell: ({ cell }) => {
+      const productTypes: ProductType = cell.getValue() as ProductType;
+      return productTypeTranslation[productTypes] ?? "Não informado";
+    },
   },
 ];

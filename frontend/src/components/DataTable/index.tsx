@@ -124,7 +124,7 @@ export function DataTable<TData, TValue>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
-                      className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"}`}
+                      className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"} uppercase`}
                       key={cell.id}
                     >
                       {flexRender(
@@ -139,9 +139,9 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-24 text-center font-semibold text-lg text-gray-700"
                 >
-                  No results.
+                  Nenhum registro encontrado...
                 </TableCell>
               </TableRow>
             )}
