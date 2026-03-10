@@ -56,6 +56,16 @@ export function DataTable<TData, TValue>({
   const isAnyRowSelected =
     table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected();
 
+  async function handleDelete() {
+    if (!onDelete) return;
+
+       const selectedRows = table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original);
+
+    console.log(selectedRows)
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex flex-col-reverse md:flex-row gap-2 justify-between">
@@ -78,14 +88,14 @@ export function DataTable<TData, TValue>({
           <ActionButton
             disabled={!onEdit || !isAnyRowSelected}
             className="text-violet-500"
-            onClick={onCreate ? onCreate : () => {}}
+            onClick={onEdit ? onEdit : () => {}}
             icon={EditIcon}
           />
 
           <ActionButton
             disabled={!onDelete || !isAnyRowSelected}
             className="text-red-500"
-            onClick={onDelete ? onDelete : () => {}}
+            onClick={handleDelete}
             icon={Trash2Icon}
           />
         </div>
