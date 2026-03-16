@@ -59,11 +59,11 @@ export function DataTable<TData, TValue>({
   async function handleDelete() {
     if (!onDelete) return;
 
-       const selectedRows = table
+    const selectedRows = table
       .getSelectedRowModel()
       .rows.map((row) => row.original);
 
-    console.log(selectedRows)
+    console.log(selectedRows);
   }
 
   return (
@@ -105,7 +105,7 @@ export function DataTable<TData, TValue>({
         <Table className="table-auto">
           <TableHeader className="bg-secondary/40">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow className="hover:bg-secondary/10" key={headerGroup.id}>
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
@@ -128,7 +128,7 @@ export function DataTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row, index) => (
                 <TableRow
-                  className="text-gray-600"
+                  className={`text-gray-600`}
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >

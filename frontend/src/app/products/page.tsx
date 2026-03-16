@@ -7,9 +7,26 @@ import { TableContainer } from "@/src/components/TableContainer";
 import { Toolbar } from "@/src/components/Toolbar";
 import { useEffect, useState } from "react";
 import { getProducts } from "@/src/domains/product/services/get-products";
+import { EntityDialog } from "@/src/components/EntityDialog";
+import { ProductForm } from "./form";
+import { toast } from "@/components/ui/sonner";
 
 function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
+
+  function handleCancel() {
+    setIsFormDialogOpen(false);
+    setEditingProduct(null);
+  }
+
+  function handleSuccess() {
+    setIsFormDialogOpen(false);
+    setEditingProduct(null);
+
+    toast("success", "Produto criado!");
+  }
 
   useEffect(() => {
     async function fetchProducts() {
@@ -27,17 +44,28 @@ function ProductsPage() {
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      {/* Header com titulo */}
       <Toolbar description="Produtos" showGoBack />
 
-      {/* Tabela de CRUD */}
       <TableContainer>
         <DataTable
           columns={productColumns}
           data={products}
           onDelete={() => "teste"}
+          onCreate={() => setIsFormDialogOpen(true)}
         />
       </TableContainer>
+
+      <EntityDialog
+        open={isFormDialogOpen}
+        onOpenChange={setIsFormDialogOpen}
+        title={editingProduct ? "Editar Produto" : "Novo Produto"}
+      >
+        <ProductForm
+          editingProduct={editingProduct}
+          onCancel={handleCancel}
+          onSuccess={handleSuccess}
+        />
+      </EntityDialog>
     </div>
   );
 }
