@@ -50,7 +50,7 @@ function ProductsPage() {
         <DataTable
           columns={productColumns}
           data={products}
-          onDelete={() => "teste"}
+          onDelete={() => {}}
           onCreate={() => setIsFormDialogOpen(true)}
         />
       </TableContainer>
@@ -58,7 +58,7 @@ function ProductsPage() {
       <EntityDialog
         open={isFormDialogOpen}
         onOpenChange={setIsFormDialogOpen}
-        title={editingProduct ? "Editar Produto" : "Novo Produto"}
+        title={editingProduct ? "Editar produto" : "Novo produto"}
       >
         <ProductForm
           editingProduct={editingProduct}

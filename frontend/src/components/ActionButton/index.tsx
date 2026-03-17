@@ -1,30 +1,39 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
+import { ReactNode } from "react";
 
 interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick: () => void;
+  onClick?: () => void;
   icon?: LucideIcon;
   className?: string;
+  children?: ReactNode;
 }
 
 export default function ActionButton({
   onClick,
   icon: Icon,
   className = "",
+  children,
   ...props
 }: ActionButtonProps) {
+  function handleClick() {
+    if (onClick) onClick();
+  }
+
   return (
     <div>
       <Button
         {...props}
-        onClick={onClick}
+        onClick={handleClick}
         className={cn(
-          "w-9 h-9 bg-white hover:bg-neutral-100 cursor-pointer text-foreground rounded-full shadow-md border-input disabled:text-gray-500",
+          "min-w-9 min-h-9 bg-white hover:bg-neutral-100 cursor-pointer text-foreground rounded-full shadow-md border-input disabled:text-gray-500",
           className,
         )}
       >
         {Icon && <Icon size={16} />}
+
+        {children && children}
       </Button>
     </div>
   );

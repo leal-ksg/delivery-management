@@ -80,21 +80,21 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center gap-2 self-end">
           <ActionButton
             disabled={!onCreate}
-            className="text-green-500"
+            className="text-green-500 w-9"
             onClick={onCreate ? onCreate : () => {}}
             icon={PlusIcon}
           />
 
           <ActionButton
             disabled={!onEdit || !isAnyRowSelected}
-            className="text-violet-500"
+            className="text-violet-500 w-9"
             onClick={onEdit ? onEdit : () => {}}
             icon={EditIcon}
           />
 
           <ActionButton
             disabled={!onDelete || !isAnyRowSelected}
-            className="text-red-500"
+            className="text-red-500 w-9"
             onClick={handleDelete}
             icon={Trash2Icon}
           />

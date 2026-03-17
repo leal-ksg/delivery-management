@@ -21,9 +21,11 @@ export function EntityDialog({
 }: EntityDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-light-foreground sm:max-w-sm">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+      <DialogContent className="bg-light-foreground">
+        <DialogHeader className="">
+          <DialogTitle className="text-primary text-xl font-bold border-b border-zinc-400">
+            {title}
+          </DialogTitle>
         </DialogHeader>
 
         {children}

@@ -23,3 +23,11 @@ export type Product = {
   createdAt: Date;
   status?: string;
 };
+
+export type CreateProductDTO = {
+  name: string;
+  description: string | null;
+  unitPrice: number;
+  categoryId: number;
+  minStock: number;
+};
