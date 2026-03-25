@@ -1,19 +1,29 @@
-import { Prisma, Product } from "../../../generated/prisma";
+import {
+  Prisma,
+  Product,
+  ConsumptionType,
+  ProductType,
+} from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
 import { Result } from "../../core/result";
 
 export interface CreateProductDTO {
   name: string;
-  description: string  | null;
+  description: string | null;
   unitPrice: Prisma.Decimal;
   categoryId: number;
   minStock: number;
+  consumptionType: ConsumptionType | null;
+  type: ProductType | null;
 }
 
 export interface IProductRepository {
   findAll(): Promise<Result<Product[]>>;
   findById(id: string): Promise<Result<Product | null>>;
-  create(product: CreateProductDTO, transaction: Prisma.TransactionClient): Promise<Result<Product>>;
+  create(
+    product: CreateProductDTO,
+    transaction: Prisma.TransactionClient,
+  ): Promise<Result<Product>>;
   update(id: string, product: Partial<Product>): Promise<Result<Product>>;
   delete(id: string): Promise<Result<void>>;
 }
@@ -24,11 +34,11 @@ export interface IProductController {
   createProduct(product: CreateProductDTO): Promise<HttpResponse<Product>>;
   updateProduct(
     id: string,
-    product: Partial<Product>
+    product: Partial<Product>,
   ): Promise<HttpResponse<Product>>;
   deleteProduct(id: string): Promise<HttpResponse<void>>;
 }
 
 export interface IProductService {
-  createProduct(product: CreateProductDTO): Promise<Result<Product>> 
+  createProduct(product: CreateProductDTO): Promise<Result<Product>>;
 }

@@ -1,6 +1,6 @@
 export enum ProductType {
-  SALE = "SALE",
   PURCHASE = "PURCHASE",
+  SALE = "SALE",
   PACKAGING = "PACKAGING",
 }
 

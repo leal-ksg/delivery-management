@@ -11,20 +11,15 @@ import {
   ProductType,
 } from "@/src/domains/product/types";
 import { Spinner } from "@/components/ui/spinner";
-import { toast } from "@/components/ui/sonner";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   consumptionTypeTranslation,
   productTypeTranslation,
 } from "@/lib/field-translations";
 import { FormSelect } from "@/src/components/FormSelect";
+import { getDirtyValues } from "@/lib/get-dirty-values";
+import { ApiResponse } from "@/lib/api";
+import { updateProduct } from "@/src/domains/product/services/update-product";
+import { useEffect } from "react";
 
 interface ProductFormProps {
   editingProduct: Product | null;
@@ -32,7 +27,7 @@ interface ProductFormProps {
   onCancel: () => void;
 }
 
-const createProductSchema = z.object({
+const productSchema = z.object({
   name: z
     .string("Informe o nome do produto")
     .min(1, "Informe o nome do produto"),
@@ -51,11 +46,16 @@ const createProductSchema = z.object({
     .default(0),
   consumptionType: z
     .enum(Object.values(ConsumptionType), "Informe um tipo de consumo válido")
-    .nullable().optional(),
-  type: z.enum(ProductType, "Informe um tipo de produto válido").nullable(),
+    .nullable()
+    .optional()
+    .or(z.literal("").transform(() => null)),
+  type: z
+    .enum(ProductType, "Informe um tipo de produto válido")
+    .nullable()
+    .or(z.literal("").transform(() => null)),
 });
 
-type FormData = z.input<typeof createProductSchema>;
+type FormData = z.input<typeof productSchema>;
 
 export function ProductForm({
   editingProduct,
@@ -63,13 +63,16 @@ export function ProductForm({
   onCancel,
 }: ProductFormProps) {
   const methods = useForm<FormData>({
-    defaultValues: editingProduct ?? {},
-    resolver: zodResolver(createProductSchema),
+    defaultValues: editingProduct
+      ? {
+          ...editingProduct,
+          categoryId: String(editingProduct.categoryId),
+        }
+      : undefined,
+    resolver: zodResolver(productSchema),
   });
 
   const { formState } = methods;
-
-  console.log(formState.errors);
 
   const consumptionOptions = Object.values(ConsumptionType).map((value) => ({
     label: consumptionTypeTranslation[value],
@@ -82,16 +85,35 @@ export function ProductForm({
   }));
 
   async function onSubmit(data: FormData) {
-    console.log(data);
-    // toast("info", "submit");
-    // const parsedData = createProductSchema.parse(data);
+    let response: ApiResponse<Product>;
 
-    // const response = await createProduct(parsedData);
+    if (editingProduct) {
+      const { dirtyFields } = formState;
+      console.log(dirtyFields);
 
-    // if (response.ok) {
-    //   onSuccess();
-    // }
+      const parsedData = productSchema.parse(methods.getValues());
+      const dirtyData = getDirtyValues(dirtyFields, parsedData);
+      response = await updateProduct(editingProduct.id, dirtyData);
+    } else {
+      const parsedData = productSchema.parse(data);
+      response = await createProduct(parsedData);
+    }
+
+    if (response.ok) {
+      onSuccess();
+    }
   }
+
+  useEffect(() => {
+    if (editingProduct) {
+      methods.reset({
+        ...editingProduct,
+        unitPrice: String(editingProduct.unitPrice),
+        minStock: String(editingProduct.minStock),
+        categoryId: String(editingProduct.categoryId),
+      });
+    }
+  }, [editingProduct, methods]);
 
   return (
     <FormProvider {...methods}>
@@ -126,12 +148,14 @@ export function ProductForm({
             options={productTypeOptions}
             name="type"
             label="Tipo do produto"
+            defaultValue={ProductType.PURCHASE}
           />
 
           <FormSelect
             options={consumptionOptions}
             name="consumptionType"
             label="Tipo de consumo"
+            defaultValue={ConsumptionType.PRODUCTION}
           />
 
           <FormSelect
@@ -145,7 +169,6 @@ export function ProductForm({
           <ActionButton
             onClick={onCancel}
             className="text-white bg-gray-500 hover:bg-gray-400 disabled:text-gray-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
-            type="submit"
             disabled={formState.isSubmitting}
           >
             <span>Cancelar</span>

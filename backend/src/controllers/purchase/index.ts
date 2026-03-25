@@ -45,7 +45,7 @@ export class PurchaseController implements IPurchaseController {
   ): Promise<HttpResponse<Purchase>> {
     const result = await this._purchaseService.createPurchase(purchase);
 
-    return toHttpResponse(result);
+    return toHttpResponse(result, 201);
   }
 
   async updatePurchase(

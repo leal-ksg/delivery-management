@@ -9,29 +9,34 @@ import {
 import { cn } from "@/lib/utils";
 import { Controller, useFormContext } from "react-hook-form";
 
-interface SelectOption {
+interface SelectOption<T extends string> {
   label: string;
-  value: string;
+  value: T;
 }
 
-interface FormSelectProps {
-  options: SelectOption[];
-  defaultValue?: string;
+interface FormSelectProps<T extends string> {
+  options: SelectOption<T>[];
+  defaultValue?: T;
   placeholder?: string;
   name: string;
   classname?: string;
   label?: string;
 }
 
-export function FormSelect({
+export function FormSelect<T extends string>({
   name,
   options,
   placeholder,
   classname,
   defaultValue,
   label,
-}: FormSelectProps) {
-  const { control } = useFormContext();
+}: FormSelectProps<T>) {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const error = errors[name]?.message as string | undefined;
 
   return (
     <div className="flex-1 relative">
@@ -44,11 +49,11 @@ export function FormSelect({
       <Controller
         name={name}
         control={control}
+        defaultValue={defaultValue ?? ""}
         render={({ field }) => (
           <Select
             value={field.value ?? ""}
             onValueChange={(value) => field.onChange(value)}
-            defaultValue={defaultValue ?? ""}
           >
             <SelectTrigger className={cn("w-full text-gray-700", classname)}>
               <SelectValue placeholder={placeholder ?? "Selecione um valor"} />
@@ -71,6 +76,12 @@ export function FormSelect({
           </Select>
         )}
       />
+
+      {error && (
+        <span className="absolute text-sm text-red-400 font-semibold">
+          {error}
+        </span>
+      )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  Row,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -25,7 +26,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onDelete?: () => void;
-  onEdit?: () => void;
+  onEdit?: (row: TData[]) => void;
   onCreate?: () => void;
   loading: boolean;
 }
@@ -58,14 +59,28 @@ export function DataTable<TData, TValue>({
   const isAnyRowSelected =
     table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected();
 
-  async function handleDelete() {
+  function handleDelete() {
     if (!onDelete) return;
 
     const selectedRows = table
       .getSelectedRowModel()
       .rows.map((row) => row.original);
+  }
 
-    console.log(selectedRows);
+  function handleEdit() {
+    if (!onEdit) return;
+
+    const selectedRows = table
+      .getSelectedRowModel()
+      .rows.map((row) => row.original);
+
+    onEdit(selectedRows);
+    setRowSelection({});
+  }
+
+  function handleFilterChange(value: string) {
+    setGlobalFilter(value);
+    setRowSelection({});
   }
 
   return (
@@ -76,7 +91,7 @@ export function DataTable<TData, TValue>({
           placeholder="Busque por qualquer informação..."
           className="w-full md:w-[80%] placeholder:text-gray-400"
           value={globalFilter}
-          onChange={(e) => setGlobalFilter(String(e.target.value))}
+          onChange={(e) => handleFilterChange(String(e.target.value))}
         />
 
         <div className="flex items-center gap-2 self-end">
@@ -88,9 +103,13 @@ export function DataTable<TData, TValue>({
           />
 
           <ActionButton
-            disabled={!onEdit || !isAnyRowSelected}
+            disabled={
+              !onEdit ||
+              !isAnyRowSelected ||
+              table.getSelectedRowModel().rows.length > 1
+            }
             className="text-violet-500 w-9"
-            onClick={onEdit ? onEdit : () => {}}
+            onClick={handleEdit}
             icon={EditIcon}
           />
 

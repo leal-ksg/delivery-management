@@ -42,7 +42,7 @@ export class ProductionController implements IProductionController {
   ): Promise<HttpResponse<void>> {
     const result = await this.service.create(production);
 
-    return toHttpResponse(result);
+    return toHttpResponse(result, 201);
   }
 
   async updateProduction(

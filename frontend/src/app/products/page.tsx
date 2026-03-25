@@ -29,6 +29,13 @@ function ProductsPage() {
     setReload((prev) => !prev);
   }
 
+  function handleEdit(rows: Product[]) {
+    if (!rows || rows.length !== 1) return;
+
+    setEditingProduct(rows[0]);
+    setIsFormDialogOpen(true);
+  }
+
   useEffect(() => {
     async function fetchProducts() {
       setLoading(true);
@@ -56,6 +63,7 @@ function ProductsPage() {
           data={products}
           onDelete={() => {}}
           onCreate={() => setIsFormDialogOpen(true)}
+          onEdit={handleEdit}
           loading={loading}
         />
       </TableContainer>

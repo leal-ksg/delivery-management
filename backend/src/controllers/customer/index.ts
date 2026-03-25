@@ -22,7 +22,7 @@ export class CustomerController implements ICustomerController {
   ): Promise<HttpResponse<Customer>> {
     const result = await this.customerRepository.create(customer);
 
-    return toHttpResponse(result);
+    return toHttpResponse(result, 201);
   }
 
   async updateCustomer(

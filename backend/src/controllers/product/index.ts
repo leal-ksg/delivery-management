@@ -36,7 +36,7 @@ export class ProductController implements IProductController {
   ): Promise<HttpResponse<Product>> {
     const result = await this.service.createProduct(product);
 
-    return toHttpResponse(result);
+    return toHttpResponse(result, 201);
   }
 
   async updateProduct(

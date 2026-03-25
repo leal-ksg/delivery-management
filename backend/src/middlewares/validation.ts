@@ -10,5 +10,7 @@ export function validationMiddleware<T>(schema: ZodType<T>, body: unknown) {
         error: result.error.issues[0]?.message,
       });
     }
+
+    next()
   };
 }
