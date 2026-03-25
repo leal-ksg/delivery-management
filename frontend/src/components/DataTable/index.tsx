@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import ActionButton from "../ActionButton";
 import { EditIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import ActionButton from "../ActionButton";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -27,6 +27,7 @@ interface DataTableProps<TData, TValue> {
   onDelete?: () => void;
   onEdit?: () => void;
   onCreate?: () => void;
+  loading: boolean;
 }
 
 export function DataTable<TData, TValue>({
@@ -35,6 +36,7 @@ export function DataTable<TData, TValue>({
   onCreate,
   onDelete,
   onEdit,
+  loading,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState<string>("");
   const [rowSelection, setRowSelection] = useState({});
@@ -151,7 +153,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center font-semibold text-lg text-gray-700"
                 >
-                  Nenhum registro encontrado...
+                  {loading ? "Carregando..." : "Nenhum registro encontrado..."}
                 </TableCell>
               </TableRow>
             )}

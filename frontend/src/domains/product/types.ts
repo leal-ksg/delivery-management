@@ -5,8 +5,8 @@ export enum ProductType {
 }
 
 export enum ConsumptionType {
-  PRODUCTION,
-  SALE,
+  PRODUCTION = "PRODUCTION",
+  SALE = "SALE",
 }
 
 export type Product = {

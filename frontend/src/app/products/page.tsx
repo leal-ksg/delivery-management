@@ -15,6 +15,8 @@ function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reload, setReload] = useState<boolean>(false);
 
   function handleCancel() {
     setIsFormDialogOpen(false);
@@ -24,23 +26,25 @@ function ProductsPage() {
   function handleSuccess() {
     setIsFormDialogOpen(false);
     setEditingProduct(null);
-
-    toast("success", "Produto criado!");
+    setReload((prev) => !prev);
   }
 
   useEffect(() => {
     async function fetchProducts() {
+      setLoading(true);
       const result = await getProducts();
 
       if (result.ok) {
         setProducts(result.body);
       } else {
-        console.log(result.error);
+        toast("error", result.error);
       }
+
+      setLoading(false);
     }
 
     fetchProducts();
-  }, []);
+  }, [reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
@@ -52,6 +56,7 @@ function ProductsPage() {
           data={products}
           onDelete={() => {}}
           onCreate={() => setIsFormDialogOpen(true)}
+          loading={loading}
         />
       </TableContainer>
 

@@ -52,8 +52,7 @@
 @theme inline {
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
-  --color-selection: red
-  --color-background: var(--background);
+  --color-selection: red --color-background: var(--background);
   --color-dark-foreground: var(--foreground-dark);
   --color-light-foreground: var(--foreground-light);
   --font-sans: var(--font-geist-sans);
@@ -102,7 +101,6 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  padding-top: env(safe-area-inset-top);
   background-color: #d4d4d4;
 }
 

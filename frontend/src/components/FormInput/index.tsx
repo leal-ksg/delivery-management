@@ -22,7 +22,7 @@ export function FormInput({
   const error = errors[name]?.message as string | undefined;
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 relative">
       {label && (
         <label htmlFor={name} className="text-stone-600 font-semibold">
           {label}
@@ -36,7 +36,11 @@ export function FormInput({
         autoComplete="off"
       />
 
-      {error && <span className="text-xs text-red-500">{error}</span>}
+      {error && (
+        <span className="absolute text-sm text-red-400 font-semibold">
+          {error}
+        </span>
+      )}
     </div>
   );
 }

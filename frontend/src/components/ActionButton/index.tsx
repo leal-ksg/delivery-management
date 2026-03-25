@@ -24,12 +24,13 @@ export default function ActionButton({
   return (
     <div>
       <Button
-        {...props}
+        type="button"
         onClick={handleClick}
         className={cn(
           "min-w-9 min-h-9 bg-white hover:bg-neutral-100 cursor-pointer text-foreground rounded-full shadow-md border-input disabled:text-gray-500",
           className,
         )}
+        {...props}
       >
         {Icon && <Icon size={16} />}
 
