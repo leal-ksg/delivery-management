@@ -3,18 +3,34 @@ import {
   CreateProductDTO,
   IProductRepository,
 } from "../../controllers/product/interfaces";
+import { Pagination } from "../../core/pagination";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
 
 export class ProductRepository implements IProductRepository {
-  async findAll(): Promise<Result<Product[]>> {
-    try {
-      const products = await prisma.product.findMany({
-        orderBy: { name: "asc" },
-      });
+  async findAll(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<Result<Pagination<Product>>> {
+    if (!itemsPerPage) itemsPerPage = 10;
 
-      return { ok: true, body: products };
+    if (!page) page = 1;
+
+    try {
+      const [products, total] = await Promise.all([
+        prisma.product.findMany({
+          orderBy: { name: "asc" },
+          take: itemsPerPage,
+          skip: (page - 1) * itemsPerPage,
+        }),
+        prisma.product.count(),
+      ]);
+
+      return {
+        ok: true,
+        body: { list: products, total, itemsPerPage, page },
+      };
     } catch (error) {
       return { ok: false, error: parseDatabaseErrorMessage(error, "Produto") };
     }

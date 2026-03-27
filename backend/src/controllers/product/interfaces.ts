@@ -5,6 +5,7 @@ import {
   ProductType,
 } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
+import { Pagination } from "../../core/pagination";
 import { Result } from "../../core/result";
 
 export interface CreateProductDTO {
@@ -18,7 +19,10 @@ export interface CreateProductDTO {
 }
 
 export interface IProductRepository {
-  findAll(): Promise<Result<Product[]>>;
+  findAll(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<Result<Pagination<Product>>>;
   findById(id: string): Promise<Result<Product | null>>;
   create(
     product: CreateProductDTO,
@@ -29,7 +33,10 @@ export interface IProductRepository {
 }
 
 export interface IProductController {
-  getAllProducts(): Promise<HttpResponse<Product[]>>;
+  getAllProducts(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<HttpResponse<Pagination<Product>>>;
   getProductById(id: string): Promise<HttpResponse<Product | null>>;
   createProduct(product: CreateProductDTO): Promise<HttpResponse<Product>>;
   updateProduct(
