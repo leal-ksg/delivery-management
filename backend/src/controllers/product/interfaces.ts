@@ -29,7 +29,7 @@ export interface IProductRepository {
     transaction: Prisma.TransactionClient,
   ): Promise<Result<Product>>;
   update(id: string, product: Partial<Product>): Promise<Result<Product>>;
-  delete(id: string): Promise<Result<void>>;
+  delete(ids: string[]): Promise<Result<void>>;
 }
 
 export interface IProductController {
@@ -43,7 +43,7 @@ export interface IProductController {
     id: string,
     product: Partial<Product>,
   ): Promise<HttpResponse<Product>>;
-  deleteProduct(id: string): Promise<HttpResponse<void>>;
+  deleteProduct(ids: string[]): Promise<HttpResponse<void>>;
 }
 
 export interface IProductService {

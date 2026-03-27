@@ -61,10 +61,9 @@ productRouter.patch(
   },
 );
 
-productRouter.delete("/:id", async (req: Request, res: Response) => {
-  const { statusCode, body } = await productController.deleteProduct(
-    req.params.id!,
-  );
+productRouter.delete("/", async (req: Request, res: Response) => {
+  console.log(req.body);
+  const { statusCode, body } = await productController.deleteProduct(req.body);
 
   return res.status(statusCode).json(body);
 });

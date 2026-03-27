@@ -13,9 +13,8 @@ export class ProductRepository implements IProductRepository {
     itemsPerPage?: number,
     page?: number,
   ): Promise<Result<Pagination<Product>>> {
-    if (!itemsPerPage) itemsPerPage = 10;
-
-    if (!page) page = 1;
+    itemsPerPage = Math.min(50, Math.max(1, itemsPerPage ?? 10));
+    page = Math.max(1, page ?? 1);
 
     try {
       const [products, total] = await Promise.all([
@@ -77,9 +76,12 @@ export class ProductRepository implements IProductRepository {
     }
   }
 
-  async delete(id: string): Promise<Result<void>> {
+  async delete(ids: string[]): Promise<Result<void>> {
     try {
-      await prisma.product.update({ where: { id }, data: { active: false } });
+      await prisma.product.updateMany({
+        where: { id: { in: ids } },
+        data: { active: false },
+      });
 
       return { ok: true, body: undefined };
     } catch (error) {

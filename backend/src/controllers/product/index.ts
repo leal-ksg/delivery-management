@@ -52,8 +52,8 @@ export class ProductController implements IProductController {
     return toHttpResponse(result);
   }
 
-  async deleteProduct(id: string): Promise<HttpResponse<void>> {
-    const result = await this.productRepository.delete(id);
+  async deleteProduct(ids: string[]): Promise<HttpResponse<void>> {
+    const result = await this.productRepository.delete(ids);
 
     return toHttpResponse(result);
   }

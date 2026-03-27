@@ -40,7 +40,7 @@ interface DataTableProps<TData, TValue> {
   page?: number;
   total?: number;
   itemsPerPage?: number;
-  onDelete?: () => void;
+  onDelete?: (rows: TData[]) => Promise<void>;
   onEdit?: (row: TData[]) => void;
   onCreate?: () => void;
   onPageChange?: (page: number) => void;
@@ -87,12 +87,14 @@ export function DataTable<TData, TValue>({
   const isAnyRowSelected =
     table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected();
 
-  function handleDelete() {
+  async function handleDelete() {
     if (!onDelete) return;
 
     const selectedRows = table
       .getSelectedRowModel()
       .rows.map((row) => row.original);
+
+    await onDelete(selectedRows);
   }
 
   function handleEdit() {

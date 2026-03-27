@@ -10,6 +10,7 @@ import { getProducts } from "@/src/domains/product/services/get-products";
 import { EntityDialog } from "@/src/components/EntityDialog";
 import { ProductForm } from "./form";
 import { toast } from "@/components/ui/sonner";
+import { deleteProducts } from "@/src/domains/product/services/delete-products";
 
 function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -37,6 +38,12 @@ function ProductsPage() {
 
     setEditingProduct(rows[0]);
     setIsFormDialogOpen(true);
+  }, []);
+
+  const handleDelete = useCallback(async (rows: Product[]) => {
+    const ids = rows.map((product) => product.id);
+    await deleteProducts(ids);
+    setReload((prev) => !prev);
   }, []);
 
   const handlePageChange = useCallback((newPage: number) => {
@@ -74,7 +81,7 @@ function ProductsPage() {
         <DataTable
           columns={productColumns}
           data={products}
-          onDelete={() => {}}
+          onDelete={handleDelete}
           onCreate={() => setIsFormDialogOpen(true)}
           onEdit={handleEdit}
           loading={loading}
