@@ -1,15 +1,32 @@
 import * as z from "zod";
+import { ConsumptionType, ProductType } from "../../generated/prisma";
 
-export const createProductSchema = z.object({
-  name: z.string("Informe o nome do produto"),
-  description: z.string("A descrição deve ser texto").nullable(),
+export const productSchema = z.object({
+  name: z
+    .string("Informe o nome do produto")
+    .min(1, "Informe o nome do produto"),
+  description: z
+    .string("A descrição deve ser texto")
+    .transform((value) => (value === "" ? null : value))
+    .nullable()
+    .optional(),
   unitPrice: z.coerce
-    .number("Informe um preço unitário válido")
+    .number("Preço unitário não é um número ou não foi informado")
+    .refine((value) => value !== 0, "Preço obrigatório")
     .nonnegative("O preço unitário não pode ser negativo"),
   categoryId: z.coerce
-    .number("O código da categoria deve ser um número")
-    .positive("O código da categoria não pode ser negativo"),
+    .number("Código de categoria não é um número ou não foi informado")
+    .refine((value) => value !== 0, "Informe uma categoria")
+    .nonnegative("O código da categoria não pode ser negativo"),
   minStock: z.coerce
-    .number("O estoque mínimo deve ser um número")
-    .nonnegative("O estoque mínimo não pode ser negativo"),
+    .number("Estoque mínimo não é um número ou não foi informado")
+    .nonnegative("O estoque mínimo não pode ser negativo")
+    .default(0),
+  consumptionType: z
+    .enum(Object.values(ConsumptionType), "Informe um tipo de consumo válido")
+    .nullable()
+    .optional(),
+  type: z.enum(ProductType, "Informe um tipo de produto válido").nullable(),
 });
+
+export const updateProductSchema = productSchema.partial();
