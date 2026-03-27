@@ -5,7 +5,7 @@ import { Product } from "@/src/domains/product/types";
 import { productColumns } from "./columns";
 import { TableContainer } from "@/src/components/TableContainer";
 import { Toolbar } from "@/src/components/Toolbar";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getProducts } from "@/src/domains/product/services/get-products";
 import { EntityDialog } from "@/src/components/EntityDialog";
 import { ProductForm } from "./form";
@@ -17,6 +17,9 @@ function ProductsPage() {
   const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
+  const [total, setTotal] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+  const [itemsperPage, setItemsPerPage] = useState<number>(20);
 
   function handleCancel() {
     setIsFormDialogOpen(false);
@@ -29,20 +32,30 @@ function ProductsPage() {
     setReload((prev) => !prev);
   }
 
-  function handleEdit(rows: Product[]) {
+  const handleEdit = useCallback((rows: Product[]) => {
     if (!rows || rows.length !== 1) return;
 
     setEditingProduct(rows[0]);
     setIsFormDialogOpen(true);
-  }
+  }, []);
+
+  const handlePageChange = useCallback((newPage: number) => {
+    setPage(newPage);
+  }, []);
+
+  const handleItemsPerPageChange = useCallback((newValue: number) => {
+    setPage(1);
+    setItemsPerPage(newValue);
+  }, []);
 
   useEffect(() => {
     async function fetchProducts() {
       setLoading(true);
-      const result = await getProducts();
+      const result = await getProducts(page, itemsperPage);
 
       if (result.ok) {
-        setProducts(result.body);
+        setProducts(result.body.list);
+        setTotal(result.body.total);
       } else {
         toast("error", result.error);
       }
@@ -51,7 +64,7 @@ function ProductsPage() {
     }
 
     fetchProducts();
-  }, [reload]);
+  }, [itemsperPage, page, reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
@@ -65,6 +78,11 @@ function ProductsPage() {
           onCreate={() => setIsFormDialogOpen(true)}
           onEdit={handleEdit}
           loading={loading}
+          page={page}
+          itemsPerPage={itemsperPage}
+          total={total}
+          onItemsPerPageChange={handleItemsPerPageChange}
+          onPageChange={handlePageChange}
         />
       </TableContainer>
 

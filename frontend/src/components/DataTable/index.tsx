@@ -5,7 +5,6 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  Row,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -18,29 +17,58 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import { EditIcon, PlusIcon, Trash2Icon } from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  EditIcon,
+  PlusIcon,
+  Trash2Icon,
+} from "lucide-react";
 import ActionButton from "../ActionButton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  page?: number;
+  total?: number;
+  itemsPerPage?: number;
   onDelete?: () => void;
   onEdit?: (row: TData[]) => void;
   onCreate?: () => void;
+  onPageChange?: (page: number) => void;
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
   loading: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  page = 0,
+  total = 0,
+  itemsPerPage = 0,
   onCreate,
   onDelete,
+  onPageChange,
+  onItemsPerPageChange,
   onEdit,
   loading,
 }: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState<string>("");
   const [rowSelection, setRowSelection] = useState({});
+
+  const totalPages = Math.ceil(total / itemsPerPage);
+  const enablePagination = useMemo(
+    () => total && itemsPerPage && page,
+    [itemsPerPage, total, page],
+  );
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -178,6 +206,51 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+
+        {enablePagination && onPageChange && onItemsPerPageChange ? (
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-10 lg:gap-30 xl:gap-80 p-2 md:p-8 border-t border-[#DDDDDD] bg-white w-full  md:h-10 text-gray-400 font-semibold">
+            <span className="">{total ? total : 0} registros</span>
+
+            <div className="flex gap-6">
+              <button
+                type="button"
+                className=" hover:cursor-pointer disabled:text-gray-200 disabled:cursor-default"
+                onClick={() => onPageChange(page - 1)}
+                disabled={page - 1 < 1}
+              >
+                <ChevronLeft />
+              </button>
+
+              <span>
+                Página <span className="font-bold text-gray-500">{page}</span>{" "}
+                de {totalPages}
+              </span>
+
+              <button
+                type="button"
+                className=" hover:cursor-pointer disabled:text-gray-200 disabled:cursor-default"
+                onClick={() => onPageChange(page + 1)}
+                disabled={page + 1 > totalPages}
+              >
+                <ChevronRight />
+              </button>
+            </div>
+
+            <Select
+              defaultValue="20"
+              onValueChange={(value) => onItemsPerPageChange(Number(value))}
+            >
+              <SelectTrigger className="w-18">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+                <SelectItem value="100">100</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        ) : null}
       </div>
     </div>
   );

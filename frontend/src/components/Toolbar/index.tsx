@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { ChevronLeftCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -11,7 +10,7 @@ export function Toolbar({ description, showGoBack = false }: ToolbarProps) {
   const router = useRouter();
 
   return (
-    <div className="flex items-center gap-1 justify-center w-full h-14.5 px-10 bg-primary text-secondary n md:text-cyan-400 md:mt-2 md:justify-start md:h-13 md:rounded-full md:w-[75%] fixed z-40">
+    <div className="flex items-center gap-1 justify-center w-full h-14.5 px-10 bg-primary text-secondary n md:text-cyan-400 md:mt-2 md:justify-start md:h-13 md:rounded-full md:w-[75%] sticky top-0 md:top-2 z-40">
       {showGoBack && (
         <button
           className="flex items-center justify-center h-10 w-10 p-0 hover:cursor-pointer"
