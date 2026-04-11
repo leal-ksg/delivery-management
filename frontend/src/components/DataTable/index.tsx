@@ -33,6 +33,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Span } from "next/dist/trace";
+import { Spinner } from "@/components/ui/spinner";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -202,7 +204,13 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center font-semibold text-lg text-gray-700"
                 >
-                  {loading ? "Carregando..." : "Nenhum registro encontrado..."}
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      Carregando <Spinner />
+                    </span>
+                  ) : (
+                    "Nenhum registro encontrado..."
+                  )}
                 </TableCell>
               </TableRow>
             )}

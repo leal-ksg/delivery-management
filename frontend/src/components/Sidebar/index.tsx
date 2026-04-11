@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   LucideIcon,
@@ -8,6 +13,8 @@ import {
   HandCoins,
   Menu,
   X,
+  Boxes,
+  FileUser,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,39 +34,64 @@ interface LinkWrapperProps {
   isOpen: boolean;
 }
 
+function LinkTooltip({
+  tip,
+  children,
+}: {
+  tip?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Tooltip delayDuration={400}>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+
+      {tip && (
+        <TooltipContent
+          side="right"
+          className="ml-4 bg-primary/75 text-white text-sm"
+        >
+          <p>{tip}</p>
+        </TooltipContent>
+      )}
+    </Tooltip>
+  );
+}
+
 function SidebarLink({ icon: Icon, text, href, isOpen }: SidebarLinkProps) {
   const pathname = usePathname();
   const isActive = pathname === href;
 
   return (
-    <Link
-      href={href}
-      className={`
+    <LinkTooltip tip={text}>
+      <Link
+        href={href}
+        className={`
         relative flex items-center h-10 w-full rounded-lg
         transition-colors duration-200
         ${isActive ? "bg-secondary/80" : "hover:bg-slate-700/50"}
       `}
-    >
-      <div
-        className={`items-center w-full h-full ${isOpen ? "flex px-4" : "hidden md:flex md:justify-center"}`}
       >
-        {Icon && (
-          <Icon
-            size={20}
-            className={`shrink-0 ${isActive ? "text-white" : "text-cyan-400"}`}
-          />
-        )}
-        <span
-          className={`
+        <div
+          className={`items-center w-full h-full ${isOpen ? "flex px-4" : "hidden md:flex md:justify-center"}`}
+        >
+          {Icon && (
+            <Icon
+              size={20}
+              className={`shrink-0 ${isActive ? "text-white" : "text-cyan-400"}`}
+            />
+          )}
+          <span
+            className={`
             whitespace-nowrap text-sm text-slate-200
             absolute left-12
             ${isOpen ? "block" : "hidden"}
           `}
-        >
-          {text}
-        </span>
-      </div>
-    </Link>
+          >
+            {text}
+          </span>
+        </div>
+      </Link>
+    </LinkTooltip>
   );
 }
 
@@ -156,13 +188,13 @@ export function Sidebar() {
 
             <LinkWrapper title="Cadastros" isOpen={isOpen}>
               <SidebarLink
-                icon={HandCoins}
+                icon={FileUser}
                 href="/customers"
                 text="Clientes"
                 isOpen={isOpen}
               />
               <SidebarLink
-                icon={ShoppingCart}
+                icon={Boxes}
                 href="/products"
                 text="Produtos"
                 isOpen={isOpen}

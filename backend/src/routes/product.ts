@@ -52,8 +52,13 @@ productRouter.patch(
   "/:id",
   validationMiddleware(updateProductSchema),
   async (req: Request, res: Response) => {
+    if (!req.params.id)
+      return res
+        .status(400)
+        .json({ error: "É necessário um ID para a atualização" });
+
     const { statusCode, body } = await productController.updateProduct(
-      req.params.id!,
+      req.params.id,
       req.body,
     );
 

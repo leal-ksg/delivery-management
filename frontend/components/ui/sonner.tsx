@@ -10,6 +10,11 @@ export function toast(
   message: string,
   duration: number = 3500,
 ) {
+  message =
+    message.length > 70 && type === "error"
+      ? "Ocorreu um erro inesperado no sistema"
+      : message;
+
   switch (type) {
     case "success":
       rootToast.success(message, {

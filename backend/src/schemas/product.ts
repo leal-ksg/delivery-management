@@ -27,6 +27,7 @@ export const productSchema = z.object({
     .nullable()
     .optional(),
   type: z.enum(ProductType, "Informe um tipo de produto válido").nullable(),
+  active: z.boolean().optional().nullable()
 });
 
 export const updateProductSchema = productSchema.partial();

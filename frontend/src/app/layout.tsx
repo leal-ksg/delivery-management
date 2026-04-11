@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Raleway } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "../components/Sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,13 +41,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased font-sans`}
       >
-        <div className="flex h-dvh overflow-hidden relative">
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto transition-all duration-300">
-            {children}
-          </main>
-        </div>
-        <Toaster />
+        <TooltipProvider>
+          <div className="flex h-dvh overflow-hidden relative">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto transition-all duration-300">
+              {children}
+            </main>
+          </div>
+          <Toaster />
+        </TooltipProvider>
       </body>
     </html>
   );

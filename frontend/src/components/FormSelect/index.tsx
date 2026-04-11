@@ -58,7 +58,7 @@ export function FormSelect<T extends string>({
             <SelectTrigger className={cn("w-full text-gray-700", classname)}>
               <SelectValue placeholder={placeholder ?? "Selecione um valor"} />
             </SelectTrigger>
-            <SelectContent className="border-secondary border-2">
+            <SelectContent className="max-h-80 overflow-y-scroll  border-secondary border-2">
               <SelectGroup>
                 {options?.map((option) => {
                   return (

@@ -20,6 +20,7 @@ import { getDirtyValues } from "@/lib/get-dirty-values";
 import { ApiResponse } from "@/lib/api";
 import { updateProduct } from "@/src/domains/product/services/update-product";
 import { useEffect } from "react";
+import { FormSwitch } from "@/src/components/FormSwitch";
 
 interface ProductFormProps {
   editingProduct: Product | null;
@@ -53,6 +54,7 @@ const productSchema = z.object({
     .enum(ProductType, "Informe um tipo de produto válido")
     .nullable()
     .or(z.literal("").transform(() => null)),
+  active: z.boolean().nullable().optional(),
 });
 
 type FormData = z.input<typeof productSchema>;
@@ -125,9 +127,17 @@ export function ProductForm({
           <FormInput name="name" label="Nome" />
 
           <FormInput name="description" label="Descrição" />
+
+          <FormSwitch
+            name="active"
+            label="Ativo?"
+            classname="md:ml-4 self-start md:self-center"
+            disabled={!editingProduct}
+            defaultValue={true}
+          />
         </div>
 
-        <div className="flex flex-col w-2/3 gap-2 md:flex-row">
+        <div className="flex flex-col w-full gap-2 md:flex-row">
           <FormInput
             name="unitPrice"
             label="Preço unitário"

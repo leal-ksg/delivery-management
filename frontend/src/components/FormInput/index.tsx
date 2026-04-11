@@ -1,25 +1,62 @@
 import { Input } from "@/components/ui/input";
+import { PatternFormat } from "react-number-format";
 import { cn } from "@/lib/utils";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   name: string;
   label?: string;
+  mask?: string;
+  unique?: boolean
 }
 
 export function FormInput({
   className,
   name,
   label,
+  mask,
+  unique,
   ...props
 }: FormInputProps) {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext();
 
   const error = errors[name]?.message as string | undefined;
+
+  if (mask)
+    return (
+      <div className="flex-1 relative">
+        {label && (
+          <label className="text-stone-600 font-semibold">
+            {label}
+            {unique && <><span className="ml-2 text-purple-300">(único)</span></>}
+          </label>
+        )}
+
+        <Controller
+          name={name}
+          control={control}
+          render={({ field }) => (
+            <PatternFormat
+              format={mask}
+              customInput={Input}
+              value={field.value ?? ""}
+              onValueChange={(values) => field.onChange(values.value)}
+            />
+          )}
+        />
+
+        {error && (
+          <span className="absolute text-sm text-red-400 font-semibold">
+            {error}
+          </span>
+        )}
+      </div>
+    );
 
   return (
     <div className="flex-1 relative">
