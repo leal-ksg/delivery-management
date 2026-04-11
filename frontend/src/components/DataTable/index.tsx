@@ -74,7 +74,7 @@ export function DataTable<TData, TValue>({
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
-    data,
+    data: data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     onGlobalFilterChange: setGlobalFilter,
@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
   });
 
   const isAnyRowSelected =
-    table.getIsSomeRowsSelected() || table.getIsAllPageRowsSelected();
+    table?.getIsSomeRowsSelected() || table?.getIsAllPageRowsSelected();
 
   async function handleDelete() {
     if (!onDelete) return;
