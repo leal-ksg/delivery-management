@@ -52,9 +52,9 @@ customerRouter.patch(
   },
 );
 
-customerRouter.delete("/:id", async (req: Request, res: Response) => {
-  const { body, statusCode } = await customerController.deleteCustomer(
-    req.params.id!,
+customerRouter.delete("/", async (req: Request, res: Response) => {
+  const { body, statusCode } = await customerController.deleteCustomers(
+    req.body,
   );
 
   return res.status(statusCode).json(body);

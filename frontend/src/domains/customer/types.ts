@@ -1,14 +1,3 @@
-export enum ProductType {
-  PURCHASE = "PURCHASE",
-  SALE = "SALE",
-  PACKAGING = "PACKAGING",
-}
-
-export enum ConsumptionType {
-  PRODUCTION = "PRODUCTION",
-  SALE = "SALE",
-}
-
 export type Customer = {
   id: string;
   name: string;

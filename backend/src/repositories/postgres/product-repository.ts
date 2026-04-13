@@ -51,7 +51,11 @@ export class ProductRepository implements IProductRepository {
   ): Promise<Result<Product>> {
     try {
       const createdProduct = await transaction.product.create({
-        data: product,
+        data: {
+          ...product,
+          type: product.type ?? "PURCHASE",
+          consumptionType: product.consumptionType ?? "PRODUCTION",
+        },
       });
 
       return { ok: true, body: createdProduct };

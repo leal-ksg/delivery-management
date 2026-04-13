@@ -22,3 +22,9 @@ export const customerSchema = z.object({
 });
 
 export const updateCustomerSchema = customerSchema.partial();
+
+export const deleteCustomerSchema = z.object({
+  ids: z
+    .array(z.uuid("ID de cliente inválido"))
+    .min(1, "Informe pelo menos um cliente para a exclusão"),
+});

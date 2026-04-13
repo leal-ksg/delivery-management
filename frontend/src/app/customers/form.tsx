@@ -14,6 +14,7 @@ import { createCustomer } from "@/src/domains/customer/services/create-customer"
 import { FormSelect } from "@/src/components/FormSelect";
 import { brazilStates } from "@/src/constants";
 import { formatPhone } from "@/lib/format-phone";
+import { useEffect } from "react";
 
 interface CustomerFormProps {
   editingCustomer: Customer | null;
@@ -64,6 +65,8 @@ export function CustomerForm({
     if (editingCustomer) {
       const { dirtyFields } = formState;
 
+      console.log(dirtyFields);
+
       const parsedData = customerSchema.parse(methods.getValues());
       const dirtyData = getDirtyValues(dirtyFields, parsedData);
       response = await updateCustomer(editingCustomer.id, dirtyData);
@@ -76,6 +79,12 @@ export function CustomerForm({
       onSuccess();
     }
   }
+
+  useEffect(() => {
+    if (editingCustomer) {
+      methods.reset(editingCustomer);
+    }
+  }, [editingCustomer, methods]);
 
   return (
     <FormProvider {...methods}>

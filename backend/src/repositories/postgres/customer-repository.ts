@@ -3,15 +3,32 @@ import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Customer } from "../../../generated/prisma";
+import { Pagination } from "../../core/pagination";
 
 export class CustomerRepository implements ICustomerRepository {
-  async findAll(): Promise<Result<Customer[]>> {
-    try {
-      const customers = await prisma.customer.findMany();
+  async findAll(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<Result<Pagination<Customer>>> {
+    itemsPerPage = Math.min(50, Math.max(1, itemsPerPage ?? 10));
+    page = Math.max(1, page ?? 1);
 
-      return { ok: true, body: customers };
-    } catch (err) {
-      return { ok: false, error: parseDatabaseErrorMessage(err, "Cliente") };
+    try {
+      const [customers, total] = await Promise.all([
+        prisma.customer.findMany({
+          orderBy: [{ name: "asc" }, { surname: "asc" }],
+          take: itemsPerPage,
+          skip: (page - 1) * itemsPerPage,
+        }),
+        prisma.customer.count(),
+      ]);
+
+      return {
+        ok: true,
+        body: { list: customers, total, itemsPerPage, page },
+      };
+    } catch (error) {
+      return { ok: false, error: parseDatabaseErrorMessage(error, "Produto") };
     }
   }
 
@@ -37,8 +54,9 @@ export class CustomerRepository implements ICustomerRepository {
 
   async update(
     id: string,
-    customer: Partial<Customer>
+    customer: Partial<Customer>,
   ): Promise<Result<Customer>> {
+    console.log(customer);
     try {
       const customers = await prisma.customer.update({
         data: customer,
@@ -51,9 +69,12 @@ export class CustomerRepository implements ICustomerRepository {
     }
   }
 
-  async delete(id: string): Promise<Result<void>> {
+  async delete(ids: string[]): Promise<Result<void>> {
     try {
-      await prisma.customer.delete({ where: { id } });
+      await prisma.customer.updateMany({
+        where: { id: { in: ids } },
+        data: { active: false },
+      });
 
       return { ok: true, body: undefined };
     } catch (err) {
