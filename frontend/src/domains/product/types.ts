@@ -29,4 +29,6 @@ export type CreateProductDTO = {
   unitPrice: number;
   categoryId: number;
   minStock: number;
+  type?: ProductType | null;
+  consumptionType?: ConsumptionType | null;
 };
