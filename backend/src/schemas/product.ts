@@ -27,7 +27,13 @@ export const productSchema = z.object({
     .nullable()
     .optional(),
   type: z.enum(ProductType, "Informe um tipo de produto válido").nullable(),
-  active: z.boolean().optional().nullable()
+  active: z.boolean().optional().nullable(),
 });
 
 export const updateProductSchema = productSchema.partial();
+
+export const deleteProductSchema = z.object({
+  ids: z
+    .array(z.uuid("ID de produto inválido"))
+    .min(1, "Informe pelo menos um produto para a exclusão"),
+});

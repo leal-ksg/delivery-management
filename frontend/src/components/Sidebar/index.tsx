@@ -15,6 +15,7 @@ import {
   X,
   Boxes,
   FileUser,
+  Network,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -193,10 +194,18 @@ export function Sidebar() {
                 text="Clientes"
                 isOpen={isOpen}
               />
+
               <SidebarLink
                 icon={Boxes}
                 href="/products"
                 text="Produtos"
+                isOpen={isOpen}
+              />
+
+              <SidebarLink
+                icon={Network}
+                href="/productStructure"
+                text="Árvore de produtos"
                 isOpen={isOpen}
               />
             </LinkWrapper>
