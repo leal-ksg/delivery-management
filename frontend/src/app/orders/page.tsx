@@ -10,6 +10,7 @@ import { toast } from "@/components/ui/sonner";
 import { Order } from "@/src/domains/order/types";
 import { deleteOrders } from "@/src/domains/order/services/delete-orders";
 import { getOrders } from "@/src/domains/order/services/get-orders";
+import { OrderForm } from "./form";
 
 function SalesPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -54,23 +55,23 @@ function SalesPage() {
     setItemsPerPage(newValue);
   }, []);
 
-  useEffect(() => {
-    async function fetchOrders() {
-      setLoading(true);
-      const result = await getOrders(page, itemsperPage);
+  // useEffect(() => {
+  //   async function fetchOrders() {
+  //     setLoading(true);
+  //     const result = await getOrders(page, itemsperPage);
 
-      if (result.ok) {
-        setOrders(result.body.list);
-        setTotal(result.body.total);
-      } else {
-        toast("error", result.error);
-      }
+  //     if (result.ok) {
+  //       setOrders(result.body.list);
+  //       setTotal(result.body.total);
+  //     } else {
+  //       toast("error", result.error);
+  //     }
 
-      setLoading(false);
-    }
+  //     setLoading(false);
+  //   }
 
-    fetchOrders();
-  }, [itemsperPage, page, reload]);
+  //   fetchOrders();
+  // }, [itemsperPage, page, reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
@@ -96,6 +97,7 @@ function SalesPage() {
         open={isFormDialogOpen}
         onOpenChange={setIsFormDialogOpen}
         title={editingOrder ? "Editar venda" : "Nova venda"}
+        classname="min-w-[80%] min-h-[90%]"
       >
         <OrderForm
           editingOrder={editingOrder}

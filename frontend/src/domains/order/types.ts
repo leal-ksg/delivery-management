@@ -21,7 +21,7 @@ type OrderProduct = {
   };
 };
 
-type OrderProductDTO = {
+export type OrderProductDTO = {
   id: string;
   quantity: number;
 };

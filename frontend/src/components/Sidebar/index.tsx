@@ -175,7 +175,7 @@ export function Sidebar() {
             <LinkWrapper title="Movimentações" isOpen={isOpen}>
               <SidebarLink
                 icon={HandCoins}
-                href="/sales"
+                href="/orders"
                 text="Vendas"
                 isOpen={isOpen}
               />

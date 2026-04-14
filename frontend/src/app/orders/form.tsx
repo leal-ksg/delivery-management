@@ -1,10 +1,8 @@
 import ActionButton from "@/src/components/ActionButton";
 import * as z from "zod";
-import { FormInput } from "@/src/components/FormInput";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, Plus, XCircle } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createProduct } from "@/src/domains/product/services/create-product";
 import {
   ConsumptionType,
   Product,
@@ -18,10 +16,12 @@ import {
 import { FormSelect } from "@/src/components/FormSelect";
 import { getDirtyValues } from "@/lib/get-dirty-values";
 import { ApiResponse } from "@/lib/api";
-import { updateProduct } from "@/src/domains/product/services/update-product";
-import { useEffect } from "react";
-import { FormSwitch } from "@/src/components/FormSwitch";
-import { Order } from "@/src/domains/order/types";
+import { useEffect, useState } from "react";
+import { Order, OrderProductDTO, OrderStatus } from "@/src/domains/order/types";
+import { updateOrder } from "@/src/domains/order/services/update-order";
+import { createOrder } from "@/src/domains/order/services/create-order";
+import { FormInput } from "@/src/components/FormInput";
+import { Input } from "@/components/ui/input";
 
 interface OrderFormProps {
   editingOrder: Order | null;
@@ -30,32 +30,10 @@ interface OrderFormProps {
 }
 
 const orderSchema = z.object({
-  name: z
-    .string("Informe o nome do produto")
-    .min(1, "Informe o nome do produto"),
-  description: z.string("A descrição deve ser texto").nullable(),
-  unitPrice: z.coerce
-    .number("Informe um preço unitário válido")
-    .refine((val) => val !== 0, "Preço obrigatório")
-    .nonnegative("O preço unitário não pode ser negativo"),
-  categoryId: z.coerce
-    .number("O código da categoria deve ser um número")
-    .refine((val) => val !== 0, "Informe uma categoria")
-    .nonnegative("O código da categoria não pode ser negativo"),
-  minStock: z.coerce
-    .number("O estoque mínimo deve ser um número")
-    .nonnegative("O estoque mínimo não pode ser negativo")
-    .default(0),
-  consumptionType: z
-    .enum(Object.values(ConsumptionType), "Informe um tipo de consumo válido")
-    .nullable()
-    .optional()
-    .or(z.literal("").transform(() => null)),
-  type: z
-    .enum(ProductType, "Informe um tipo de produto válido")
-    .nullable()
-    .or(z.literal("").transform(() => null)),
-  active: z.boolean().nullable().optional(),
+  customerId: z.uuid("Informe o cliente"),
+  userId: z.uuid().nullable().optional(),
+  comment: z.string().nullable().optional(),
+  status: z.enum(OrderStatus, "Informe um status válido"),
 });
 
 type FormData = z.input<typeof orderSchema>;
@@ -69,6 +47,7 @@ export function OrderForm({
     defaultValues: editingOrder ?? undefined,
     resolver: zodResolver(orderSchema),
   });
+  const [products, setProducts] = useState<OrderProductDTO[]>([]);
 
   const { formState } = methods;
 
@@ -91,22 +70,20 @@ export function OrderForm({
 
       const parsedData = orderSchema.parse(methods.getValues());
       const dirtyData = getDirtyValues(dirtyFields, parsedData);
-      response = await updateProduct(editingOrder.id, dirtyData);
+      // response = await updateOrder(editingOrder.id, dirtyData);
     } else {
       const parsedData = orderSchema.parse(data);
-      response = await createProduct(parsedData);
+      // response = await createOrder(parsedData);
     }
 
-    if (response.ok) {
-      onSuccess();
-    }
+    // if (response.ok) {
+    //   onSuccess();
+    // }
   }
 
   useEffect(() => {
     if (editingOrder) {
-      methods.reset({
-        editingOrder,
-      });
+      methods.reset(editingOrder);
     }
   }, [editingOrder, methods]);
 
@@ -116,56 +93,34 @@ export function OrderForm({
         className="flex flex-col w-full min-h-90 mt-10 gap-10"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col w-full gap-2 md:flex-row">
-          <FormInput name="name" label="Nome" />
-
-          <FormInput name="description" label="Descrição" />
-
-          <FormSwitch
-            name="active"
-            label="Ativo?"
-            classname="md:ml-4 self-start md:self-center"
-            disabled={!editingOrder}
-            defaultValue={true}
-          />
-        </div>
-
-        <div className="flex flex-col w-full gap-2 md:flex-row">
-          <FormInput
-            name="unitPrice"
-            label="Preço unitário"
-            type="text"
-            inputMode="decimal"
-          />
-
-          <FormInput
-            name="minStock"
-            label="Estoque mínimo"
-            type="text"
-            inputMode="numeric"
-          />
-        </div>
-
-        <div className="flex flex-col w-full gap-2 md:flex-row">
+        <div className="flex flex-col w-1/2 gap-2 md:flex-row">
+          {/* TODO: add async logic to fetch users */}
           <FormSelect
             options={productTypeOptions}
-            name="type"
-            label="Tipo do produto"
-            defaultValue={ProductType.PURCHASE}
+            name="customerId"
+            label="Cliente"
           />
+        </div>
 
-          <FormSelect
-            options={consumptionOptions}
-            name="consumptionType"
-            label="Tipo de consumo"
-            defaultValue={ConsumptionType.PRODUCTION}
-          />
+        <div className="flex flex-col w-full gap-2 md:flex-row">
+          <FormInput name="comment" label="Comentário" />
+        </div>
 
-          <FormSelect
-            options={[{ label: "Lasanhas", value: "10" }]}
-            name="categoryId"
-            label="Categoria"
-          />
+        <div className="flex flex-col w-full mt-5 gap-2">
+          <h2 className="text-xl font-semibold text-stone-600">Produtos</h2>
+
+          <div className="flex items-center gap-3">
+            <Input className="max-w-1/2" />
+            <ActionButton
+              className="bg-secondary text-white hover:bg-secondary/65"
+              icon={Plus}
+            ></ActionButton>
+          </div>
+
+          <div className="flex flex-col gap-1 w-1/2 mt-5 overflow-y-scroll">
+            
+            {/* Products list goes here */}
+          </div>
         </div>
 
         <div className="flex self-end mt-10 md:mt-25 gap-2">
