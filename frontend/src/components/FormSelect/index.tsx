@@ -55,17 +55,17 @@ export function FormSelect<T extends string>({
             value={field.value ?? ""}
             onValueChange={(value) => field.onChange(value)}
           >
-            <SelectTrigger className={cn("w-full text-gray-700", classname)}>
+            <SelectTrigger className={cn("w-full text-neutral-800 bg-neutral-100", classname)}>
               <SelectValue placeholder={placeholder ?? "Selecione um valor"} />
             </SelectTrigger>
-            <SelectContent className="max-h-80 overflow-y-scroll  border-secondary border-2">
+            <SelectContent className="max-h-80 overflow-y-scroll bg-neutral-100 border-secondary border-2">
               <SelectGroup>
                 {options?.map((option) => {
                   return (
                     <SelectItem
                       key={option.value}
                       value={option.value}
-                      className="text-gray-700"
+                      className="text-gray-800"
                     >
                       {option.label}
                     </SelectItem>

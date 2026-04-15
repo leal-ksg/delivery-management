@@ -90,63 +90,71 @@ export function OrderForm({
   return (
     <FormProvider {...methods}>
       <form
-        className="flex flex-col w-full min-h-90 mt-10 gap-10"
+        className="relative flex flex-col w-full min-h-150 mt-10 gap-10 lg:flex-row "
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col w-1/2 gap-2 md:flex-row">
-          {/* TODO: add async logic to fetch users */}
-          <FormSelect
-            options={productTypeOptions}
-            name="customerId"
-            label="Cliente"
-          />
+        <div className="flex flex-col items-center gap-6 w-full lg:w-1/2">
+          <h2 className="text-xl font-semibold text-stone-600">
+            Dados básicos
+          </h2>
+
+          <div className="w-full">
+            {/* TODO: add async logic to fetch users */}
+            <FormSelect
+              options={productTypeOptions}
+              name="customerId"
+              label="Cliente"
+            />
+          </div>
+
+          <div className="w-full">
+            <FormInput name="comment" label="Comentário" />
+          </div>
         </div>
 
-        <div className="flex flex-col w-full gap-2 md:flex-row">
-          <FormInput name="comment" label="Comentário" />
-        </div>
+        <hr className="border border-gray-200 min-h-150 justify-self-center hidden lg:block" />
 
-        <div className="flex flex-col w-full mt-5 gap-2">
+        <div className="flex flex-col items-center gap-6 w-full lg:w-1/2">
           <h2 className="text-xl font-semibold text-stone-600">Produtos</h2>
 
-          <div className="flex items-center gap-3">
-            <Input className="max-w-1/2" />
+          <div className="flex items-center justify-center gap-3 mt-5 w-full">
+            <Input className="text-neutral-800 bg-neutral-100" />
+
             <ActionButton
               className="bg-secondary text-white hover:bg-secondary/65"
               icon={Plus}
             ></ActionButton>
           </div>
 
-          <div className="flex flex-col gap-1 w-1/2 mt-5 overflow-y-scroll">
-            
-            {/* Products list goes here */}
+          <div className="grid gap-1 w-full p-3 bg-neutral-500 mt-5 max-h-90 overflow-y-auto">
+            {/* TODO: add products list */}
           </div>
-        </div>
 
-        <div className="flex self-end mt-10 md:mt-25 gap-2">
-          <ActionButton
-            onClick={onCancel}
-            className="text-white bg-gray-500 hover:bg-gray-400 disabled:text-gray-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
-            disabled={formState.isSubmitting}
-          >
-            <span>Cancelar</span>
+          <div className="absolute bottom-0 right-0 flex mt-10 md:mt-25 gap-2">
+            <ActionButton
+              onClick={onCancel}
+              className="text-white bg-gray-500 hover:bg-gray-400 disabled:text-gray-600 disabled:bg-gray-200 disabled:cursor-not-allowed"
+              disabled={formState.isSubmitting}
+            >
+              <span>Cancelar</span>
 
-            <XCircle strokeWidth={3} />
-          </ActionButton>
+              <XCircle strokeWidth={3} />
+            </ActionButton>
 
-          <ActionButton
-            className="text-white bg-green-600 hover:bg-green-500 disabled:text-green-600 disabled:bg-green-200 disabled:cursor-not-allowed"
-            type="submit"
-            disabled={formState.isSubmitting}
-          >
-            <span>Confirmar</span>
+            <ActionButton
+              className="text-white bg-green-600 hover:bg-green-500 disabled:text-green-600 disabled:bg-green-200 disabled:cursor-not-allowed"
+              type="submit"
+              disabled={formState.isSubmitting}
+            >
+              <span>Confirmar</span>
 
-            {formState.isSubmitting ? (
-              <Spinner />
-            ) : (
-              <CheckCircle strokeWidth={3} />
-            )}
-          </ActionButton>
+              {formState.isSubmitting ? (
+                <Spinner />
+              ) : (
+                <CheckCircle strokeWidth={3} />
+              )}
+            </ActionButton>
+          </div>
         </div>
       </form>
     </FormProvider>

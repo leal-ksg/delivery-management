@@ -8,7 +8,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
   mask?: string;
-  unique?: boolean
+  unique?: boolean;
 }
 
 export function FormInput({
@@ -33,7 +33,11 @@ export function FormInput({
         {label && (
           <label className="text-stone-600 font-semibold">
             {label}
-            {unique && <><span className="ml-2 text-purple-300">(único)</span></>}
+            {unique && (
+              <>
+                <span className="ml-2 text-purple-300">(único)</span>
+              </>
+            )}
           </label>
         )}
 
@@ -46,6 +50,7 @@ export function FormInput({
               customInput={Input}
               value={field.value ?? ""}
               onValueChange={(values) => field.onChange(values.value)}
+              className={cn("bg-neutral-100", className)}
             />
           )}
         />
@@ -69,7 +74,7 @@ export function FormInput({
       <Input
         {...props}
         {...register(name)}
-        className={cn(className)}
+        className={cn("bg-neutral-100 text-neutral-800", className)}
         autoComplete="off"
       />
 
