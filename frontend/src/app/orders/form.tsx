@@ -16,12 +16,13 @@ import {
 import { FormSelect } from "@/src/components/FormSelect";
 import { getDirtyValues } from "@/lib/get-dirty-values";
 import { ApiResponse } from "@/lib/api";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { Order, OrderProductDTO, OrderStatus } from "@/src/domains/order/types";
 import { updateOrder } from "@/src/domains/order/services/update-order";
 import { createOrder } from "@/src/domains/order/services/create-order";
 import { FormInput } from "@/src/components/FormInput";
 import { Input } from "@/components/ui/input";
+import { SearchInput } from "@/src/components/SearchInput";
 
 interface OrderFormProps {
   editingOrder: Order | null;
@@ -47,19 +48,29 @@ export function OrderForm({
     defaultValues: editingOrder ?? undefined,
     resolver: zodResolver(orderSchema),
   });
-  const [products, setProducts] = useState<OrderProductDTO[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProductOption, setSelectedProductOption] = useState<Product>();
+  const [selectedProducts, setSelectedProducts] = useState<OrderProductDTO[]>(
+    [],
+  );
+  const [productQuery, setProductQuery] = useState<string>("");
 
   const { formState } = methods;
 
-  const consumptionOptions = Object.values(ConsumptionType).map((value) => ({
-    label: consumptionTypeTranslation[value],
-    value,
-  }));
+  const productOptions = useMemo(() => {
+    return products.map((product) => ({ label: product.name, value: product }));
+  }, []);
 
-  const productTypeOptions = Object.values(ProductType).map((value) => ({
-    label: productTypeTranslation[value],
-    value,
-  }));
+  const handleProductQueryChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setProductQuery(e.target.value);
+    },
+    [],
+  );
+
+  const handleProductSelection = useCallback((option: Product) => {
+    setSelectedProductOption(option);
+  }, []);
 
   async function onSubmit(data: FormData) {
     let response: ApiResponse<Product>;
@@ -99,12 +110,13 @@ export function OrderForm({
           </h2>
 
           <div className="w-full">
-            {/* TODO: add async logic to fetch users */}
-            <FormSelect
-              options={productTypeOptions}
-              name="customerId"
-              label="Cliente"
-            />
+            <SearchInput
+              value={productQuery}
+              options={productOptions}
+              onChange={handleProductQueryChange}
+              onEndOfList={() => {}}
+              onSelectOption={handleProductSelection}
+            ></SearchInput>
           </div>
 
           <div className="w-full">
