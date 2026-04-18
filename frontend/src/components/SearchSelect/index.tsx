@@ -4,23 +4,23 @@ import AsyncSelect from "react-select/async";
 import { Controller, useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
 
-interface SearchSelectProps {
+interface SearchSelectProps<T> {
   name: string;
-  loadOptions: (inputValue: string) => Promise<Option[]>;
-  defaultOptions: boolean | Option[];
+  loadOptions: (inputValue: string) => Promise<Option<T>[]>;
+  defaultOptions: boolean | Option<T>[];
   label?: string;
   className?: string;
   placeholder?: string;
 }
 
-export function SearchSelect({
+export function SearchSelect<T>({
   name,
   loadOptions,
   defaultOptions,
   label,
   placeholder,
   className,
-}: SearchSelectProps) {
+}: SearchSelectProps<T>) {
   const { control } = useFormContext();
 
   return (
@@ -32,6 +32,7 @@ export function SearchSelect({
         control={control}
         render={({ field }) => (
           <AsyncSelect
+            cacheOptions
             isClearable
             onChange={field.onChange}
             value={field.value}
@@ -39,6 +40,7 @@ export function SearchSelect({
             styles={reactSelectTheme}
             loadOptions={loadOptions}
             placeholder={placeholder ? placeholder : "Selecione..."}
+            loadingMessage={() => "Carregando..."}
           />
         )}
       />

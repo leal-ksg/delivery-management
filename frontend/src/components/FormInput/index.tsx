@@ -9,6 +9,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   mask?: string;
   unique?: boolean;
+  optional?: boolean;
 }
 
 export function FormInput({
@@ -17,6 +18,7 @@ export function FormInput({
   label,
   mask,
   unique,
+  optional,
   ...props
 }: FormInputProps) {
   const {
@@ -36,6 +38,11 @@ export function FormInput({
             {unique && (
               <>
                 <span className="ml-2 text-purple-300">(único)</span>
+              </>
+            )}
+            {optional && (
+              <>
+                <span className="ml-2 text-orange-300">opcional</span>
               </>
             )}
           </label>
@@ -66,8 +73,18 @@ export function FormInput({
   return (
     <div className="flex-1 relative">
       {label && (
-        <label htmlFor={name} className="text-stone-600 font-semibold">
+        <label className="text-stone-600 font-semibold">
           {label}
+          {unique && (
+            <>
+              <span className="ml-2 text-purple-300">(único)</span>
+            </>
+          )}
+          {optional && (
+            <>
+              <span className="ml-2 text-orange-300">(opcional)</span>
+            </>
+          )}
         </label>
       )}
 

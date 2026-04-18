@@ -20,7 +20,7 @@ const reactSelectTheme: StylesConfig = {
       ...styles,
       color: "#364153",
       cursor: isDisabled ? "not-allowed" : "default",
-      whiteSpace: "pre-line !important",
+      whiteSpace: "pre-line",
       backgroundColor: isDisabled
         ? null
         : isSelected

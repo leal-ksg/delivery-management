@@ -97,7 +97,7 @@ function SalesPage() {
         open={isFormDialogOpen}
         onOpenChange={setIsFormDialogOpen}
         title={editingOrder ? "Editar venda" : "Nova venda"}
-        classname="min-w-[80%] min-h-[90%]"
+        classname="min-h-[90%]"
       >
         <OrderForm
           editingOrder={editingOrder}
