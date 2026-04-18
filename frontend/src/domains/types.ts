@@ -4,3 +4,8 @@ export type Pagination<T> = {
   page: number;
   itemsPerPage: number;
 };
+
+export type Option = {
+  label: string;
+  value: string;
+};

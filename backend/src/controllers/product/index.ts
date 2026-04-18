@@ -21,10 +21,11 @@ export class ProductController implements IProductController {
   }
 
   async getAllProducts(
+    query?: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<HttpResponse<Pagination<Product>>> {
-    const result = await this.productRepository.findAll(itemsPerPage, page);
+    const result = await this.productRepository.findAll(query, itemsPerPage, page);
 
     return toHttpResponse(result);
   }

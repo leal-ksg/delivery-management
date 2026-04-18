@@ -58,7 +58,7 @@ function ProductsPage() {
   useEffect(() => {
     async function fetchProducts() {
       setLoading(true);
-      const result = await getProducts(page, itemsperPage);
+      const result = await getProducts("", page, itemsperPage);
 
       if (result.ok) {
         setProducts(result.body.list);

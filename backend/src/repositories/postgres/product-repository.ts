@@ -10,15 +10,22 @@ import { prisma } from "../../database/prisma";
 
 export class ProductRepository implements IProductRepository {
   async findAll(
+    query?: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<Result<Pagination<Product>>> {
     itemsPerPage = Math.min(50, Math.max(1, itemsPerPage ?? 10));
     page = Math.max(1, page ?? 1);
 
+    const where = query
+      ? { name: { contains: query, mode: "insensitive" as const } }
+      : {};
+
+    console.log(where);
     try {
       const [products, total] = await Promise.all([
         prisma.product.findMany({
+          where,
           orderBy: { name: "asc" },
           take: itemsPerPage,
           skip: (page - 1) * itemsPerPage,

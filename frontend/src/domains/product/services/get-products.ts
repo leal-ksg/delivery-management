@@ -4,12 +4,14 @@ import axios from "axios";
 import { Pagination } from "../../types";
 
 export async function getProducts(
+  query: string,
   page: number,
   itemsPerPage: number,
 ): Promise<ApiResponse<Pagination<Product>>> {
   try {
     const { data } = await api.get("/product", {
       params: {
+        query,
         page,
         itemsPerPage,
       },

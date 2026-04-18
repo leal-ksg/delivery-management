@@ -19,8 +19,12 @@ productRouter.get("/", async (req: Request, res: Response) => {
     : undefined;
 
   const page = req.query.page ? Number(req.query.page) : undefined;
+  
+  const query = req.query.query ? String(req.query.query) : undefined;
+  console.log(query)
 
   const { statusCode, body } = await productController.getAllProducts(
+    query,
     itemsPerPage,
     page,
   );

@@ -19,7 +19,7 @@ interface SearchInputProps<
   className?: string;
 }
 
-export function SearchInput<T>({
+export function SearchInputDeprecated<T>({
   onChange,
   onEndOfList,
   value,

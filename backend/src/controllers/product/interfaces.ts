@@ -20,6 +20,7 @@ export interface CreateProductDTO {
 
 export interface IProductRepository {
   findAll(
+    query?: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<Result<Pagination<Product>>>;
@@ -34,6 +35,7 @@ export interface IProductRepository {
 
 export interface IProductController {
   getAllProducts(
+    query?: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<HttpResponse<Pagination<Product>>>;

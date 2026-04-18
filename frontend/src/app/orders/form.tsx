@@ -3,17 +3,8 @@ import * as z from "zod";
 import { CheckCircle, Plus, XCircle } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  ConsumptionType,
-  Product,
-  ProductType,
-} from "@/src/domains/product/types";
+import { Product } from "@/src/domains/product/types";
 import { Spinner } from "@/components/ui/spinner";
-import {
-  consumptionTypeTranslation,
-  productTypeTranslation,
-} from "@/lib/field-translations";
-import { FormSelect } from "@/src/components/FormSelect";
 import { getDirtyValues } from "@/lib/get-dirty-values";
 import { ApiResponse } from "@/lib/api";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
@@ -22,7 +13,13 @@ import { updateOrder } from "@/src/domains/order/services/update-order";
 import { createOrder } from "@/src/domains/order/services/create-order";
 import { FormInput } from "@/src/components/FormInput";
 import { Input } from "@/components/ui/input";
-import { SearchInput } from "@/src/components/SearchInput";
+import { useSearch } from "@/hooks/use-search";
+import { getProducts } from "@/src/domains/product/services/get-products";
+import { Option } from "@/src/domains/types";
+import debounce from "lodash.debounce";
+import AsyncSelect from "react-select/async";
+import reactSelectTheme from "@/src/components/SearchSelect/styles";
+import { SearchSelect } from "@/src/components/SearchSelect";
 
 interface OrderFormProps {
   editingOrder: Order | null;
@@ -39,6 +36,32 @@ const orderSchema = z.object({
 
 type FormData = z.input<typeof orderSchema>;
 
+const fetchProducts = async (inputValue: string): Promise<Option[]> => {
+  const response = await getProducts(inputValue, 0, 20);
+
+  if (!response.ok) {
+    return [];
+  }
+
+  return response.body.list.map((p) => ({
+    label: p.name,
+    value: JSON.stringify({ name: p.name, id: p.id, unitPrice: p.unitPrice }),
+  }));
+};
+
+const debouncedFetch = debounce(
+  (inputValue: string, resolve: (value: Option[]) => void) => {
+    fetchProducts(inputValue).then(resolve);
+  },
+  1000,
+);
+
+const loadOptions = (inputValue: string): Promise<Option[]> => {
+  return new Promise((resolve) => {
+    debouncedFetch(inputValue, resolve);
+  });
+};
+
 export function OrderForm({
   editingOrder,
   onSuccess,
@@ -48,24 +71,27 @@ export function OrderForm({
     defaultValues: editingOrder ?? undefined,
     resolver: zodResolver(orderSchema),
   });
-  const [products, setProducts] = useState<Product[]>([]);
   const [selectedProductOption, setSelectedProductOption] = useState<Product>();
   const [selectedProducts, setSelectedProducts] = useState<OrderProductDTO[]>(
     [],
   );
-  const [productQuery, setProductQuery] = useState<string>("");
+
+  const productSearch = useSearch(getProducts);
 
   const { formState } = methods;
 
   const productOptions = useMemo(() => {
-    return products.map((product) => ({ label: product.name, value: product }));
-  }, []);
+    return productSearch.results.map((product) => ({
+      label: product.name,
+      value: product,
+    }));
+  }, [productSearch.results]);
 
   const handleProductQueryChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setProductQuery(e.target.value);
+      productSearch.handleChangeQuery(e);
     },
-    [],
+    [productSearch],
   );
 
   const handleProductSelection = useCallback((option: Product) => {
@@ -110,13 +136,12 @@ export function OrderForm({
           </h2>
 
           <div className="w-full">
-            <SearchInput
-              value={productQuery}
-              options={productOptions}
-              onChange={handleProductQueryChange}
-              onEndOfList={() => {}}
-              onSelectOption={handleProductSelection}
-            ></SearchInput>
+            <SearchSelect
+              name="selectedProduct"
+              label="Busque por produtos"
+              defaultOptions
+              loadOptions={loadOptions}
+            />
           </div>
 
           <div className="w-full">
