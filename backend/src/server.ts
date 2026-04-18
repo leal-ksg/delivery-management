@@ -3,10 +3,12 @@ import dotenv from "dotenv";
 import { connectDb } from "./database/prisma";
 import cors from "cors";
 import { router } from "./routes";
+import { withRetry } from "./core/with-retry";
 
 async function main() {
   dotenv.config();
-  await connectDb();
+
+  await withRetry(connectDb);
 
   const PORT = process.env.PORT || 3001;
 

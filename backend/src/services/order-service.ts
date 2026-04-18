@@ -17,46 +17,13 @@ export class OrderService implements IOrderService {
     private readonly orderProductRepo: IOrderProductRepository,
     private readonly productRepo: IProductRepository,
     private readonly customerRepo: ICustomerRepository,
-    private readonly stockRepo: IStockRepository
+    private readonly stockRepo: IStockRepository,
   ) {}
 
   async validate(
     order: CreateOrderDTO | UpdateOrderDTO,
-    orderId?: number
+    orderId?: number,
   ): Promise<ValidationResult> {
-    if (order.userId) {
-      const userResult = await this.userRepo.findById(order.userId!);
-
-      if (!userResult.ok) return { succeed: false, message: userResult.error };
-
-      if (!userResult.body)
-        return {
-          succeed: false,
-          message: "Usuário não encontrado para finalizar o pedido",
-        };
-
-      if (!userResult.body.active)
-        return {
-          succeed: false,
-          message: `Usuário ${userResult.body.name} ${userResult.body.surname} não está ativo`,
-        };
-    }
-
-    if (order.customerId) {
-      const customerResult = await this.customerRepo.findById(
-        order.customerId!
-      );
-
-      if (!customerResult.ok)
-        return { succeed: false, message: customerResult.error };
-
-      if (!customerResult.body)
-        return {
-          succeed: false,
-          message: "Cliente não encontrado para finalizar o pedido",
-        };
-    }
-
     if ((!order.products || !order.products.length) && !orderId) {
       const message = `Não foi informado nenhum produto para o pedido`;
       return { succeed: false, message };
@@ -64,7 +31,7 @@ export class OrderService implements IOrderService {
 
     for (const orderProduct of order.products ?? []) {
       const productResult = await this.productRepo.findById(
-        orderProduct.productId
+        orderProduct.productId,
       );
 
       if (!productResult.ok)
@@ -80,8 +47,7 @@ export class OrderService implements IOrderService {
       if (!productResult.body.active)
         return {
           succeed: false,
-          message:
-            `O produto ${productResult.body.name} não está ativo`,
+          message: `O produto ${productResult.body.name} não está ativo`,
         };
     }
 
