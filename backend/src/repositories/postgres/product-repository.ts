@@ -21,6 +21,7 @@ export class ProductRepository implements IProductRepository {
       ? { name: { contains: query, mode: "insensitive" as const } }
       : {};
 
+    console.log(where);
     try {
       const [products, total] = await Promise.all([
         prisma.product.findMany({

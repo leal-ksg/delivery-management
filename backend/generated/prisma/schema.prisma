@@ -5,6 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -85,7 +86,9 @@ model Product {
 
 model Order {
   id            Int            @id @default(autoincrement())
+  customerId    String         @db.Uuid
   comment       String?
+  customer      Customer       @relation(fields: [customerId], references: [id])
   status        OrderStatus    @default(PENDING)
   createdAt     DateTime       @default(now())
   orderProducts OrderProduct[]
@@ -136,6 +139,7 @@ model Customer {
   state        String
   neighborhood String
   complement   String?
+  orders       Order[]
   active       Boolean @default(true)
 }
 

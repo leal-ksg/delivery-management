@@ -19,8 +19,9 @@ productRouter.get("/", async (req: Request, res: Response) => {
     : undefined;
 
   const page = req.query.page ? Number(req.query.page) : undefined;
-
+  
   const query = req.query.query ? String(req.query.query) : undefined;
+  console.log(query)
 
   const { statusCode, body } = await productController.getAllProducts(
     query,
@@ -32,14 +33,9 @@ productRouter.get("/", async (req: Request, res: Response) => {
 });
 
 productRouter.get("/:id", async (req: Request, res: Response) => {
-  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-
-  if (!id)
-    return res
-      .status(400)
-      .json({ error: "Informe um código de produto para a busca" });
-
-  const { statusCode, body } = await productController.getProductById(id);
+  const { statusCode, body } = await productController.getProductById(
+    req.params.id!,
+  );
 
   return res.status(statusCode).json(body);
 });
@@ -60,15 +56,8 @@ productRouter.patch(
   "/:id",
   validationMiddleware(updateProductSchema),
   async (req: Request, res: Response) => {
-    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-
-    if (!id)
-      return res
-        .status(400)
-        .json({ error: "Informe um código de produto para atualização" });
-
     const { statusCode, body } = await productController.updateProduct(
-      id,
+      req.params.id!,
       req.body,
     );
 
