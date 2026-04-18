@@ -5,10 +5,7 @@ create type orderProduct as (
 
 create type orderUpdateDTO as (
   id         INT,
-  comment    TEXT,
-  customerId UUID,
   status     "OrderStatus",
-  userId     UUID,
   products   orderProduct[]
 );
 
@@ -80,7 +77,6 @@ begin
 
   update "Order"
      set "comment" = coalesce(order_data.comment, "comment"),
-         "customerId" = coalesce(order_data.customerId, "customerId"),
          "status" = coalesce(order_data.status, "status")
     where "id" = order_data.id;
 

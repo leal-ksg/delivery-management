@@ -4,8 +4,6 @@ create type orderProduct as (
 );
 
 create type orderCreationDTO as (
-  customerId UUID,
-      userId UUID,
      comment TEXT,
     products orderProduct[]
 );
@@ -24,10 +22,8 @@ declare
   child_quantity   int;
 begin
   
-  insert into "Order" ("userId", "customerId", "comment") 
+  insert into "Order" ("comment") 
   values (
-    new_order.userId, 
-    new_order.customerId, 
     new_order.comment
   )
   returning id into order_id;

@@ -35,8 +35,6 @@ export class OrderRepository implements IOrderRepository {
         await transaction.$executeRaw`
         select create_order(
           row(
-            ${newOrder.customerId}::uuid,
-            ${newOrder.userId}::uuid,
             ${newOrder.comment}::text,
             (
               select array_agg(
@@ -76,9 +74,7 @@ export class OrderRepository implements IOrderRepository {
           row(
             ${id}::int,
             ${data.comment}::text,
-            ${data.customerId}::uuid,
             ${data.status},
-            ${data.userId}::uuid,
             (
               select coalesce(
                 array_agg(
