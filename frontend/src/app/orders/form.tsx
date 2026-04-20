@@ -23,9 +23,11 @@ import { useSearch } from "@/hooks/use-search";
 import { getProducts } from "@/src/domains/product/services/get-products";
 import { Option } from "@/src/domains/types";
 import debounce from "lodash.debounce";
-import { SearchSelect } from "@/src/components/SearchSelect";
+import { FormSearchSelect } from "@/src/components/FormSearchSelect";
 import { Button } from "@/components/ui/button";
 import { Checkout } from "./components/checkout";
+import { toast } from "@/components/ui/sonner";
+import { parse } from "path";
 
 interface OrderFormProps {
   editingOrder: Order | null;
@@ -41,8 +43,6 @@ export interface ProductOptionValue {
 }
 
 const orderSchema = z.object({
-  customerId: z.uuid("Informe o cliente"),
-  userId: z.uuid().nullable().optional(),
   comment: z.string().nullable().optional(),
   selectedProduct: z
     .object({
@@ -55,7 +55,7 @@ const orderSchema = z.object({
     })
     .nullable()
     .optional(),
-  status: z.enum(OrderStatus, "Informe um status válido"),
+  status: z.enum(OrderStatus, "Informe um status válido").nullable().optional(),
 });
 
 type FormData = z.input<typeof orderSchema>;
@@ -113,38 +113,67 @@ export function OrderForm({
 
     if (!selectedProduct) return;
 
-    console.log(selectedProduct);
-
     const alreadyIncluded = selectedProducts.some((p) => {
       return p.id === selectedProduct.value.id;
     });
 
     if (alreadyIncluded) return;
 
-    console.log(3);
-    setSelectedProducts((prev) => [...prev, selectedProduct.value]);
+    setSelectedProducts((prev) => [
+      ...prev,
+      { ...selectedProduct.value, quantity: 1 },
+    ]);
 
-    // console.log(4);
     setValue("selectedProduct", null);
   }, [methods, selectedProducts, setValue]);
 
+  function validateProducts() {
+    if (!selectedProducts || !selectedProducts.length)
+      return "Selecione os produtos vendidos";
+
+    if (selectedProducts.some((p) => !p.quantity))
+      return "Há um produto sem quantidade informada";
+
+    return null;
+  }
+
+  function mapOrderData(data: FormData) {
+    const products = selectedProducts.map((p) => ({
+      productId: p.id,
+      quantity: p.quantity,
+    }));
+
+    return {
+      comment: data.comment,
+      products,
+    };
+  }
+
   async function onSubmit(data: FormData) {
-    let response: ApiResponse<Product>;
+    let response: ApiResponse<Order>;
+
+    const productValidationError = validateProducts();
+
+    if (productValidationError) {
+      toast("error", productValidationError);
+      return;
+    }
 
     if (editingOrder) {
       const { dirtyFields } = formState;
 
       const parsedData = orderSchema.parse(methods.getValues());
       const dirtyData = getDirtyValues(dirtyFields, parsedData);
-      // response = await updateOrder(editingOrder.id, dirtyData);
+      response = await updateOrder(editingOrder.id, dirtyData);
     } else {
-      const parsedData = orderSchema.parse(data);
-      // response = await createOrder(parsedData);
+      const parsedData = mapOrderData(orderSchema.parse(data));
+      console.log(parsedData);
+      response = await createOrder(parsedData);
     }
 
-    // if (response.ok) {
-    //   onSuccess();
-    // }
+    if (response.ok) {
+      onSuccess();
+    }
   }
 
   useEffect(() => {
@@ -174,7 +203,7 @@ export function OrderForm({
             <FormInput name="comment" label="Comentário" optional />
 
             <div className="space-y-3">
-              <SearchSelect
+              <FormSearchSelect
                 name="selectedProduct"
                 label="Buscar produto"
                 defaultOptions
@@ -194,9 +223,28 @@ export function OrderForm({
 
           {selectedProducts && selectedProducts.length !== 0 && (
             <div className="bg-white rounded-2xl shadow-sm p-2 lg:p-6 flex flex-col">
-              <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                Produtos do Pedido
-              </h2>
+              <div className="flex justify-between text-gray-700">
+                <h2 className="text-lg font-semibold mb-4">
+                  Produtos do Pedido
+                </h2>
+
+                {selectedProducts && selectedProducts.length > 0 && (
+                  <span>
+                    Total:
+                    {selectedProducts
+                      .reduce(
+                        (acc, v) => acc + (v.quantity ?? 0) * v.unitPrice,
+                        0,
+                      )
+                      .toLocaleString("pt-br", {
+                        style: "currency",
+                        currency: "BRL",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })}
+                  </span>
+                )}
+              </div>
 
               <div className="flex-1 overflow-y-auto lg:pr-2">
                 <Checkout

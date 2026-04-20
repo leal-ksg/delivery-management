@@ -8,6 +8,14 @@ interface CheckoutProps {
 }
 
 export function Checkout({ products, updateProducts }: CheckoutProps) {
+  function handleQuantityChange(value: number, productId: string) {
+    updateProducts((prev) =>
+      prev.map((item) =>
+        item.id === productId ? { ...item, quantity: value } : item,
+      ),
+    );
+  }
+
   return (
     <div className="flex flex-col gap-3 w-full lg:p-3 max-h-49 lg:max-h-120 overflow-y-auto">
       {products.map((p) => (
@@ -26,19 +34,11 @@ export function Checkout({ products, updateProducts }: CheckoutProps) {
           </div>
 
           <input
-            type="number"
-            min={1}
+            type="text"
+            inputMode="decimal"
             defaultValue={1}
             className="w-16 h-9 text-center rounded-md border border-neutral-300 bg-white text-sm outline-none focus:ring-2 focus:ring-secondary"
-            onChange={(e) => {
-              const value = Number(e.target.value);
-
-              updateProducts((prev) =>
-                prev.map((item) =>
-                  item.id === p.id ? { ...item, quantity: value } : item,
-                ),
-              );
-            }}
+            onChange={(e) => handleQuantityChange(Number(e.target.value), p.id)}
           />
 
           <button

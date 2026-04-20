@@ -1,6 +1,4 @@
-import { Customer } from "../customer/types";
 import { ProductType } from "../product/types";
-import { User } from "../user/types";
 
 export enum OrderStatus {
   PENDING = "PENDING",
@@ -22,27 +20,20 @@ type OrderProduct = {
 };
 
 export type OrderProductDTO = {
-  id: string;
-  quantity: number;
+  productId: string;
+  quantity: number | null | undefined;
 };
 
 export type Order = {
   id: number;
   comment: string;
-  customer: Customer;
   status: OrderStatus;
   createdAt: Date;
   orderProducts: OrderProduct[];
   totalAmount: number;
-  userId: string;
-  user: User;
 };
 
 export type CreateOrderDTO = {
-  customerId: string;
-  userId: string;
   comment?: string | null;
-  status?: OrderStatus | null;
-  createdAt: Date;
   products: OrderProductDTO[];
 };

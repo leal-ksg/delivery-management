@@ -4,7 +4,7 @@ import { handleRequest } from "@/lib/handleRequest";
 import { toast } from "@/components/ui/sonner";
 
 export const updateOrder = async (
-  id: string,
+  id: number,
   order: Partial<Order>,
 ): Promise<ApiResponse<Order>> => {
   const response = await handleRequest<Order>({
