@@ -11,7 +11,7 @@ export function toast(
   duration: number = 3500,
 ) {
   message =
-    message.length > 70 && type === "error"
+    message.length > 100 && type === "error"
       ? "Ocorreu um erro inesperado no sistema"
       : message;
 

@@ -42,7 +42,7 @@ export function FormInput({
             )}
             {optional && (
               <>
-                <span className="ml-2 text-orange-300">opcional</span>
+                <span className="ml-2 text-orange-300">(opcional)</span>
               </>
             )}
           </label>

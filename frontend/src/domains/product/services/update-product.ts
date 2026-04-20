@@ -1,11 +1,11 @@
 import api, { ApiResponse } from "@/lib/api";
-import { Product } from "../types";
+import { Product, UpdateProductDTO } from "../types";
 import { handleRequest } from "@/lib/handleRequest";
 import { toast } from "@/components/ui/sonner";
 
 export const updateProduct = async (
   id: string,
-  product: Partial<Product>,
+  product: UpdateProductDTO,
 ): Promise<ApiResponse<Product>> => {
   const response = await handleRequest<Product>({
     successMessage: "Produto atualizado com sucesso!",

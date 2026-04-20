@@ -21,6 +21,7 @@ import { ApiResponse } from "@/lib/api";
 import { updateProduct } from "@/src/domains/product/services/update-product";
 import { useEffect } from "react";
 import { FormSwitch } from "@/src/components/FormSwitch";
+import { FormNumericInput } from "@/src/components/FormNumericInput";
 
 interface ProductFormProps {
   editingProduct: Product | null;
@@ -37,10 +38,6 @@ const productSchema = z.object({
     .number("Informe um preço unitário válido")
     .refine((val) => val !== 0, "Preço obrigatório")
     .nonnegative("O preço unitário não pode ser negativo"),
-  categoryId: z.coerce
-    .number("O código da categoria deve ser um número")
-    .refine((val) => val !== 0, "Informe uma categoria")
-    .nonnegative("O código da categoria não pode ser negativo"),
   minStock: z.coerce
     .number("O estoque mínimo deve ser um número")
     .nonnegative("O estoque mínimo não pode ser negativo")
@@ -54,6 +51,11 @@ const productSchema = z.object({
     .enum(ProductType, "Informe um tipo de produto válido")
     .nullable()
     .or(z.literal("").transform(() => null)),
+  stockQuantity: z.coerce
+    .number("Quantidade em estoque deve ser um número")
+    .nonnegative("Quantidade em estoque não pode ser negativa")
+    .optional()
+    .nullable(),
   active: z.boolean().nullable().optional(),
 });
 
@@ -65,14 +67,11 @@ export function ProductForm({
   onCancel,
 }: ProductFormProps) {
   const methods = useForm<FormData>({
-    defaultValues: editingProduct
-      ? {
-          ...editingProduct,
-          categoryId: String(editingProduct.categoryId),
-        }
-      : undefined,
+    defaultValues: editingProduct ? editingProduct : undefined,
     resolver: zodResolver(productSchema),
   });
+
+  console.log(editingProduct);
 
   const { formState } = methods;
 
@@ -112,7 +111,7 @@ export function ProductForm({
         ...editingProduct,
         unitPrice: String(editingProduct.unitPrice),
         minStock: String(editingProduct.minStock),
-        categoryId: String(editingProduct.categoryId),
+        stockQuantity: String(editingProduct.stockQuantity),
       });
     }
   }, [editingProduct, methods]);
@@ -123,37 +122,21 @@ export function ProductForm({
         className="flex flex-col w-full min-h-90 mt-10 gap-10"
         onSubmit={methods.handleSubmit(onSubmit)}
       >
-        <div className="flex flex-col w-full gap-2 md:flex-row">
+        <div className="flex flex-col w-full gap-2 lg:flex-row">
           <FormInput name="name" label="Nome" />
 
-          <FormInput name="description" label="Descrição" />
+          <FormInput name="description" label="Descrição" optional />
 
           <FormSwitch
             name="active"
             label="Ativo?"
-            classname="md:ml-4 self-start md:self-center"
+            classname="md:ml-4 self-end lg:self-center"
             disabled={!editingProduct}
             defaultValue={true}
           />
         </div>
 
-        <div className="flex flex-col w-full gap-2 md:flex-row">
-          <FormInput
-            name="unitPrice"
-            label="Preço unitário"
-            type="text"
-            inputMode="decimal"
-          />
-
-          <FormInput
-            name="minStock"
-            label="Estoque mínimo"
-            type="text"
-            inputMode="numeric"
-          />
-        </div>
-
-        <div className="flex flex-col w-full gap-2 md:flex-row">
+        <div className="flex flex-col w-full gap-2 lg:flex-row">
           <FormSelect
             options={productTypeOptions}
             name="type"
@@ -167,11 +150,32 @@ export function ProductForm({
             label="Tipo de consumo"
             defaultValue={ConsumptionType.PRODUCTION}
           />
+        </div>
 
-          <FormSelect
-            options={[{ label: "Lasanhas", value: "10" }]}
-            name="categoryId"
-            label="Categoria"
+        <div className="flex flex-col w-1/2 gap-2 lg:flex-row">
+          <FormNumericInput
+            name="unitPrice"
+            label="Preço unitário"
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="R$ "
+            decimalScale={2}
+            fixedDecimalScale
+            allowNegative={false}
+          />
+
+          <FormInput
+            name="minStock"
+            label="Estoque mínimo"
+            type="text"
+            inputMode="numeric"
+          />
+
+          <FormInput
+            name="stockQuantity"
+            label="Estoque atual"
+            type="text"
+            inputMode="numeric"
           />
         </div>
 

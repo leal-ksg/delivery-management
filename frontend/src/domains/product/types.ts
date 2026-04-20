@@ -15,20 +15,24 @@ export type Product = {
   name: string;
   description: string;
   unitPrice: number;
-  categoryId: number;
   type: ProductType;
   consumptionType: ConsumptionType;
   minStock: number;
   category: string;
   createdAt: Date;
+  stockQuantity: number;
 };
 
 export type CreateProductDTO = {
   name: string;
   description: string | null;
   unitPrice: number;
-  categoryId: number;
   minStock: number;
   type?: ProductType | null;
   consumptionType?: ConsumptionType | null;
+  stockQuantity?: number | null;
+};
+
+export type UpdateProductDTO = Partial<Product> & {
+  stockQuantity?: number | null;
 };
