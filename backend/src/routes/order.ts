@@ -1,11 +1,7 @@
 import { Request, Response, Router } from "express";
 import { OrderController } from "../controllers/order";
 import { OrderRepository } from "../repositories/postgres/order-repository";
-import { OrderProductRepository } from "../repositories/postgres/order-product-repository";
-import { UserRepository } from "../repositories/postgres/user-repository";
 import { ProductRepository } from "../repositories/postgres/product-repository";
-import { CustomerRepository } from "../repositories/postgres/customer-repository";
-import { StockRepository } from "../repositories/postgres/stock-repository";
 
 export const orderRouter = Router();
 const orderRepository = new OrderRepository();
@@ -13,7 +9,16 @@ const productRepository = new ProductRepository();
 const orderController = new OrderController(orderRepository, productRepository);
 
 orderRouter.get("/", async (req: Request, res: Response) => {
-  const { statusCode, body } = await orderController.getAllOrders();
+  const itemsPerPage = req.query.itemsPerPage
+    ? Number(req.query.itemsPerPage)
+    : undefined;
+
+  const page = req.query.page ? Number(req.query.page) : undefined;
+
+  const { statusCode, body } = await orderController.getAllOrders(
+    itemsPerPage,
+    page,
+  );
 
   return res.status(statusCode).json(body);
 });

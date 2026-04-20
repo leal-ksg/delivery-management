@@ -8,7 +8,6 @@ import { useCallback, useEffect, useState } from "react";
 import { EntityDialog } from "@/src/components/EntityDialog";
 import { toast } from "@/components/ui/sonner";
 import { Order } from "@/src/domains/order/types";
-import { deleteOrders } from "@/src/domains/order/services/delete-orders";
 import { getOrders } from "@/src/domains/order/services/get-orders";
 import { OrderForm } from "./form";
 
@@ -40,12 +39,6 @@ function SalesPage() {
     setIsFormDialogOpen(true);
   }, []);
 
-  const handleDelete = useCallback(async (rows: Order[]) => {
-    const ids = rows.map((order) => order.id);
-    await deleteOrders(ids);
-    setReload((prev) => !prev);
-  }, []);
-
   const handlePageChange = useCallback((newPage: number) => {
     setPage(newPage);
   }, []);
@@ -55,33 +48,33 @@ function SalesPage() {
     setItemsPerPage(newValue);
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchOrders() {
-  //     setLoading(true);
-  //     const result = await getOrders(page, itemsperPage);
+  useEffect(() => {
+    async function fetchOrders() {
+      setLoading(true);
+      const result = await getOrders(page, itemsperPage);
+      console.log(result);
 
-  //     if (result.ok) {
-  //       setOrders(result.body.list);
-  //       setTotal(result.body.total);
-  //     } else {
-  //       toast("error", result.error);
-  //     }
+      if (result.ok) {
+        setOrders(result.body.list);
+        setTotal(result.body.total);
+      } else {
+        toast("error", result.error);
+      }
 
-  //     setLoading(false);
-  //   }
+      setLoading(false);
+    }
 
-  //   fetchOrders();
-  // }, [itemsperPage, page, reload]);
+    fetchOrders();
+  }, [itemsperPage, page, reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
       <Toolbar description="Vendas" showGoBack />
 
-      <TableContainer>
+      <TableContainer classname="w-3/4">
         <DataTable
           columns={orderColumns}
           data={orders}
-          onDelete={handleDelete}
           onCreate={() => setIsFormDialogOpen(true)}
           onEdit={handleEdit}
           loading={loading}

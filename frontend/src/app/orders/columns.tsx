@@ -33,16 +33,36 @@ export const orderColumns: ColumnDef<Order>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "comment",
+    header: () => <div className="text-center">Comentário</div>,
     cell: ({ cell }) => {
-      const orderStatus: OrderStatus = cell.getValue() as OrderStatus;
-      return orderStatusTranslation[orderStatus] ?? "Não informado";
+      const comment = String(cell.getValue());
+
+      return (
+        <div className="text-center">{comment === "" ? "-" : comment}</div>
+      );
     },
   },
   {
-    accessorKey: "Lançada em",
-    header: "createdAt",
+    accessorKey: "createdAt",
+    header: "Lançada em",
+    cell: ({ cell }) => {
+      const date = new Date(String(cell.getValue()));
+
+      const formated = date.toLocaleString("pt-br", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "UTC",
+      });
+      return formated;
+    },
   },
   {
     id: "totalAmount",

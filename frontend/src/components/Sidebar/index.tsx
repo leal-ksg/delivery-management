@@ -134,7 +134,7 @@ export function Sidebar() {
         className={`h-dvh transition-[width] duration-300 ease-in-out z-50 min-h-full pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] fixed md:relative top-0 left-0
           ${isOpen ? "w-52" : "w-0 md:w-20"}`}
       >
-        <div className="flex flex-col bg-primary rounded-tr-2xl rounded-br-2xl min-h-full overflow-hidden">
+        <div className="flex flex-col bg-primary min-h-full overflow-hidden">
           <div className="relative h-36 w-full shrink-0">
             <div
               className={`absolute top-4 transition-all duration-300 ${isOpen ? "right-2" : "left-1/2 -translate-x-1/2"}`}

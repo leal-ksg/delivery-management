@@ -2,20 +2,55 @@ import { Order } from "../../../generated/prisma";
 import {
   CreateOrderDTO,
   IOrderRepository,
+  OrderDTO,
   UpdateOrderDTO,
 } from "../../controllers/order/interfaces";
+import { Pagination } from "../../core/pagination";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
 
 export class OrderRepository implements IOrderRepository {
-  async findAll(): Promise<Result<Order[]>> {
-    try {
-      const orders = await prisma.order.findMany();
+  async findAll(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<Result<Pagination<OrderDTO>>> {
+    itemsPerPage = Math.min(50, Math.max(1, itemsPerPage ?? 10));
+    page = Math.max(1, page ?? 1);
 
-      return { ok: true, body: orders };
+    try {
+      const [orders, total] = await Promise.all([
+        prisma.order.findMany({
+          include: {
+            orderProducts: {
+              include: {
+                product: {
+                  select: { name: true, unitPrice: true, type: true },
+                },
+              },
+            },
+          },
+          orderBy: { id: "desc" },
+          take: itemsPerPage,
+          skip: (page - 1) * itemsPerPage,
+        }),
+        prisma.order.count(),
+      ]);
+
+      return {
+        ok: true,
+        body: {
+          list: orders,
+          total,
+          itemsPerPage,
+          page,
+        },
+      };
     } catch (err) {
-      return { ok: false, error: parseDatabaseErrorMessage(err, "Pedido") };
+      return {
+        ok: false,
+        error: parseDatabaseErrorMessage(err, "Pedido"),
+      };
     }
   }
 
@@ -62,11 +97,12 @@ export class OrderRepository implements IOrderRepository {
     try {
       const { products: _products, ...data } = order;
 
-      if (Object.keys(data).length === 0) return { ok: true, body: undefined };
+      console.log(data);
 
       await prisma.$transaction(async (transaction) => {
         const productsJson = JSON.stringify(_products ?? []);
 
+        console.log(productsJson);
         await transaction.$executeRaw`
         select update_order(
           row(

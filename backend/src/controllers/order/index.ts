@@ -1,5 +1,6 @@
 import { Order } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
+import { Pagination } from "../../core/pagination";
 import { OrderService } from "../../services/order-service";
 import { IProductRepository } from "../product/interfaces";
 import {
@@ -7,6 +8,7 @@ import {
   IOrderController,
   IOrderRepository,
   IOrderService,
+  OrderDTO,
   UpdateOrderDTO,
 } from "./interfaces";
 
@@ -20,8 +22,11 @@ export class OrderController implements IOrderController {
     this.service = new OrderService(orderRepository, productRepository);
   }
 
-  async getAllOrders(): Promise<HttpResponse<Order[]>> {
-    const result = await this.orderRepository.findAll();
+  async getAllOrders(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<HttpResponse<Pagination<OrderDTO>>> {
+    const result = await this.orderRepository.findAll(itemsPerPage, page);
 
     return toHttpResponse(result);
   }

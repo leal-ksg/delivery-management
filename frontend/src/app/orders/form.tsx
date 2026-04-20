@@ -1,25 +1,16 @@
 import ActionButton from "@/src/components/ActionButton";
 import * as z from "zod";
 import { CheckCircle, Plus, XCircle } from "lucide-react";
-import { useForm, FormProvider, useWatch } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product } from "@/src/domains/product/types";
 import { Spinner } from "@/components/ui/spinner";
 import { getDirtyValues } from "@/lib/get-dirty-values";
 import { ApiResponse } from "@/lib/api";
-import {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useEffectEvent,
-  useMemo,
-  useState,
-} from "react";
-import { Order, OrderProductDTO, OrderStatus } from "@/src/domains/order/types";
+import { useCallback, useEffect, useState } from "react";
+import { Order, OrderStatus } from "@/src/domains/order/types";
 import { updateOrder } from "@/src/domains/order/services/update-order";
 import { createOrder } from "@/src/domains/order/services/create-order";
 import { FormInput } from "@/src/components/FormInput";
-import { useSearch } from "@/hooks/use-search";
 import { getProducts } from "@/src/domains/product/services/get-products";
 import { Option } from "@/src/domains/types";
 import debounce from "lodash.debounce";
@@ -27,7 +18,6 @@ import { FormSearchSelect } from "@/src/components/FormSearchSelect";
 import { Button } from "@/components/ui/button";
 import { Checkout } from "./components/checkout";
 import { toast } from "@/components/ui/sonner";
-import { parse } from "path";
 
 interface OrderFormProps {
   editingOrder: Order | null;
@@ -93,6 +83,17 @@ const loadProductOptions = (
   });
 };
 
+const mapOrderProducts = (order: Order | null): ProductOptionValue[] => {
+  if (!order) return [];
+
+  return order.orderProducts.map((p) => ({
+    name: p.product.name,
+    id: p.productId,
+    unitPrice: p.product.unitPrice,
+    quantity: p.quantity,
+  }));
+};
+
 export function OrderForm({
   editingOrder,
   onSuccess,
@@ -104,7 +105,7 @@ export function OrderForm({
   });
   const [selectedProducts, setSelectedProducts] = useState<
     ProductOptionValue[]
-  >([]);
+  >(mapOrderProducts(editingOrder));
 
   const { formState, setValue } = methods;
 
@@ -164,7 +165,16 @@ export function OrderForm({
 
       const parsedData = orderSchema.parse(methods.getValues());
       const dirtyData = getDirtyValues(dirtyFields, parsedData);
-      response = await updateOrder(editingOrder.id, dirtyData);
+
+      const mappedProducts = selectedProducts.map((p) => ({
+        productId: p.id,
+        quantity: p.quantity,
+      }));
+
+      response = await updateOrder(editingOrder.id, {
+        ...dirtyData,
+        products: mappedProducts,
+      });
     } else {
       const parsedData = mapOrderData(orderSchema.parse(data));
       console.log(parsedData);
@@ -177,12 +187,11 @@ export function OrderForm({
   }
 
   useEffect(() => {
-    // console.log(selectedProducts);
-  }, [selectedProducts]);
-
-  useEffect(() => {
     if (editingOrder) {
-      methods.reset(editingOrder);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { orderProducts, ...order } = editingOrder;
+
+      methods.reset(order);
     }
   }, [editingOrder, methods]);
 
@@ -260,7 +269,7 @@ export function OrderForm({
         <div className="flex justify-end gap-3 pt-2 lg:pt-4 border-t border-gray-300">
           <ActionButton
             onClick={onCancel}
-            className="bg-gray-500 hover:bg-gray-400 text-white"
+            className="bg-gray-500 hover:bg-gray-400 text-white disabled:text-white"
             disabled={formState.isSubmitting}
           >
             <span>Cancelar</span>
@@ -269,7 +278,7 @@ export function OrderForm({
 
           <ActionButton
             type="submit"
-            className="bg-green-600 hover:bg-green-500 text-white"
+            className="bg-green-600 hover:bg-green-500 text-white disabled:text-white"
             disabled={formState.isSubmitting}
           >
             <span>Confirmar</span>

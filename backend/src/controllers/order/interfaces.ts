@@ -1,6 +1,26 @@
-import { Order, Prisma, OrderProduct } from "../../../generated/prisma";
+import {
+  Order,
+  Prisma,
+  OrderProduct,
+  ProductType,
+} from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
+import { Pagination } from "../../core/pagination";
 import { Result, ValidationResult } from "../../core/result";
+
+interface OrderProductDTO {
+  productId: string;
+  quantity: number;
+  product: {
+    name: string;
+    unitPrice: Prisma.Decimal;
+    type: ProductType;
+  };
+}
+
+export interface OrderDTO extends Order {
+  orderProducts: OrderProductDTO[];
+}
 
 export interface CreateOrderDTO {
   comment: string | null;
@@ -21,14 +41,20 @@ export interface IOrderService {
 }
 
 export interface IOrderRepository {
-  findAll(): Promise<Result<Order[]>>;
+  findAll(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<Result<Pagination<OrderDTO>>>;
   findById(id: number): Promise<Result<Order | null>>;
   create(newOrder: CreateOrderDTO): Promise<Result<void>>;
   update(id: number, order: UpdateOrderDTO): Promise<Result<void>>;
 }
 
 export interface IOrderController {
-  getAllOrders(): Promise<HttpResponse<Order[]>>;
+  getAllOrders(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<HttpResponse<Pagination<OrderDTO>>>;
   getOrderById(id: number): Promise<HttpResponse<Order | null>>;
   createOrder(newOrder: CreateOrderDTO): Promise<HttpResponse<void>>;
   updateOrder(id: number, order: UpdateOrderDTO): Promise<HttpResponse<void>>;

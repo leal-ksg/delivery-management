@@ -10,9 +10,10 @@ export enum OrderStatus {
 }
 
 type OrderProduct = {
+  orderId: number;
+  productId: string;
   quantity: number;
   product: {
-    id: string;
     name: string;
     unitPrice: number;
     type: ProductType;
@@ -30,7 +31,6 @@ export type Order = {
   status: OrderStatus;
   createdAt: Date;
   orderProducts: OrderProduct[];
-  totalAmount: number;
 };
 
 export type CreateOrderDTO = {
