@@ -24,6 +24,7 @@ export class ProductRepository implements IProductRepository {
     try {
       const [products, total] = await Promise.all([
         prisma.product.findMany({
+          include: { stock: { select: { quantity: true } } },
           where,
           orderBy: { name: "asc" },
           take: itemsPerPage,
@@ -32,9 +33,14 @@ export class ProductRepository implements IProductRepository {
         prisma.product.count(),
       ]);
 
+      const productsDTO = products.map(({ stock, ...product }) => ({
+        ...product,
+        stockQuantity: stock?.quantity,
+      }));
+
       return {
         ok: true,
-        body: { list: products, total, itemsPerPage, page },
+        body: { list: productsDTO, total, itemsPerPage, page },
       };
     } catch (error) {
       return { ok: false, error: parseDatabaseErrorMessage(error, "Produto") };
@@ -77,9 +83,14 @@ export class ProductRepository implements IProductRepository {
   async update(
     id: string,
     product: Partial<Product>,
+    transaction: PrismaClient,
   ): Promise<Result<Product>> {
     try {
-      const updatedProduct = await prisma.product.update({
+      if (!Object.keys(product).length) {
+        return { ok: true, body: {} as Product };
+      }
+
+      const updatedProduct = await transaction.product.update({
         where: { id },
         data: product,
       });

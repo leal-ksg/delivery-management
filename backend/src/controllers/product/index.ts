@@ -8,6 +8,7 @@ import {
   IProductController,
   IProductRepository,
   IProductService,
+  ProductDTO,
 } from "./interfaces";
 
 export class ProductController implements IProductController {
@@ -24,8 +25,12 @@ export class ProductController implements IProductController {
     query?: string,
     itemsPerPage?: number,
     page?: number,
-  ): Promise<HttpResponse<Pagination<Product>>> {
-    const result = await this.productRepository.findAll(query, itemsPerPage, page);
+  ): Promise<HttpResponse<Pagination<ProductDTO>>> {
+    const result = await this.productRepository.findAll(
+      query,
+      itemsPerPage,
+      page,
+    );
 
     return toHttpResponse(result);
   }
@@ -48,9 +53,9 @@ export class ProductController implements IProductController {
     id: string,
     product: Partial<Product>,
   ): Promise<HttpResponse<Product>> {
-    const result = await this.productRepository.update(id, product);
+    const result = await this.service.updateProduct(id, product);
 
-    return toHttpResponse(result);
+    return toHttpResponse(result, 201);
   }
 
   async deleteProduct(ids: string[]): Promise<HttpResponse<void>> {

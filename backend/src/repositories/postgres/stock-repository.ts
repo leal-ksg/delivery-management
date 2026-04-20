@@ -44,9 +44,22 @@ export class StockRepository implements IStockRepository {
     }
   }
 
+  async update(data: Stock, transaction: PrismaClient): Promise<Result<Stock>> {
+    try {
+      const updatedStock = await transaction.stock.update({
+        where: { productId: data.productId },
+        data: { quantity: data.quantity },
+      });
+
+      return { ok: true, body: updatedStock };
+    } catch (error) {
+      return { ok: false, error: parseDatabaseErrorMessage(error, "Estoque") };
+    }
+  }
+
   async increase(
     data: Stock,
-    transaction: Prisma.TransactionClient
+    transaction: Prisma.TransactionClient,
   ): Promise<Result<Stock>> {
     try {
       const stock = await transaction.stock.update({
@@ -66,7 +79,7 @@ export class StockRepository implements IStockRepository {
 
   async decrease(
     data: Stock,
-    transaction: Prisma.TransactionClient
+    transaction: Prisma.TransactionClient,
   ): Promise<Result<Stock>> {
     try {
       const stock = await transaction.stock.update({

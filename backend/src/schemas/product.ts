@@ -23,6 +23,11 @@ export const productSchema = z.object({
     .nullable()
     .optional(),
   type: z.enum(ProductType, "Informe um tipo de produto válido").nullable(),
+  stockQuantity: z.coerce
+    .number("Quantidade em estoque não é um número ou não foi informada")
+    .nonnegative("Quantidade em estoque não pode ser negativa")
+    .optional()
+    .nullable(),
   active: z.boolean().optional().nullable(),
 });
 

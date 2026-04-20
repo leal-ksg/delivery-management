@@ -58,6 +58,10 @@ export class CustomerRepository implements ICustomerRepository {
   ): Promise<Result<Customer>> {
     console.log(customer);
     try {
+      if (!Object.keys(customer).length) {
+        return { ok: true, body: {} as Customer };
+      }
+
       const customers = await prisma.customer.update({
         data: customer,
         where: { id },
