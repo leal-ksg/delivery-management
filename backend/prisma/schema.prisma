@@ -60,7 +60,6 @@ model User {
 model ProductCategory {
   id       Int       @id @default(autoincrement())
   name     String    @unique
-  products Product[]
 }
 
 model Product {
@@ -69,11 +68,9 @@ model Product {
   name             String
   description      String?
   unitPrice        Decimal           @db.Decimal(10, 2)
-  categoryId       Int
   type             ProductType       @default(PURCHASE)
   consumptionType  ConsumptionType   @default(PRODUCTION)
   minStock         Int               @default(0)
-  category         ProductCategory   @relation(fields: [categoryId], references: [id])
   createdAt        DateTime          @default(now())
   orderProducts    OrderProduct[]
   purchaseProducts PurchaseProduct[]

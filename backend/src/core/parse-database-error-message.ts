@@ -3,12 +3,12 @@ import { Prisma } from "../../generated/prisma";
 export function parseDatabaseErrorMessage(err: unknown, entity: string) {
   let message: string = "Ocorreu um erro desconhecido no banco de dados";
 
-  console.log(err);
-
   if (err instanceof Error && "message" in err) {
     const match = err.message.match(/Message:\s*`([^`]*)`/);
 
     message = match && match.length ? match[1]! : err.message;
+
+    message = message.replace(/^ERROR:\s*/, "");
   }
 
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -18,7 +18,7 @@ export function parseDatabaseErrorMessage(err: unknown, entity: string) {
         break;
 
       case "P2002":
-        message = `${entity} tem um campo único já cadastrado`
+        message = `${entity} tem um campo único já cadastrado`;
         break;
 
       case "P2003":

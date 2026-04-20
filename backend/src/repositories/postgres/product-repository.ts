@@ -21,7 +21,6 @@ export class ProductRepository implements IProductRepository {
       ? { name: { contains: query, mode: "insensitive" as const } }
       : {};
 
-    console.log(where);
     try {
       const [products, total] = await Promise.all([
         prisma.product.findMany({
@@ -44,11 +43,15 @@ export class ProductRepository implements IProductRepository {
 
   async findById(id: string): Promise<Result<Product | null>> {
     try {
+      console.log(id);
       const product = await prisma.product.findUnique({ where: { id } });
 
       return { ok: true, body: product };
     } catch (error) {
-      return { ok: false, error: parseDatabaseErrorMessage(error, "Produto") };
+      return {
+        ok: false,
+        error: parseDatabaseErrorMessage(error, "Produto"),
+      };
     }
   }
 

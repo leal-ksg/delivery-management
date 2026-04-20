@@ -142,7 +142,6 @@ exports.Prisma.ProductScalarFieldEnum = {
   name: 'name',
   description: 'description',
   unitPrice: 'unitPrice',
-  categoryId: 'categoryId',
   type: 'type',
   consumptionType: 'consumptionType',
   minStock: 'minStock',

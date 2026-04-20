@@ -12,7 +12,6 @@ export interface CreateProductDTO {
   name: string;
   description: string | null;
   unitPrice: Prisma.Decimal;
-  categoryId: number;
   minStock: number;
   consumptionType: ConsumptionType | null;
   type: ProductType | null;

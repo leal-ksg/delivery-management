@@ -14,10 +14,6 @@ export const productSchema = z.object({
     .number("Preço unitário não é um número ou não foi informado")
     .refine((value) => value !== 0, "Preço obrigatório")
     .nonnegative("O preço unitário não pode ser negativo"),
-  categoryId: z.coerce
-    .number("Código de categoria não é um número ou não foi informado")
-    .refine((value) => value !== 0, "Informe uma categoria")
-    .nonnegative("O código da categoria não pode ser negativo"),
   minStock: z.coerce
     .number("Estoque mínimo não é um número ou não foi informado")
     .nonnegative("O estoque mínimo não pode ser negativo")

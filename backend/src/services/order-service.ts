@@ -1,23 +1,16 @@
-import { ICustomerRepository } from "../controllers/customer/interfaces";
+
 import {
   CreateOrderDTO,
-  IOrderProductRepository,
   IOrderRepository,
   IOrderService,
   UpdateOrderDTO,
 } from "../controllers/order/interfaces";
 import { IProductRepository } from "../controllers/product/interfaces";
-import { IStockRepository } from "../controllers/stock/interfaces";
-import { IUserRepository } from "../controllers/user/interfaces";
 import { Result, ValidationResult } from "../core/result";
 export class OrderService implements IOrderService {
   constructor(
-    private readonly userRepo: IUserRepository,
     private readonly orderRepo: IOrderRepository,
-    private readonly orderProductRepo: IOrderProductRepository,
     private readonly productRepo: IProductRepository,
-    private readonly customerRepo: ICustomerRepository,
-    private readonly stockRepo: IStockRepository,
   ) {}
 
   async validate(

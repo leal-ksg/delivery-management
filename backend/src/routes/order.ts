@@ -9,19 +9,8 @@ import { StockRepository } from "../repositories/postgres/stock-repository";
 
 export const orderRouter = Router();
 const orderRepository = new OrderRepository();
-const orderProductRepository = new OrderProductRepository();
-const userRepository = new UserRepository();
 const productRepository = new ProductRepository();
-const customerRepository = new CustomerRepository();
-const stockRepository = new StockRepository();
-const orderController = new OrderController(
-  orderRepository,
-  orderProductRepository,
-  userRepository,
-  productRepository,
-  customerRepository,
-  stockRepository
-);
+const orderController = new OrderController(orderRepository, productRepository);
 
 orderRouter.get("/", async (req: Request, res: Response) => {
   const { statusCode, body } = await orderController.getAllOrders();
@@ -31,7 +20,7 @@ orderRouter.get("/", async (req: Request, res: Response) => {
 
 orderRouter.get("/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await orderController.getOrderById(
-    Number(req.params.id)
+    Number(req.params.id),
   );
 
   return res.status(statusCode).json(body);
@@ -46,7 +35,7 @@ orderRouter.post("/", async (req: Request, res: Response) => {
 orderRouter.patch("/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await orderController.updateOrder(
     Number(req.params.id),
-    req.body
+    req.body,
   );
 
   return res.status(statusCode).json(body);
@@ -55,7 +44,7 @@ orderRouter.patch("/:id", async (req: Request, res: Response) => {
 orderRouter.patch("/cancel/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await orderController.cancelOrder(
     Number(req.params.id),
-    req.body
+    req.body,
   );
 
   return res.status(statusCode).json(body);
