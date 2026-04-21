@@ -266,7 +266,7 @@ export function OrderForm({
         </div>
 
         {/* ACTIONS */}
-        <div className="flex justify-end gap-3 pt-2 lg:pt-4 border-t border-gray-300">
+        <div className="flex justify-end gap-3 pt-2 lg:pt-4">
           <ActionButton
             onClick={onCancel}
             className="bg-gray-500 hover:bg-gray-400 text-white disabled:text-white"

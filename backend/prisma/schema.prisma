@@ -76,8 +76,8 @@ model Product {
   purchaseProducts PurchaseProduct[]
   stock            Stock?
   production  Production[]
-  materialTreeChild MaterialTree[] @relation("MaterialTreeChild")
-  materialTreeParent MaterialTree[] @relation("MaterialTreeParent")
+  ProductTreeChild ProductTree[] @relation("ProductTreeChild")
+  ProductTreeParent ProductTree[] @relation("ProductTreeParent")
 }
 
 model Order {
@@ -154,14 +154,15 @@ model GeneralLog {
   date        DateTime @default(now())
 }
 
-model MaterialTree {
+model ProductTree {
   parentId    String   @db.Uuid
-  parent      Product  @relation("MaterialTreeParent", fields: [parentId], references: [id])
+  parent      Product  @relation("ProductTreeParent", fields: [parentId], references: [id])
   
   childId     String   @db.Uuid
-  child       Product  @relation("MaterialTreeChild", fields: [childId], references: [id])
+  child       Product  @relation("ProductTreeChild", fields: [childId], references: [id])
 
   childQuantity   Int
+  childUnitCost   Decimal  @db.Decimal(10, 2)
 
   @@id([childId, parentId])
 }

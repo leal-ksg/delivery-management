@@ -69,10 +69,10 @@ export type Production = $Result.DefaultSelection<Prisma.$ProductionPayload>
  */
 export type GeneralLog = $Result.DefaultSelection<Prisma.$GeneralLogPayload>
 /**
- * Model MaterialTree
+ * Model ProductTree
  * 
  */
-export type MaterialTree = $Result.DefaultSelection<Prisma.$MaterialTreePayload>
+export type ProductTree = $Result.DefaultSelection<Prisma.$ProductTreePayload>
 
 /**
  * Enums
@@ -388,14 +388,14 @@ export class PrismaClient<
   get generalLog(): Prisma.GeneralLogDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.materialTree`: Exposes CRUD operations for the **MaterialTree** model.
+   * `prisma.productTree`: Exposes CRUD operations for the **ProductTree** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more MaterialTrees
-    * const materialTrees = await prisma.materialTree.findMany()
+    * // Fetch zero or more ProductTrees
+    * const productTrees = await prisma.productTree.findMany()
     * ```
     */
-  get materialTree(): Prisma.MaterialTreeDelegate<ExtArgs, ClientOptions>;
+  get productTree(): Prisma.ProductTreeDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -848,7 +848,7 @@ export namespace Prisma {
     Stock: 'Stock',
     Production: 'Production',
     GeneralLog: 'GeneralLog',
-    MaterialTree: 'MaterialTree'
+    ProductTree: 'ProductTree'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -867,7 +867,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "productCategory" | "product" | "order" | "orderProduct" | "purchase" | "purchaseProduct" | "customer" | "stock" | "production" | "generalLog" | "materialTree"
+      modelProps: "user" | "productCategory" | "product" | "order" | "orderProduct" | "purchase" | "purchaseProduct" | "customer" | "stock" | "production" | "generalLog" | "productTree"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1685,77 +1685,77 @@ export namespace Prisma {
           }
         }
       }
-      MaterialTree: {
-        payload: Prisma.$MaterialTreePayload<ExtArgs>
-        fields: Prisma.MaterialTreeFieldRefs
+      ProductTree: {
+        payload: Prisma.$ProductTreePayload<ExtArgs>
+        fields: Prisma.ProductTreeFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.MaterialTreeFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload> | null
+            args: Prisma.ProductTreeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.MaterialTreeFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>
+            args: Prisma.ProductTreeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>
           }
           findFirst: {
-            args: Prisma.MaterialTreeFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload> | null
+            args: Prisma.ProductTreeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.MaterialTreeFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>
+            args: Prisma.ProductTreeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>
           }
           findMany: {
-            args: Prisma.MaterialTreeFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>[]
+            args: Prisma.ProductTreeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>[]
           }
           create: {
-            args: Prisma.MaterialTreeCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>
+            args: Prisma.ProductTreeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>
           }
           createMany: {
-            args: Prisma.MaterialTreeCreateManyArgs<ExtArgs>
+            args: Prisma.ProductTreeCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.MaterialTreeCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>[]
+            args: Prisma.ProductTreeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>[]
           }
           delete: {
-            args: Prisma.MaterialTreeDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>
+            args: Prisma.ProductTreeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>
           }
           update: {
-            args: Prisma.MaterialTreeUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>
+            args: Prisma.ProductTreeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>
           }
           deleteMany: {
-            args: Prisma.MaterialTreeDeleteManyArgs<ExtArgs>
+            args: Prisma.ProductTreeDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.MaterialTreeUpdateManyArgs<ExtArgs>
+            args: Prisma.ProductTreeUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.MaterialTreeUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>[]
+            args: Prisma.ProductTreeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>[]
           }
           upsert: {
-            args: Prisma.MaterialTreeUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MaterialTreePayload>
+            args: Prisma.ProductTreeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProductTreePayload>
           }
           aggregate: {
-            args: Prisma.MaterialTreeAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMaterialTree>
+            args: Prisma.ProductTreeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProductTree>
           }
           groupBy: {
-            args: Prisma.MaterialTreeGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MaterialTreeGroupByOutputType>[]
+            args: Prisma.ProductTreeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProductTreeGroupByOutputType>[]
           }
           count: {
-            args: Prisma.MaterialTreeCountArgs<ExtArgs>
-            result: $Utils.Optional<MaterialTreeCountAggregateOutputType> | number
+            args: Prisma.ProductTreeCountArgs<ExtArgs>
+            result: $Utils.Optional<ProductTreeCountAggregateOutputType> | number
           }
         }
       }
@@ -1866,7 +1866,7 @@ export namespace Prisma {
     stock?: StockOmit
     production?: ProductionOmit
     generalLog?: GeneralLogOmit
-    materialTree?: MaterialTreeOmit
+    productTree?: ProductTreeOmit
   }
 
   /* Types for Logging */
@@ -1981,16 +1981,16 @@ export namespace Prisma {
     orderProducts: number
     purchaseProducts: number
     production: number
-    materialTreeChild: number
-    materialTreeParent: number
+    ProductTreeChild: number
+    ProductTreeParent: number
   }
 
   export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderProducts?: boolean | ProductCountOutputTypeCountOrderProductsArgs
     purchaseProducts?: boolean | ProductCountOutputTypeCountPurchaseProductsArgs
     production?: boolean | ProductCountOutputTypeCountProductionArgs
-    materialTreeChild?: boolean | ProductCountOutputTypeCountMaterialTreeChildArgs
-    materialTreeParent?: boolean | ProductCountOutputTypeCountMaterialTreeParentArgs
+    ProductTreeChild?: boolean | ProductCountOutputTypeCountProductTreeChildArgs
+    ProductTreeParent?: boolean | ProductCountOutputTypeCountProductTreeParentArgs
   }
 
   // Custom InputTypes
@@ -2028,15 +2028,15 @@ export namespace Prisma {
   /**
    * ProductCountOutputType without action
    */
-  export type ProductCountOutputTypeCountMaterialTreeChildArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MaterialTreeWhereInput
+  export type ProductCountOutputTypeCountProductTreeChildArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductTreeWhereInput
   }
 
   /**
    * ProductCountOutputType without action
    */
-  export type ProductCountOutputTypeCountMaterialTreeParentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MaterialTreeWhereInput
+  export type ProductCountOutputTypeCountProductTreeParentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductTreeWhereInput
   }
 
 
@@ -4430,8 +4430,8 @@ export namespace Prisma {
     purchaseProducts?: boolean | Product$purchaseProductsArgs<ExtArgs>
     stock?: boolean | Product$stockArgs<ExtArgs>
     production?: boolean | Product$productionArgs<ExtArgs>
-    materialTreeChild?: boolean | Product$materialTreeChildArgs<ExtArgs>
-    materialTreeParent?: boolean | Product$materialTreeParentArgs<ExtArgs>
+    ProductTreeChild?: boolean | Product$ProductTreeChildArgs<ExtArgs>
+    ProductTreeParent?: boolean | Product$ProductTreeParentArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -4477,8 +4477,8 @@ export namespace Prisma {
     purchaseProducts?: boolean | Product$purchaseProductsArgs<ExtArgs>
     stock?: boolean | Product$stockArgs<ExtArgs>
     production?: boolean | Product$productionArgs<ExtArgs>
-    materialTreeChild?: boolean | Product$materialTreeChildArgs<ExtArgs>
-    materialTreeParent?: boolean | Product$materialTreeParentArgs<ExtArgs>
+    ProductTreeChild?: boolean | Product$ProductTreeChildArgs<ExtArgs>
+    ProductTreeParent?: boolean | Product$ProductTreeParentArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4491,8 +4491,8 @@ export namespace Prisma {
       purchaseProducts: Prisma.$PurchaseProductPayload<ExtArgs>[]
       stock: Prisma.$StockPayload<ExtArgs> | null
       production: Prisma.$ProductionPayload<ExtArgs>[]
-      materialTreeChild: Prisma.$MaterialTreePayload<ExtArgs>[]
-      materialTreeParent: Prisma.$MaterialTreePayload<ExtArgs>[]
+      ProductTreeChild: Prisma.$ProductTreePayload<ExtArgs>[]
+      ProductTreeParent: Prisma.$ProductTreePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4902,8 +4902,8 @@ export namespace Prisma {
     purchaseProducts<T extends Product$purchaseProductsArgs<ExtArgs> = {}>(args?: Subset<T, Product$purchaseProductsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PurchaseProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     stock<T extends Product$stockArgs<ExtArgs> = {}>(args?: Subset<T, Product$stockArgs<ExtArgs>>): Prisma__StockClient<$Result.GetResult<Prisma.$StockPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     production<T extends Product$productionArgs<ExtArgs> = {}>(args?: Subset<T, Product$productionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    materialTreeChild<T extends Product$materialTreeChildArgs<ExtArgs> = {}>(args?: Subset<T, Product$materialTreeChildArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    materialTreeParent<T extends Product$materialTreeParentArgs<ExtArgs> = {}>(args?: Subset<T, Product$materialTreeParentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ProductTreeChild<T extends Product$ProductTreeChildArgs<ExtArgs> = {}>(args?: Subset<T, Product$ProductTreeChildArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ProductTreeParent<T extends Product$ProductTreeParentArgs<ExtArgs> = {}>(args?: Subset<T, Product$ProductTreeParentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5421,51 +5421,51 @@ export namespace Prisma {
   }
 
   /**
-   * Product.materialTreeChild
+   * Product.ProductTreeChild
    */
-  export type Product$materialTreeChildArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$ProductTreeChildArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
-    where?: MaterialTreeWhereInput
-    orderBy?: MaterialTreeOrderByWithRelationInput | MaterialTreeOrderByWithRelationInput[]
-    cursor?: MaterialTreeWhereUniqueInput
+    include?: ProductTreeInclude<ExtArgs> | null
+    where?: ProductTreeWhereInput
+    orderBy?: ProductTreeOrderByWithRelationInput | ProductTreeOrderByWithRelationInput[]
+    cursor?: ProductTreeWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: MaterialTreeScalarFieldEnum | MaterialTreeScalarFieldEnum[]
+    distinct?: ProductTreeScalarFieldEnum | ProductTreeScalarFieldEnum[]
   }
 
   /**
-   * Product.materialTreeParent
+   * Product.ProductTreeParent
    */
-  export type Product$materialTreeParentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Product$ProductTreeParentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
-    where?: MaterialTreeWhereInput
-    orderBy?: MaterialTreeOrderByWithRelationInput | MaterialTreeOrderByWithRelationInput[]
-    cursor?: MaterialTreeWhereUniqueInput
+    include?: ProductTreeInclude<ExtArgs> | null
+    where?: ProductTreeWhereInput
+    orderBy?: ProductTreeOrderByWithRelationInput | ProductTreeOrderByWithRelationInput[]
+    cursor?: ProductTreeWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: MaterialTreeScalarFieldEnum | MaterialTreeScalarFieldEnum[]
+    distinct?: ProductTreeScalarFieldEnum | ProductTreeScalarFieldEnum[]
   }
 
   /**
@@ -14103,229 +14103,244 @@ export namespace Prisma {
 
 
   /**
-   * Model MaterialTree
+   * Model ProductTree
    */
 
-  export type AggregateMaterialTree = {
-    _count: MaterialTreeCountAggregateOutputType | null
-    _avg: MaterialTreeAvgAggregateOutputType | null
-    _sum: MaterialTreeSumAggregateOutputType | null
-    _min: MaterialTreeMinAggregateOutputType | null
-    _max: MaterialTreeMaxAggregateOutputType | null
+  export type AggregateProductTree = {
+    _count: ProductTreeCountAggregateOutputType | null
+    _avg: ProductTreeAvgAggregateOutputType | null
+    _sum: ProductTreeSumAggregateOutputType | null
+    _min: ProductTreeMinAggregateOutputType | null
+    _max: ProductTreeMaxAggregateOutputType | null
   }
 
-  export type MaterialTreeAvgAggregateOutputType = {
+  export type ProductTreeAvgAggregateOutputType = {
     childQuantity: number | null
+    childUnitCost: Decimal | null
   }
 
-  export type MaterialTreeSumAggregateOutputType = {
+  export type ProductTreeSumAggregateOutputType = {
     childQuantity: number | null
+    childUnitCost: Decimal | null
   }
 
-  export type MaterialTreeMinAggregateOutputType = {
+  export type ProductTreeMinAggregateOutputType = {
     parentId: string | null
     childId: string | null
     childQuantity: number | null
+    childUnitCost: Decimal | null
   }
 
-  export type MaterialTreeMaxAggregateOutputType = {
+  export type ProductTreeMaxAggregateOutputType = {
     parentId: string | null
     childId: string | null
     childQuantity: number | null
+    childUnitCost: Decimal | null
   }
 
-  export type MaterialTreeCountAggregateOutputType = {
+  export type ProductTreeCountAggregateOutputType = {
     parentId: number
     childId: number
     childQuantity: number
+    childUnitCost: number
     _all: number
   }
 
 
-  export type MaterialTreeAvgAggregateInputType = {
+  export type ProductTreeAvgAggregateInputType = {
     childQuantity?: true
+    childUnitCost?: true
   }
 
-  export type MaterialTreeSumAggregateInputType = {
+  export type ProductTreeSumAggregateInputType = {
     childQuantity?: true
+    childUnitCost?: true
   }
 
-  export type MaterialTreeMinAggregateInputType = {
+  export type ProductTreeMinAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
+    childUnitCost?: true
   }
 
-  export type MaterialTreeMaxAggregateInputType = {
+  export type ProductTreeMaxAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
+    childUnitCost?: true
   }
 
-  export type MaterialTreeCountAggregateInputType = {
+  export type ProductTreeCountAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
+    childUnitCost?: true
     _all?: true
   }
 
-  export type MaterialTreeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which MaterialTree to aggregate.
+     * Filter which ProductTree to aggregate.
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of MaterialTrees to fetch.
+     * Determine the order of ProductTrees to fetch.
      */
-    orderBy?: MaterialTreeOrderByWithRelationInput | MaterialTreeOrderByWithRelationInput[]
+    orderBy?: ProductTreeOrderByWithRelationInput | ProductTreeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: MaterialTreeWhereUniqueInput
+    cursor?: ProductTreeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` MaterialTrees from the position of the cursor.
+     * Take `±n` ProductTrees from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` MaterialTrees.
+     * Skip the first `n` ProductTrees.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned MaterialTrees
+     * Count returned ProductTrees
     **/
-    _count?: true | MaterialTreeCountAggregateInputType
+    _count?: true | ProductTreeCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: MaterialTreeAvgAggregateInputType
+    _avg?: ProductTreeAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: MaterialTreeSumAggregateInputType
+    _sum?: ProductTreeSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: MaterialTreeMinAggregateInputType
+    _min?: ProductTreeMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: MaterialTreeMaxAggregateInputType
+    _max?: ProductTreeMaxAggregateInputType
   }
 
-  export type GetMaterialTreeAggregateType<T extends MaterialTreeAggregateArgs> = {
-        [P in keyof T & keyof AggregateMaterialTree]: P extends '_count' | 'count'
+  export type GetProductTreeAggregateType<T extends ProductTreeAggregateArgs> = {
+        [P in keyof T & keyof AggregateProductTree]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateMaterialTree[P]>
-      : GetScalarType<T[P], AggregateMaterialTree[P]>
+        : GetScalarType<T[P], AggregateProductTree[P]>
+      : GetScalarType<T[P], AggregateProductTree[P]>
   }
 
 
 
 
-  export type MaterialTreeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MaterialTreeWhereInput
-    orderBy?: MaterialTreeOrderByWithAggregationInput | MaterialTreeOrderByWithAggregationInput[]
-    by: MaterialTreeScalarFieldEnum[] | MaterialTreeScalarFieldEnum
-    having?: MaterialTreeScalarWhereWithAggregatesInput
+  export type ProductTreeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProductTreeWhereInput
+    orderBy?: ProductTreeOrderByWithAggregationInput | ProductTreeOrderByWithAggregationInput[]
+    by: ProductTreeScalarFieldEnum[] | ProductTreeScalarFieldEnum
+    having?: ProductTreeScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: MaterialTreeCountAggregateInputType | true
-    _avg?: MaterialTreeAvgAggregateInputType
-    _sum?: MaterialTreeSumAggregateInputType
-    _min?: MaterialTreeMinAggregateInputType
-    _max?: MaterialTreeMaxAggregateInputType
+    _count?: ProductTreeCountAggregateInputType | true
+    _avg?: ProductTreeAvgAggregateInputType
+    _sum?: ProductTreeSumAggregateInputType
+    _min?: ProductTreeMinAggregateInputType
+    _max?: ProductTreeMaxAggregateInputType
   }
 
-  export type MaterialTreeGroupByOutputType = {
+  export type ProductTreeGroupByOutputType = {
     parentId: string
     childId: string
     childQuantity: number
-    _count: MaterialTreeCountAggregateOutputType | null
-    _avg: MaterialTreeAvgAggregateOutputType | null
-    _sum: MaterialTreeSumAggregateOutputType | null
-    _min: MaterialTreeMinAggregateOutputType | null
-    _max: MaterialTreeMaxAggregateOutputType | null
+    childUnitCost: Decimal
+    _count: ProductTreeCountAggregateOutputType | null
+    _avg: ProductTreeAvgAggregateOutputType | null
+    _sum: ProductTreeSumAggregateOutputType | null
+    _min: ProductTreeMinAggregateOutputType | null
+    _max: ProductTreeMaxAggregateOutputType | null
   }
 
-  type GetMaterialTreeGroupByPayload<T extends MaterialTreeGroupByArgs> = Prisma.PrismaPromise<
+  type GetProductTreeGroupByPayload<T extends ProductTreeGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MaterialTreeGroupByOutputType, T['by']> &
+      PickEnumerable<ProductTreeGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof MaterialTreeGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof ProductTreeGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], MaterialTreeGroupByOutputType[P]>
-            : GetScalarType<T[P], MaterialTreeGroupByOutputType[P]>
+              : GetScalarType<T[P], ProductTreeGroupByOutputType[P]>
+            : GetScalarType<T[P], ProductTreeGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type MaterialTreeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductTreeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
+    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["materialTree"]>
+  }, ExtArgs["result"]["productTree"]>
 
-  export type MaterialTreeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductTreeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
+    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["materialTree"]>
+  }, ExtArgs["result"]["productTree"]>
 
-  export type MaterialTreeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type ProductTreeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
+    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["materialTree"]>
+  }, ExtArgs["result"]["productTree"]>
 
-  export type MaterialTreeSelectScalar = {
+  export type ProductTreeSelectScalar = {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
+    childUnitCost?: boolean
   }
 
-  export type MaterialTreeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"parentId" | "childId" | "childQuantity", ExtArgs["result"]["materialTree"]>
-  export type MaterialTreeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"parentId" | "childId" | "childQuantity" | "childUnitCost", ExtArgs["result"]["productTree"]>
+  export type ProductTreeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }
-  export type MaterialTreeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }
-  export type MaterialTreeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }
 
-  export type $MaterialTreePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "MaterialTree"
+  export type $ProductTreePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProductTree"
     objects: {
       parent: Prisma.$ProductPayload<ExtArgs>
       child: Prisma.$ProductPayload<ExtArgs>
@@ -14334,136 +14349,137 @@ export namespace Prisma {
       parentId: string
       childId: string
       childQuantity: number
-    }, ExtArgs["result"]["materialTree"]>
+      childUnitCost: Prisma.Decimal
+    }, ExtArgs["result"]["productTree"]>
     composites: {}
   }
 
-  type MaterialTreeGetPayload<S extends boolean | null | undefined | MaterialTreeDefaultArgs> = $Result.GetResult<Prisma.$MaterialTreePayload, S>
+  type ProductTreeGetPayload<S extends boolean | null | undefined | ProductTreeDefaultArgs> = $Result.GetResult<Prisma.$ProductTreePayload, S>
 
-  type MaterialTreeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MaterialTreeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MaterialTreeCountAggregateInputType | true
+  type ProductTreeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProductTreeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProductTreeCountAggregateInputType | true
     }
 
-  export interface MaterialTreeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MaterialTree'], meta: { name: 'MaterialTree' } }
+  export interface ProductTreeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProductTree'], meta: { name: 'ProductTree' } }
     /**
-     * Find zero or one MaterialTree that matches the filter.
-     * @param {MaterialTreeFindUniqueArgs} args - Arguments to find a MaterialTree
+     * Find zero or one ProductTree that matches the filter.
+     * @param {ProductTreeFindUniqueArgs} args - Arguments to find a ProductTree
      * @example
-     * // Get one MaterialTree
-     * const materialTree = await prisma.materialTree.findUnique({
+     * // Get one ProductTree
+     * const productTree = await prisma.productTree.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends MaterialTreeFindUniqueArgs>(args: SelectSubset<T, MaterialTreeFindUniqueArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends ProductTreeFindUniqueArgs>(args: SelectSubset<T, ProductTreeFindUniqueArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one MaterialTree that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ProductTree that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {MaterialTreeFindUniqueOrThrowArgs} args - Arguments to find a MaterialTree
+     * @param {ProductTreeFindUniqueOrThrowArgs} args - Arguments to find a ProductTree
      * @example
-     * // Get one MaterialTree
-     * const materialTree = await prisma.materialTree.findUniqueOrThrow({
+     * // Get one ProductTree
+     * const productTree = await prisma.productTree.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends MaterialTreeFindUniqueOrThrowArgs>(args: SelectSubset<T, MaterialTreeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends ProductTreeFindUniqueOrThrowArgs>(args: SelectSubset<T, ProductTreeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first MaterialTree that matches the filter.
+     * Find the first ProductTree that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeFindFirstArgs} args - Arguments to find a MaterialTree
+     * @param {ProductTreeFindFirstArgs} args - Arguments to find a ProductTree
      * @example
-     * // Get one MaterialTree
-     * const materialTree = await prisma.materialTree.findFirst({
+     * // Get one ProductTree
+     * const productTree = await prisma.productTree.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends MaterialTreeFindFirstArgs>(args?: SelectSubset<T, MaterialTreeFindFirstArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends ProductTreeFindFirstArgs>(args?: SelectSubset<T, ProductTreeFindFirstArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first MaterialTree that matches the filter or
+     * Find the first ProductTree that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeFindFirstOrThrowArgs} args - Arguments to find a MaterialTree
+     * @param {ProductTreeFindFirstOrThrowArgs} args - Arguments to find a ProductTree
      * @example
-     * // Get one MaterialTree
-     * const materialTree = await prisma.materialTree.findFirstOrThrow({
+     * // Get one ProductTree
+     * const productTree = await prisma.productTree.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends MaterialTreeFindFirstOrThrowArgs>(args?: SelectSubset<T, MaterialTreeFindFirstOrThrowArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends ProductTreeFindFirstOrThrowArgs>(args?: SelectSubset<T, ProductTreeFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more MaterialTrees that matches the filter.
+     * Find zero or more ProductTrees that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {ProductTreeFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all MaterialTrees
-     * const materialTrees = await prisma.materialTree.findMany()
+     * // Get all ProductTrees
+     * const productTrees = await prisma.productTree.findMany()
      * 
-     * // Get first 10 MaterialTrees
-     * const materialTrees = await prisma.materialTree.findMany({ take: 10 })
+     * // Get first 10 ProductTrees
+     * const productTrees = await prisma.productTree.findMany({ take: 10 })
      * 
      * // Only select the `parentId`
-     * const materialTreeWithParentIdOnly = await prisma.materialTree.findMany({ select: { parentId: true } })
+     * const productTreeWithParentIdOnly = await prisma.productTree.findMany({ select: { parentId: true } })
      * 
      */
-    findMany<T extends MaterialTreeFindManyArgs>(args?: SelectSubset<T, MaterialTreeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends ProductTreeFindManyArgs>(args?: SelectSubset<T, ProductTreeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a MaterialTree.
-     * @param {MaterialTreeCreateArgs} args - Arguments to create a MaterialTree.
+     * Create a ProductTree.
+     * @param {ProductTreeCreateArgs} args - Arguments to create a ProductTree.
      * @example
-     * // Create one MaterialTree
-     * const MaterialTree = await prisma.materialTree.create({
+     * // Create one ProductTree
+     * const ProductTree = await prisma.productTree.create({
      *   data: {
-     *     // ... data to create a MaterialTree
+     *     // ... data to create a ProductTree
      *   }
      * })
      * 
      */
-    create<T extends MaterialTreeCreateArgs>(args: SelectSubset<T, MaterialTreeCreateArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends ProductTreeCreateArgs>(args: SelectSubset<T, ProductTreeCreateArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many MaterialTrees.
-     * @param {MaterialTreeCreateManyArgs} args - Arguments to create many MaterialTrees.
+     * Create many ProductTrees.
+     * @param {ProductTreeCreateManyArgs} args - Arguments to create many ProductTrees.
      * @example
-     * // Create many MaterialTrees
-     * const materialTree = await prisma.materialTree.createMany({
+     * // Create many ProductTrees
+     * const productTree = await prisma.productTree.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends MaterialTreeCreateManyArgs>(args?: SelectSubset<T, MaterialTreeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends ProductTreeCreateManyArgs>(args?: SelectSubset<T, ProductTreeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many MaterialTrees and returns the data saved in the database.
-     * @param {MaterialTreeCreateManyAndReturnArgs} args - Arguments to create many MaterialTrees.
+     * Create many ProductTrees and returns the data saved in the database.
+     * @param {ProductTreeCreateManyAndReturnArgs} args - Arguments to create many ProductTrees.
      * @example
-     * // Create many MaterialTrees
-     * const materialTree = await prisma.materialTree.createManyAndReturn({
+     * // Create many ProductTrees
+     * const productTree = await prisma.productTree.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many MaterialTrees and only return the `parentId`
-     * const materialTreeWithParentIdOnly = await prisma.materialTree.createManyAndReturn({
+     * // Create many ProductTrees and only return the `parentId`
+     * const productTreeWithParentIdOnly = await prisma.productTree.createManyAndReturn({
      *   select: { parentId: true },
      *   data: [
      *     // ... provide data here
@@ -14473,28 +14489,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends MaterialTreeCreateManyAndReturnArgs>(args?: SelectSubset<T, MaterialTreeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends ProductTreeCreateManyAndReturnArgs>(args?: SelectSubset<T, ProductTreeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a MaterialTree.
-     * @param {MaterialTreeDeleteArgs} args - Arguments to delete one MaterialTree.
+     * Delete a ProductTree.
+     * @param {ProductTreeDeleteArgs} args - Arguments to delete one ProductTree.
      * @example
-     * // Delete one MaterialTree
-     * const MaterialTree = await prisma.materialTree.delete({
+     * // Delete one ProductTree
+     * const ProductTree = await prisma.productTree.delete({
      *   where: {
-     *     // ... filter to delete one MaterialTree
+     *     // ... filter to delete one ProductTree
      *   }
      * })
      * 
      */
-    delete<T extends MaterialTreeDeleteArgs>(args: SelectSubset<T, MaterialTreeDeleteArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends ProductTreeDeleteArgs>(args: SelectSubset<T, ProductTreeDeleteArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one MaterialTree.
-     * @param {MaterialTreeUpdateArgs} args - Arguments to update one MaterialTree.
+     * Update one ProductTree.
+     * @param {ProductTreeUpdateArgs} args - Arguments to update one ProductTree.
      * @example
-     * // Update one MaterialTree
-     * const materialTree = await prisma.materialTree.update({
+     * // Update one ProductTree
+     * const productTree = await prisma.productTree.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -14504,30 +14520,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends MaterialTreeUpdateArgs>(args: SelectSubset<T, MaterialTreeUpdateArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends ProductTreeUpdateArgs>(args: SelectSubset<T, ProductTreeUpdateArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more MaterialTrees.
-     * @param {MaterialTreeDeleteManyArgs} args - Arguments to filter MaterialTrees to delete.
+     * Delete zero or more ProductTrees.
+     * @param {ProductTreeDeleteManyArgs} args - Arguments to filter ProductTrees to delete.
      * @example
-     * // Delete a few MaterialTrees
-     * const { count } = await prisma.materialTree.deleteMany({
+     * // Delete a few ProductTrees
+     * const { count } = await prisma.productTree.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends MaterialTreeDeleteManyArgs>(args?: SelectSubset<T, MaterialTreeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends ProductTreeDeleteManyArgs>(args?: SelectSubset<T, ProductTreeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more MaterialTrees.
+     * Update zero or more ProductTrees.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {ProductTreeUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many MaterialTrees
-     * const materialTree = await prisma.materialTree.updateMany({
+     * // Update many ProductTrees
+     * const productTree = await prisma.productTree.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -14537,14 +14553,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends MaterialTreeUpdateManyArgs>(args: SelectSubset<T, MaterialTreeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends ProductTreeUpdateManyArgs>(args: SelectSubset<T, ProductTreeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more MaterialTrees and returns the data updated in the database.
-     * @param {MaterialTreeUpdateManyAndReturnArgs} args - Arguments to update many MaterialTrees.
+     * Update zero or more ProductTrees and returns the data updated in the database.
+     * @param {ProductTreeUpdateManyAndReturnArgs} args - Arguments to update many ProductTrees.
      * @example
-     * // Update many MaterialTrees
-     * const materialTree = await prisma.materialTree.updateManyAndReturn({
+     * // Update many ProductTrees
+     * const productTree = await prisma.productTree.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -14553,8 +14569,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more MaterialTrees and only return the `parentId`
-     * const materialTreeWithParentIdOnly = await prisma.materialTree.updateManyAndReturn({
+     * // Update zero or more ProductTrees and only return the `parentId`
+     * const productTreeWithParentIdOnly = await prisma.productTree.updateManyAndReturn({
      *   select: { parentId: true },
      *   where: {
      *     // ... provide filter here
@@ -14567,56 +14583,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends MaterialTreeUpdateManyAndReturnArgs>(args: SelectSubset<T, MaterialTreeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends ProductTreeUpdateManyAndReturnArgs>(args: SelectSubset<T, ProductTreeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one MaterialTree.
-     * @param {MaterialTreeUpsertArgs} args - Arguments to update or create a MaterialTree.
+     * Create or update one ProductTree.
+     * @param {ProductTreeUpsertArgs} args - Arguments to update or create a ProductTree.
      * @example
-     * // Update or create a MaterialTree
-     * const materialTree = await prisma.materialTree.upsert({
+     * // Update or create a ProductTree
+     * const productTree = await prisma.productTree.upsert({
      *   create: {
-     *     // ... data to create a MaterialTree
+     *     // ... data to create a ProductTree
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the MaterialTree we want to update
+     *     // ... the filter for the ProductTree we want to update
      *   }
      * })
      */
-    upsert<T extends MaterialTreeUpsertArgs>(args: SelectSubset<T, MaterialTreeUpsertArgs<ExtArgs>>): Prisma__MaterialTreeClient<$Result.GetResult<Prisma.$MaterialTreePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends ProductTreeUpsertArgs>(args: SelectSubset<T, ProductTreeUpsertArgs<ExtArgs>>): Prisma__ProductTreeClient<$Result.GetResult<Prisma.$ProductTreePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of MaterialTrees.
+     * Count the number of ProductTrees.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeCountArgs} args - Arguments to filter MaterialTrees to count.
+     * @param {ProductTreeCountArgs} args - Arguments to filter ProductTrees to count.
      * @example
-     * // Count the number of MaterialTrees
-     * const count = await prisma.materialTree.count({
+     * // Count the number of ProductTrees
+     * const count = await prisma.productTree.count({
      *   where: {
-     *     // ... the filter for the MaterialTrees we want to count
+     *     // ... the filter for the ProductTrees we want to count
      *   }
      * })
     **/
-    count<T extends MaterialTreeCountArgs>(
-      args?: Subset<T, MaterialTreeCountArgs>,
+    count<T extends ProductTreeCountArgs>(
+      args?: Subset<T, ProductTreeCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], MaterialTreeCountAggregateOutputType>
+          : GetScalarType<T['select'], ProductTreeCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a MaterialTree.
+     * Allows you to perform aggregations operations on a ProductTree.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {ProductTreeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -14636,13 +14652,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends MaterialTreeAggregateArgs>(args: Subset<T, MaterialTreeAggregateArgs>): Prisma.PrismaPromise<GetMaterialTreeAggregateType<T>>
+    aggregate<T extends ProductTreeAggregateArgs>(args: Subset<T, ProductTreeAggregateArgs>): Prisma.PrismaPromise<GetProductTreeAggregateType<T>>
 
     /**
-     * Group by MaterialTree.
+     * Group by ProductTree.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {MaterialTreeGroupByArgs} args - Group by arguments.
+     * @param {ProductTreeGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -14657,14 +14673,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends MaterialTreeGroupByArgs,
+      T extends ProductTreeGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MaterialTreeGroupByArgs['orderBy'] }
-        : { orderBy?: MaterialTreeGroupByArgs['orderBy'] },
+        ? { orderBy: ProductTreeGroupByArgs['orderBy'] }
+        : { orderBy?: ProductTreeGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -14713,20 +14729,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, MaterialTreeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMaterialTreeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, ProductTreeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProductTreeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the MaterialTree model
+   * Fields of the ProductTree model
    */
-  readonly fields: MaterialTreeFieldRefs;
+  readonly fields: ProductTreeFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for MaterialTree.
+   * The delegate class that acts as a "Promise-like" for ProductTree.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__MaterialTreeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__ProductTreeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     parent<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     child<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -14756,423 +14772,424 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the MaterialTree model
+   * Fields of the ProductTree model
    */
-  interface MaterialTreeFieldRefs {
-    readonly parentId: FieldRef<"MaterialTree", 'String'>
-    readonly childId: FieldRef<"MaterialTree", 'String'>
-    readonly childQuantity: FieldRef<"MaterialTree", 'Int'>
+  interface ProductTreeFieldRefs {
+    readonly parentId: FieldRef<"ProductTree", 'String'>
+    readonly childId: FieldRef<"ProductTree", 'String'>
+    readonly childQuantity: FieldRef<"ProductTree", 'Int'>
+    readonly childUnitCost: FieldRef<"ProductTree", 'Decimal'>
   }
     
 
   // Custom InputTypes
   /**
-   * MaterialTree findUnique
+   * ProductTree findUnique
    */
-  export type MaterialTreeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * Filter, which MaterialTree to fetch.
+     * Filter, which ProductTree to fetch.
      */
-    where: MaterialTreeWhereUniqueInput
+    where: ProductTreeWhereUniqueInput
   }
 
   /**
-   * MaterialTree findUniqueOrThrow
+   * ProductTree findUniqueOrThrow
    */
-  export type MaterialTreeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * Filter, which MaterialTree to fetch.
+     * Filter, which ProductTree to fetch.
      */
-    where: MaterialTreeWhereUniqueInput
+    where: ProductTreeWhereUniqueInput
   }
 
   /**
-   * MaterialTree findFirst
+   * ProductTree findFirst
    */
-  export type MaterialTreeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * Filter, which MaterialTree to fetch.
+     * Filter, which ProductTree to fetch.
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of MaterialTrees to fetch.
+     * Determine the order of ProductTrees to fetch.
      */
-    orderBy?: MaterialTreeOrderByWithRelationInput | MaterialTreeOrderByWithRelationInput[]
+    orderBy?: ProductTreeOrderByWithRelationInput | ProductTreeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for MaterialTrees.
+     * Sets the position for searching for ProductTrees.
      */
-    cursor?: MaterialTreeWhereUniqueInput
+    cursor?: ProductTreeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` MaterialTrees from the position of the cursor.
+     * Take `±n` ProductTrees from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` MaterialTrees.
+     * Skip the first `n` ProductTrees.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of MaterialTrees.
+     * Filter by unique combinations of ProductTrees.
      */
-    distinct?: MaterialTreeScalarFieldEnum | MaterialTreeScalarFieldEnum[]
+    distinct?: ProductTreeScalarFieldEnum | ProductTreeScalarFieldEnum[]
   }
 
   /**
-   * MaterialTree findFirstOrThrow
+   * ProductTree findFirstOrThrow
    */
-  export type MaterialTreeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * Filter, which MaterialTree to fetch.
+     * Filter, which ProductTree to fetch.
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of MaterialTrees to fetch.
+     * Determine the order of ProductTrees to fetch.
      */
-    orderBy?: MaterialTreeOrderByWithRelationInput | MaterialTreeOrderByWithRelationInput[]
+    orderBy?: ProductTreeOrderByWithRelationInput | ProductTreeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for MaterialTrees.
+     * Sets the position for searching for ProductTrees.
      */
-    cursor?: MaterialTreeWhereUniqueInput
+    cursor?: ProductTreeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` MaterialTrees from the position of the cursor.
+     * Take `±n` ProductTrees from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` MaterialTrees.
+     * Skip the first `n` ProductTrees.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of MaterialTrees.
+     * Filter by unique combinations of ProductTrees.
      */
-    distinct?: MaterialTreeScalarFieldEnum | MaterialTreeScalarFieldEnum[]
+    distinct?: ProductTreeScalarFieldEnum | ProductTreeScalarFieldEnum[]
   }
 
   /**
-   * MaterialTree findMany
+   * ProductTree findMany
    */
-  export type MaterialTreeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * Filter, which MaterialTrees to fetch.
+     * Filter, which ProductTrees to fetch.
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of MaterialTrees to fetch.
+     * Determine the order of ProductTrees to fetch.
      */
-    orderBy?: MaterialTreeOrderByWithRelationInput | MaterialTreeOrderByWithRelationInput[]
+    orderBy?: ProductTreeOrderByWithRelationInput | ProductTreeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing MaterialTrees.
+     * Sets the position for listing ProductTrees.
      */
-    cursor?: MaterialTreeWhereUniqueInput
+    cursor?: ProductTreeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` MaterialTrees from the position of the cursor.
+     * Take `±n` ProductTrees from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` MaterialTrees.
+     * Skip the first `n` ProductTrees.
      */
     skip?: number
-    distinct?: MaterialTreeScalarFieldEnum | MaterialTreeScalarFieldEnum[]
+    distinct?: ProductTreeScalarFieldEnum | ProductTreeScalarFieldEnum[]
   }
 
   /**
-   * MaterialTree create
+   * ProductTree create
    */
-  export type MaterialTreeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * The data needed to create a MaterialTree.
+     * The data needed to create a ProductTree.
      */
-    data: XOR<MaterialTreeCreateInput, MaterialTreeUncheckedCreateInput>
+    data: XOR<ProductTreeCreateInput, ProductTreeUncheckedCreateInput>
   }
 
   /**
-   * MaterialTree createMany
+   * ProductTree createMany
    */
-  export type MaterialTreeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many MaterialTrees.
+     * The data used to create many ProductTrees.
      */
-    data: MaterialTreeCreateManyInput | MaterialTreeCreateManyInput[]
+    data: ProductTreeCreateManyInput | ProductTreeCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * MaterialTree createManyAndReturn
+   * ProductTree createManyAndReturn
    */
-  export type MaterialTreeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelectCreateManyAndReturn<ExtArgs> | null
+    select?: ProductTreeSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
-     * The data used to create many MaterialTrees.
+     * The data used to create many ProductTrees.
      */
-    data: MaterialTreeCreateManyInput | MaterialTreeCreateManyInput[]
+    data: ProductTreeCreateManyInput | ProductTreeCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: ProductTreeIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * MaterialTree update
+   * ProductTree update
    */
-  export type MaterialTreeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * The data needed to update a MaterialTree.
+     * The data needed to update a ProductTree.
      */
-    data: XOR<MaterialTreeUpdateInput, MaterialTreeUncheckedUpdateInput>
+    data: XOR<ProductTreeUpdateInput, ProductTreeUncheckedUpdateInput>
     /**
-     * Choose, which MaterialTree to update.
+     * Choose, which ProductTree to update.
      */
-    where: MaterialTreeWhereUniqueInput
+    where: ProductTreeWhereUniqueInput
   }
 
   /**
-   * MaterialTree updateMany
+   * ProductTree updateMany
    */
-  export type MaterialTreeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update MaterialTrees.
+     * The data used to update ProductTrees.
      */
-    data: XOR<MaterialTreeUpdateManyMutationInput, MaterialTreeUncheckedUpdateManyInput>
+    data: XOR<ProductTreeUpdateManyMutationInput, ProductTreeUncheckedUpdateManyInput>
     /**
-     * Filter which MaterialTrees to update
+     * Filter which ProductTrees to update
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
-     * Limit how many MaterialTrees to update.
+     * Limit how many ProductTrees to update.
      */
     limit?: number
   }
 
   /**
-   * MaterialTree updateManyAndReturn
+   * ProductTree updateManyAndReturn
    */
-  export type MaterialTreeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: ProductTreeSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
-     * The data used to update MaterialTrees.
+     * The data used to update ProductTrees.
      */
-    data: XOR<MaterialTreeUpdateManyMutationInput, MaterialTreeUncheckedUpdateManyInput>
+    data: XOR<ProductTreeUpdateManyMutationInput, ProductTreeUncheckedUpdateManyInput>
     /**
-     * Filter which MaterialTrees to update
+     * Filter which ProductTrees to update
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
-     * Limit how many MaterialTrees to update.
+     * Limit how many ProductTrees to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: ProductTreeIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * MaterialTree upsert
+   * ProductTree upsert
    */
-  export type MaterialTreeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * The filter to search for the MaterialTree to update in case it exists.
+     * The filter to search for the ProductTree to update in case it exists.
      */
-    where: MaterialTreeWhereUniqueInput
+    where: ProductTreeWhereUniqueInput
     /**
-     * In case the MaterialTree found by the `where` argument doesn't exist, create a new MaterialTree with this data.
+     * In case the ProductTree found by the `where` argument doesn't exist, create a new ProductTree with this data.
      */
-    create: XOR<MaterialTreeCreateInput, MaterialTreeUncheckedCreateInput>
+    create: XOR<ProductTreeCreateInput, ProductTreeUncheckedCreateInput>
     /**
-     * In case the MaterialTree was found with the provided `where` argument, update it with this data.
+     * In case the ProductTree was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<MaterialTreeUpdateInput, MaterialTreeUncheckedUpdateInput>
+    update: XOR<ProductTreeUpdateInput, ProductTreeUncheckedUpdateInput>
   }
 
   /**
-   * MaterialTree delete
+   * ProductTree delete
    */
-  export type MaterialTreeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
     /**
-     * Filter which MaterialTree to delete.
+     * Filter which ProductTree to delete.
      */
-    where: MaterialTreeWhereUniqueInput
+    where: ProductTreeWhereUniqueInput
   }
 
   /**
-   * MaterialTree deleteMany
+   * ProductTree deleteMany
    */
-  export type MaterialTreeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which MaterialTrees to delete
+     * Filter which ProductTrees to delete
      */
-    where?: MaterialTreeWhereInput
+    where?: ProductTreeWhereInput
     /**
-     * Limit how many MaterialTrees to delete.
+     * Limit how many ProductTrees to delete.
      */
     limit?: number
   }
 
   /**
-   * MaterialTree without action
+   * ProductTree without action
    */
-  export type MaterialTreeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProductTreeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the MaterialTree
+     * Select specific fields to fetch from the ProductTree
      */
-    select?: MaterialTreeSelect<ExtArgs> | null
+    select?: ProductTreeSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the MaterialTree
+     * Omit specific fields from the ProductTree
      */
-    omit?: MaterialTreeOmit<ExtArgs> | null
+    omit?: ProductTreeOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: MaterialTreeInclude<ExtArgs> | null
+    include?: ProductTreeInclude<ExtArgs> | null
   }
 
 
@@ -15311,13 +15328,14 @@ export namespace Prisma {
   export type GeneralLogScalarFieldEnum = (typeof GeneralLogScalarFieldEnum)[keyof typeof GeneralLogScalarFieldEnum]
 
 
-  export const MaterialTreeScalarFieldEnum: {
+  export const ProductTreeScalarFieldEnum: {
     parentId: 'parentId',
     childId: 'childId',
-    childQuantity: 'childQuantity'
+    childQuantity: 'childQuantity',
+    childUnitCost: 'childUnitCost'
   };
 
-  export type MaterialTreeScalarFieldEnum = (typeof MaterialTreeScalarFieldEnum)[keyof typeof MaterialTreeScalarFieldEnum]
+  export type ProductTreeScalarFieldEnum = (typeof ProductTreeScalarFieldEnum)[keyof typeof ProductTreeScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -15634,8 +15652,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductListRelationFilter
     stock?: XOR<StockNullableScalarRelationFilter, StockWhereInput> | null
     production?: ProductionListRelationFilter
-    materialTreeChild?: MaterialTreeListRelationFilter
-    materialTreeParent?: MaterialTreeListRelationFilter
+    ProductTreeChild?: ProductTreeListRelationFilter
+    ProductTreeParent?: ProductTreeListRelationFilter
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -15652,8 +15670,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductOrderByRelationAggregateInput
     stock?: StockOrderByWithRelationInput
     production?: ProductionOrderByRelationAggregateInput
-    materialTreeChild?: MaterialTreeOrderByRelationAggregateInput
-    materialTreeParent?: MaterialTreeOrderByRelationAggregateInput
+    ProductTreeChild?: ProductTreeOrderByRelationAggregateInput
+    ProductTreeParent?: ProductTreeOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -15673,8 +15691,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductListRelationFilter
     stock?: XOR<StockNullableScalarRelationFilter, StockWhereInput> | null
     production?: ProductionListRelationFilter
-    materialTreeChild?: MaterialTreeListRelationFilter
-    materialTreeParent?: MaterialTreeListRelationFilter
+    ProductTreeChild?: ProductTreeListRelationFilter
+    ProductTreeParent?: ProductTreeListRelationFilter
   }, "id">
 
   export type ProductOrderByWithAggregationInput = {
@@ -16153,55 +16171,60 @@ export namespace Prisma {
     date?: DateTimeWithAggregatesFilter<"GeneralLog"> | Date | string
   }
 
-  export type MaterialTreeWhereInput = {
-    AND?: MaterialTreeWhereInput | MaterialTreeWhereInput[]
-    OR?: MaterialTreeWhereInput[]
-    NOT?: MaterialTreeWhereInput | MaterialTreeWhereInput[]
-    parentId?: UuidFilter<"MaterialTree"> | string
-    childId?: UuidFilter<"MaterialTree"> | string
-    childQuantity?: IntFilter<"MaterialTree"> | number
+  export type ProductTreeWhereInput = {
+    AND?: ProductTreeWhereInput | ProductTreeWhereInput[]
+    OR?: ProductTreeWhereInput[]
+    NOT?: ProductTreeWhereInput | ProductTreeWhereInput[]
+    parentId?: UuidFilter<"ProductTree"> | string
+    childId?: UuidFilter<"ProductTree"> | string
+    childQuantity?: IntFilter<"ProductTree"> | number
+    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
     parent?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     child?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
 
-  export type MaterialTreeOrderByWithRelationInput = {
+  export type ProductTreeOrderByWithRelationInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
+    childUnitCost?: SortOrder
     parent?: ProductOrderByWithRelationInput
     child?: ProductOrderByWithRelationInput
   }
 
-  export type MaterialTreeWhereUniqueInput = Prisma.AtLeast<{
-    childId_parentId?: MaterialTreeChildIdParentIdCompoundUniqueInput
-    AND?: MaterialTreeWhereInput | MaterialTreeWhereInput[]
-    OR?: MaterialTreeWhereInput[]
-    NOT?: MaterialTreeWhereInput | MaterialTreeWhereInput[]
-    parentId?: UuidFilter<"MaterialTree"> | string
-    childId?: UuidFilter<"MaterialTree"> | string
-    childQuantity?: IntFilter<"MaterialTree"> | number
+  export type ProductTreeWhereUniqueInput = Prisma.AtLeast<{
+    childId_parentId?: ProductTreeChildIdParentIdCompoundUniqueInput
+    AND?: ProductTreeWhereInput | ProductTreeWhereInput[]
+    OR?: ProductTreeWhereInput[]
+    NOT?: ProductTreeWhereInput | ProductTreeWhereInput[]
+    parentId?: UuidFilter<"ProductTree"> | string
+    childId?: UuidFilter<"ProductTree"> | string
+    childQuantity?: IntFilter<"ProductTree"> | number
+    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
     parent?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     child?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "childId_parentId">
 
-  export type MaterialTreeOrderByWithAggregationInput = {
+  export type ProductTreeOrderByWithAggregationInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    _count?: MaterialTreeCountOrderByAggregateInput
-    _avg?: MaterialTreeAvgOrderByAggregateInput
-    _max?: MaterialTreeMaxOrderByAggregateInput
-    _min?: MaterialTreeMinOrderByAggregateInput
-    _sum?: MaterialTreeSumOrderByAggregateInput
+    childUnitCost?: SortOrder
+    _count?: ProductTreeCountOrderByAggregateInput
+    _avg?: ProductTreeAvgOrderByAggregateInput
+    _max?: ProductTreeMaxOrderByAggregateInput
+    _min?: ProductTreeMinOrderByAggregateInput
+    _sum?: ProductTreeSumOrderByAggregateInput
   }
 
-  export type MaterialTreeScalarWhereWithAggregatesInput = {
-    AND?: MaterialTreeScalarWhereWithAggregatesInput | MaterialTreeScalarWhereWithAggregatesInput[]
-    OR?: MaterialTreeScalarWhereWithAggregatesInput[]
-    NOT?: MaterialTreeScalarWhereWithAggregatesInput | MaterialTreeScalarWhereWithAggregatesInput[]
-    parentId?: UuidWithAggregatesFilter<"MaterialTree"> | string
-    childId?: UuidWithAggregatesFilter<"MaterialTree"> | string
-    childQuantity?: IntWithAggregatesFilter<"MaterialTree"> | number
+  export type ProductTreeScalarWhereWithAggregatesInput = {
+    AND?: ProductTreeScalarWhereWithAggregatesInput | ProductTreeScalarWhereWithAggregatesInput[]
+    OR?: ProductTreeScalarWhereWithAggregatesInput[]
+    NOT?: ProductTreeScalarWhereWithAggregatesInput | ProductTreeScalarWhereWithAggregatesInput[]
+    parentId?: UuidWithAggregatesFilter<"ProductTree"> | string
+    childId?: UuidWithAggregatesFilter<"ProductTree"> | string
+    childQuantity?: IntWithAggregatesFilter<"ProductTree"> | number
+    childUnitCost?: DecimalWithAggregatesFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
   }
 
   export type UserCreateInput = {
@@ -16324,8 +16347,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductCreateNestedManyWithoutProductInput
     stock?: StockCreateNestedOneWithoutProductInput
     production?: ProductionCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeCreateNestedManyWithoutParentInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -16342,8 +16365,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedCreateNestedManyWithoutProductInput
     stock?: StockUncheckedCreateNestedOneWithoutProductInput
     production?: ProductionUncheckedCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeUncheckedCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeUncheckedCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeUncheckedCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ProductUpdateInput = {
@@ -16360,8 +16383,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUpdateManyWithoutProductNestedInput
     stock?: StockUpdateOneWithoutProductNestedInput
     production?: ProductionUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUpdateManyWithoutParentNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -16378,8 +16401,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedUpdateManyWithoutProductNestedInput
     stock?: StockUncheckedUpdateOneWithoutProductNestedInput
     production?: ProductionUncheckedUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUncheckedUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUncheckedUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUncheckedUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ProductCreateManyInput = {
@@ -16834,44 +16857,51 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MaterialTreeCreateInput = {
+  export type ProductTreeCreateInput = {
     childQuantity: number
-    parent: ProductCreateNestedOneWithoutMaterialTreeParentInput
-    child: ProductCreateNestedOneWithoutMaterialTreeChildInput
+    childUnitCost: Decimal | DecimalJsLike | number | string
+    parent: ProductCreateNestedOneWithoutProductTreeParentInput
+    child: ProductCreateNestedOneWithoutProductTreeChildInput
   }
 
-  export type MaterialTreeUncheckedCreateInput = {
+  export type ProductTreeUncheckedCreateInput = {
     parentId: string
     childId: string
     childQuantity: number
+    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUpdateInput = {
+  export type ProductTreeUpdateInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    parent?: ProductUpdateOneRequiredWithoutMaterialTreeParentNestedInput
-    child?: ProductUpdateOneRequiredWithoutMaterialTreeChildNestedInput
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    parent?: ProductUpdateOneRequiredWithoutProductTreeParentNestedInput
+    child?: ProductUpdateOneRequiredWithoutProductTreeChildNestedInput
   }
 
-  export type MaterialTreeUncheckedUpdateInput = {
+  export type ProductTreeUncheckedUpdateInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeCreateManyInput = {
+  export type ProductTreeCreateManyInput = {
     parentId: string
     childId: string
     childQuantity: number
+    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUpdateManyMutationInput = {
+  export type ProductTreeUpdateManyMutationInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUncheckedUpdateManyInput = {
+  export type ProductTreeUncheckedUpdateManyInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -17128,10 +17158,10 @@ export namespace Prisma {
     none?: ProductionWhereInput
   }
 
-  export type MaterialTreeListRelationFilter = {
-    every?: MaterialTreeWhereInput
-    some?: MaterialTreeWhereInput
-    none?: MaterialTreeWhereInput
+  export type ProductTreeListRelationFilter = {
+    every?: ProductTreeWhereInput
+    some?: ProductTreeWhereInput
+    none?: ProductTreeWhereInput
   }
 
   export type SortOrderInput = {
@@ -17151,7 +17181,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type MaterialTreeOrderByRelationAggregateInput = {
+  export type ProductTreeOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17599,35 +17629,40 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type MaterialTreeChildIdParentIdCompoundUniqueInput = {
+  export type ProductTreeChildIdParentIdCompoundUniqueInput = {
     childId: string
     parentId: string
   }
 
-  export type MaterialTreeCountOrderByAggregateInput = {
+  export type ProductTreeCountOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
+    childUnitCost?: SortOrder
   }
 
-  export type MaterialTreeAvgOrderByAggregateInput = {
+  export type ProductTreeAvgOrderByAggregateInput = {
     childQuantity?: SortOrder
+    childUnitCost?: SortOrder
   }
 
-  export type MaterialTreeMaxOrderByAggregateInput = {
+  export type ProductTreeMaxOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
+    childUnitCost?: SortOrder
   }
 
-  export type MaterialTreeMinOrderByAggregateInput = {
+  export type ProductTreeMinOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
+    childUnitCost?: SortOrder
   }
 
-  export type MaterialTreeSumOrderByAggregateInput = {
+  export type ProductTreeSumOrderByAggregateInput = {
     childQuantity?: SortOrder
+    childUnitCost?: SortOrder
   }
 
   export type PurchaseCreateNestedManyWithoutUserInput = {
@@ -17719,18 +17754,18 @@ export namespace Prisma {
     connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[]
   }
 
-  export type MaterialTreeCreateNestedManyWithoutChildInput = {
-    create?: XOR<MaterialTreeCreateWithoutChildInput, MaterialTreeUncheckedCreateWithoutChildInput> | MaterialTreeCreateWithoutChildInput[] | MaterialTreeUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutChildInput | MaterialTreeCreateOrConnectWithoutChildInput[]
-    createMany?: MaterialTreeCreateManyChildInputEnvelope
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
+  export type ProductTreeCreateNestedManyWithoutChildInput = {
+    create?: XOR<ProductTreeCreateWithoutChildInput, ProductTreeUncheckedCreateWithoutChildInput> | ProductTreeCreateWithoutChildInput[] | ProductTreeUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutChildInput | ProductTreeCreateOrConnectWithoutChildInput[]
+    createMany?: ProductTreeCreateManyChildInputEnvelope
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
   }
 
-  export type MaterialTreeCreateNestedManyWithoutParentInput = {
-    create?: XOR<MaterialTreeCreateWithoutParentInput, MaterialTreeUncheckedCreateWithoutParentInput> | MaterialTreeCreateWithoutParentInput[] | MaterialTreeUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutParentInput | MaterialTreeCreateOrConnectWithoutParentInput[]
-    createMany?: MaterialTreeCreateManyParentInputEnvelope
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
+  export type ProductTreeCreateNestedManyWithoutParentInput = {
+    create?: XOR<ProductTreeCreateWithoutParentInput, ProductTreeUncheckedCreateWithoutParentInput> | ProductTreeCreateWithoutParentInput[] | ProductTreeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutParentInput | ProductTreeCreateOrConnectWithoutParentInput[]
+    createMany?: ProductTreeCreateManyParentInputEnvelope
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
   }
 
   export type OrderProductUncheckedCreateNestedManyWithoutProductInput = {
@@ -17760,18 +17795,18 @@ export namespace Prisma {
     connect?: ProductionWhereUniqueInput | ProductionWhereUniqueInput[]
   }
 
-  export type MaterialTreeUncheckedCreateNestedManyWithoutChildInput = {
-    create?: XOR<MaterialTreeCreateWithoutChildInput, MaterialTreeUncheckedCreateWithoutChildInput> | MaterialTreeCreateWithoutChildInput[] | MaterialTreeUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutChildInput | MaterialTreeCreateOrConnectWithoutChildInput[]
-    createMany?: MaterialTreeCreateManyChildInputEnvelope
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
+  export type ProductTreeUncheckedCreateNestedManyWithoutChildInput = {
+    create?: XOR<ProductTreeCreateWithoutChildInput, ProductTreeUncheckedCreateWithoutChildInput> | ProductTreeCreateWithoutChildInput[] | ProductTreeUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutChildInput | ProductTreeCreateOrConnectWithoutChildInput[]
+    createMany?: ProductTreeCreateManyChildInputEnvelope
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
   }
 
-  export type MaterialTreeUncheckedCreateNestedManyWithoutParentInput = {
-    create?: XOR<MaterialTreeCreateWithoutParentInput, MaterialTreeUncheckedCreateWithoutParentInput> | MaterialTreeCreateWithoutParentInput[] | MaterialTreeUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutParentInput | MaterialTreeCreateOrConnectWithoutParentInput[]
-    createMany?: MaterialTreeCreateManyParentInputEnvelope
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
+  export type ProductTreeUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<ProductTreeCreateWithoutParentInput, ProductTreeUncheckedCreateWithoutParentInput> | ProductTreeCreateWithoutParentInput[] | ProductTreeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutParentInput | ProductTreeCreateOrConnectWithoutParentInput[]
+    createMany?: ProductTreeCreateManyParentInputEnvelope
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -17850,32 +17885,32 @@ export namespace Prisma {
     deleteMany?: ProductionScalarWhereInput | ProductionScalarWhereInput[]
   }
 
-  export type MaterialTreeUpdateManyWithoutChildNestedInput = {
-    create?: XOR<MaterialTreeCreateWithoutChildInput, MaterialTreeUncheckedCreateWithoutChildInput> | MaterialTreeCreateWithoutChildInput[] | MaterialTreeUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutChildInput | MaterialTreeCreateOrConnectWithoutChildInput[]
-    upsert?: MaterialTreeUpsertWithWhereUniqueWithoutChildInput | MaterialTreeUpsertWithWhereUniqueWithoutChildInput[]
-    createMany?: MaterialTreeCreateManyChildInputEnvelope
-    set?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    disconnect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    delete?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    update?: MaterialTreeUpdateWithWhereUniqueWithoutChildInput | MaterialTreeUpdateWithWhereUniqueWithoutChildInput[]
-    updateMany?: MaterialTreeUpdateManyWithWhereWithoutChildInput | MaterialTreeUpdateManyWithWhereWithoutChildInput[]
-    deleteMany?: MaterialTreeScalarWhereInput | MaterialTreeScalarWhereInput[]
+  export type ProductTreeUpdateManyWithoutChildNestedInput = {
+    create?: XOR<ProductTreeCreateWithoutChildInput, ProductTreeUncheckedCreateWithoutChildInput> | ProductTreeCreateWithoutChildInput[] | ProductTreeUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutChildInput | ProductTreeCreateOrConnectWithoutChildInput[]
+    upsert?: ProductTreeUpsertWithWhereUniqueWithoutChildInput | ProductTreeUpsertWithWhereUniqueWithoutChildInput[]
+    createMany?: ProductTreeCreateManyChildInputEnvelope
+    set?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    disconnect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    delete?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    update?: ProductTreeUpdateWithWhereUniqueWithoutChildInput | ProductTreeUpdateWithWhereUniqueWithoutChildInput[]
+    updateMany?: ProductTreeUpdateManyWithWhereWithoutChildInput | ProductTreeUpdateManyWithWhereWithoutChildInput[]
+    deleteMany?: ProductTreeScalarWhereInput | ProductTreeScalarWhereInput[]
   }
 
-  export type MaterialTreeUpdateManyWithoutParentNestedInput = {
-    create?: XOR<MaterialTreeCreateWithoutParentInput, MaterialTreeUncheckedCreateWithoutParentInput> | MaterialTreeCreateWithoutParentInput[] | MaterialTreeUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutParentInput | MaterialTreeCreateOrConnectWithoutParentInput[]
-    upsert?: MaterialTreeUpsertWithWhereUniqueWithoutParentInput | MaterialTreeUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: MaterialTreeCreateManyParentInputEnvelope
-    set?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    disconnect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    delete?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    update?: MaterialTreeUpdateWithWhereUniqueWithoutParentInput | MaterialTreeUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: MaterialTreeUpdateManyWithWhereWithoutParentInput | MaterialTreeUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: MaterialTreeScalarWhereInput | MaterialTreeScalarWhereInput[]
+  export type ProductTreeUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ProductTreeCreateWithoutParentInput, ProductTreeUncheckedCreateWithoutParentInput> | ProductTreeCreateWithoutParentInput[] | ProductTreeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutParentInput | ProductTreeCreateOrConnectWithoutParentInput[]
+    upsert?: ProductTreeUpsertWithWhereUniqueWithoutParentInput | ProductTreeUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ProductTreeCreateManyParentInputEnvelope
+    set?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    disconnect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    delete?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    update?: ProductTreeUpdateWithWhereUniqueWithoutParentInput | ProductTreeUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ProductTreeUpdateManyWithWhereWithoutParentInput | ProductTreeUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ProductTreeScalarWhereInput | ProductTreeScalarWhereInput[]
   }
 
   export type OrderProductUncheckedUpdateManyWithoutProductNestedInput = {
@@ -17930,32 +17965,32 @@ export namespace Prisma {
     deleteMany?: ProductionScalarWhereInput | ProductionScalarWhereInput[]
   }
 
-  export type MaterialTreeUncheckedUpdateManyWithoutChildNestedInput = {
-    create?: XOR<MaterialTreeCreateWithoutChildInput, MaterialTreeUncheckedCreateWithoutChildInput> | MaterialTreeCreateWithoutChildInput[] | MaterialTreeUncheckedCreateWithoutChildInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutChildInput | MaterialTreeCreateOrConnectWithoutChildInput[]
-    upsert?: MaterialTreeUpsertWithWhereUniqueWithoutChildInput | MaterialTreeUpsertWithWhereUniqueWithoutChildInput[]
-    createMany?: MaterialTreeCreateManyChildInputEnvelope
-    set?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    disconnect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    delete?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    update?: MaterialTreeUpdateWithWhereUniqueWithoutChildInput | MaterialTreeUpdateWithWhereUniqueWithoutChildInput[]
-    updateMany?: MaterialTreeUpdateManyWithWhereWithoutChildInput | MaterialTreeUpdateManyWithWhereWithoutChildInput[]
-    deleteMany?: MaterialTreeScalarWhereInput | MaterialTreeScalarWhereInput[]
+  export type ProductTreeUncheckedUpdateManyWithoutChildNestedInput = {
+    create?: XOR<ProductTreeCreateWithoutChildInput, ProductTreeUncheckedCreateWithoutChildInput> | ProductTreeCreateWithoutChildInput[] | ProductTreeUncheckedCreateWithoutChildInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutChildInput | ProductTreeCreateOrConnectWithoutChildInput[]
+    upsert?: ProductTreeUpsertWithWhereUniqueWithoutChildInput | ProductTreeUpsertWithWhereUniqueWithoutChildInput[]
+    createMany?: ProductTreeCreateManyChildInputEnvelope
+    set?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    disconnect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    delete?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    update?: ProductTreeUpdateWithWhereUniqueWithoutChildInput | ProductTreeUpdateWithWhereUniqueWithoutChildInput[]
+    updateMany?: ProductTreeUpdateManyWithWhereWithoutChildInput | ProductTreeUpdateManyWithWhereWithoutChildInput[]
+    deleteMany?: ProductTreeScalarWhereInput | ProductTreeScalarWhereInput[]
   }
 
-  export type MaterialTreeUncheckedUpdateManyWithoutParentNestedInput = {
-    create?: XOR<MaterialTreeCreateWithoutParentInput, MaterialTreeUncheckedCreateWithoutParentInput> | MaterialTreeCreateWithoutParentInput[] | MaterialTreeUncheckedCreateWithoutParentInput[]
-    connectOrCreate?: MaterialTreeCreateOrConnectWithoutParentInput | MaterialTreeCreateOrConnectWithoutParentInput[]
-    upsert?: MaterialTreeUpsertWithWhereUniqueWithoutParentInput | MaterialTreeUpsertWithWhereUniqueWithoutParentInput[]
-    createMany?: MaterialTreeCreateManyParentInputEnvelope
-    set?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    disconnect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    delete?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    connect?: MaterialTreeWhereUniqueInput | MaterialTreeWhereUniqueInput[]
-    update?: MaterialTreeUpdateWithWhereUniqueWithoutParentInput | MaterialTreeUpdateWithWhereUniqueWithoutParentInput[]
-    updateMany?: MaterialTreeUpdateManyWithWhereWithoutParentInput | MaterialTreeUpdateManyWithWhereWithoutParentInput[]
-    deleteMany?: MaterialTreeScalarWhereInput | MaterialTreeScalarWhereInput[]
+  export type ProductTreeUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ProductTreeCreateWithoutParentInput, ProductTreeUncheckedCreateWithoutParentInput> | ProductTreeCreateWithoutParentInput[] | ProductTreeUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ProductTreeCreateOrConnectWithoutParentInput | ProductTreeCreateOrConnectWithoutParentInput[]
+    upsert?: ProductTreeUpsertWithWhereUniqueWithoutParentInput | ProductTreeUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ProductTreeCreateManyParentInputEnvelope
+    set?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    disconnect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    delete?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    connect?: ProductTreeWhereUniqueInput | ProductTreeWhereUniqueInput[]
+    update?: ProductTreeUpdateWithWhereUniqueWithoutParentInput | ProductTreeUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ProductTreeUpdateManyWithWhereWithoutParentInput | ProductTreeUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ProductTreeScalarWhereInput | ProductTreeScalarWhereInput[]
   }
 
   export type OrderProductCreateNestedManyWithoutOrderInput = {
@@ -18152,32 +18187,32 @@ export namespace Prisma {
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutProductionInput, ProductUpdateWithoutProductionInput>, ProductUncheckedUpdateWithoutProductionInput>
   }
 
-  export type ProductCreateNestedOneWithoutMaterialTreeParentInput = {
-    create?: XOR<ProductCreateWithoutMaterialTreeParentInput, ProductUncheckedCreateWithoutMaterialTreeParentInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutMaterialTreeParentInput
+  export type ProductCreateNestedOneWithoutProductTreeParentInput = {
+    create?: XOR<ProductCreateWithoutProductTreeParentInput, ProductUncheckedCreateWithoutProductTreeParentInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutProductTreeParentInput
     connect?: ProductWhereUniqueInput
   }
 
-  export type ProductCreateNestedOneWithoutMaterialTreeChildInput = {
-    create?: XOR<ProductCreateWithoutMaterialTreeChildInput, ProductUncheckedCreateWithoutMaterialTreeChildInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutMaterialTreeChildInput
+  export type ProductCreateNestedOneWithoutProductTreeChildInput = {
+    create?: XOR<ProductCreateWithoutProductTreeChildInput, ProductUncheckedCreateWithoutProductTreeChildInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutProductTreeChildInput
     connect?: ProductWhereUniqueInput
   }
 
-  export type ProductUpdateOneRequiredWithoutMaterialTreeParentNestedInput = {
-    create?: XOR<ProductCreateWithoutMaterialTreeParentInput, ProductUncheckedCreateWithoutMaterialTreeParentInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutMaterialTreeParentInput
-    upsert?: ProductUpsertWithoutMaterialTreeParentInput
+  export type ProductUpdateOneRequiredWithoutProductTreeParentNestedInput = {
+    create?: XOR<ProductCreateWithoutProductTreeParentInput, ProductUncheckedCreateWithoutProductTreeParentInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutProductTreeParentInput
+    upsert?: ProductUpsertWithoutProductTreeParentInput
     connect?: ProductWhereUniqueInput
-    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutMaterialTreeParentInput, ProductUpdateWithoutMaterialTreeParentInput>, ProductUncheckedUpdateWithoutMaterialTreeParentInput>
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutProductTreeParentInput, ProductUpdateWithoutProductTreeParentInput>, ProductUncheckedUpdateWithoutProductTreeParentInput>
   }
 
-  export type ProductUpdateOneRequiredWithoutMaterialTreeChildNestedInput = {
-    create?: XOR<ProductCreateWithoutMaterialTreeChildInput, ProductUncheckedCreateWithoutMaterialTreeChildInput>
-    connectOrCreate?: ProductCreateOrConnectWithoutMaterialTreeChildInput
-    upsert?: ProductUpsertWithoutMaterialTreeChildInput
+  export type ProductUpdateOneRequiredWithoutProductTreeChildNestedInput = {
+    create?: XOR<ProductCreateWithoutProductTreeChildInput, ProductUncheckedCreateWithoutProductTreeChildInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutProductTreeChildInput
+    upsert?: ProductUpsertWithoutProductTreeChildInput
     connect?: ProductWhereUniqueInput
-    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutMaterialTreeChildInput, ProductUpdateWithoutMaterialTreeChildInput>, ProductUncheckedUpdateWithoutMaterialTreeChildInput>
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutProductTreeChildInput, ProductUpdateWithoutProductTreeChildInput>, ProductUncheckedUpdateWithoutProductTreeChildInput>
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -18613,43 +18648,47 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type MaterialTreeCreateWithoutChildInput = {
+  export type ProductTreeCreateWithoutChildInput = {
     childQuantity: number
-    parent: ProductCreateNestedOneWithoutMaterialTreeParentInput
+    childUnitCost: Decimal | DecimalJsLike | number | string
+    parent: ProductCreateNestedOneWithoutProductTreeParentInput
   }
 
-  export type MaterialTreeUncheckedCreateWithoutChildInput = {
+  export type ProductTreeUncheckedCreateWithoutChildInput = {
     parentId: string
     childQuantity: number
+    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeCreateOrConnectWithoutChildInput = {
-    where: MaterialTreeWhereUniqueInput
-    create: XOR<MaterialTreeCreateWithoutChildInput, MaterialTreeUncheckedCreateWithoutChildInput>
+  export type ProductTreeCreateOrConnectWithoutChildInput = {
+    where: ProductTreeWhereUniqueInput
+    create: XOR<ProductTreeCreateWithoutChildInput, ProductTreeUncheckedCreateWithoutChildInput>
   }
 
-  export type MaterialTreeCreateManyChildInputEnvelope = {
-    data: MaterialTreeCreateManyChildInput | MaterialTreeCreateManyChildInput[]
+  export type ProductTreeCreateManyChildInputEnvelope = {
+    data: ProductTreeCreateManyChildInput | ProductTreeCreateManyChildInput[]
     skipDuplicates?: boolean
   }
 
-  export type MaterialTreeCreateWithoutParentInput = {
+  export type ProductTreeCreateWithoutParentInput = {
     childQuantity: number
-    child: ProductCreateNestedOneWithoutMaterialTreeChildInput
+    childUnitCost: Decimal | DecimalJsLike | number | string
+    child: ProductCreateNestedOneWithoutProductTreeChildInput
   }
 
-  export type MaterialTreeUncheckedCreateWithoutParentInput = {
+  export type ProductTreeUncheckedCreateWithoutParentInput = {
     childId: string
     childQuantity: number
+    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeCreateOrConnectWithoutParentInput = {
-    where: MaterialTreeWhereUniqueInput
-    create: XOR<MaterialTreeCreateWithoutParentInput, MaterialTreeUncheckedCreateWithoutParentInput>
+  export type ProductTreeCreateOrConnectWithoutParentInput = {
+    where: ProductTreeWhereUniqueInput
+    create: XOR<ProductTreeCreateWithoutParentInput, ProductTreeUncheckedCreateWithoutParentInput>
   }
 
-  export type MaterialTreeCreateManyParentInputEnvelope = {
-    data: MaterialTreeCreateManyParentInput | MaterialTreeCreateManyParentInput[]
+  export type ProductTreeCreateManyParentInputEnvelope = {
+    data: ProductTreeCreateManyParentInput | ProductTreeCreateManyParentInput[]
     skipDuplicates?: boolean
   }
 
@@ -18750,45 +18789,46 @@ export namespace Prisma {
     date?: DateTimeFilter<"Production"> | Date | string
   }
 
-  export type MaterialTreeUpsertWithWhereUniqueWithoutChildInput = {
-    where: MaterialTreeWhereUniqueInput
-    update: XOR<MaterialTreeUpdateWithoutChildInput, MaterialTreeUncheckedUpdateWithoutChildInput>
-    create: XOR<MaterialTreeCreateWithoutChildInput, MaterialTreeUncheckedCreateWithoutChildInput>
+  export type ProductTreeUpsertWithWhereUniqueWithoutChildInput = {
+    where: ProductTreeWhereUniqueInput
+    update: XOR<ProductTreeUpdateWithoutChildInput, ProductTreeUncheckedUpdateWithoutChildInput>
+    create: XOR<ProductTreeCreateWithoutChildInput, ProductTreeUncheckedCreateWithoutChildInput>
   }
 
-  export type MaterialTreeUpdateWithWhereUniqueWithoutChildInput = {
-    where: MaterialTreeWhereUniqueInput
-    data: XOR<MaterialTreeUpdateWithoutChildInput, MaterialTreeUncheckedUpdateWithoutChildInput>
+  export type ProductTreeUpdateWithWhereUniqueWithoutChildInput = {
+    where: ProductTreeWhereUniqueInput
+    data: XOR<ProductTreeUpdateWithoutChildInput, ProductTreeUncheckedUpdateWithoutChildInput>
   }
 
-  export type MaterialTreeUpdateManyWithWhereWithoutChildInput = {
-    where: MaterialTreeScalarWhereInput
-    data: XOR<MaterialTreeUpdateManyMutationInput, MaterialTreeUncheckedUpdateManyWithoutChildInput>
+  export type ProductTreeUpdateManyWithWhereWithoutChildInput = {
+    where: ProductTreeScalarWhereInput
+    data: XOR<ProductTreeUpdateManyMutationInput, ProductTreeUncheckedUpdateManyWithoutChildInput>
   }
 
-  export type MaterialTreeScalarWhereInput = {
-    AND?: MaterialTreeScalarWhereInput | MaterialTreeScalarWhereInput[]
-    OR?: MaterialTreeScalarWhereInput[]
-    NOT?: MaterialTreeScalarWhereInput | MaterialTreeScalarWhereInput[]
-    parentId?: UuidFilter<"MaterialTree"> | string
-    childId?: UuidFilter<"MaterialTree"> | string
-    childQuantity?: IntFilter<"MaterialTree"> | number
+  export type ProductTreeScalarWhereInput = {
+    AND?: ProductTreeScalarWhereInput | ProductTreeScalarWhereInput[]
+    OR?: ProductTreeScalarWhereInput[]
+    NOT?: ProductTreeScalarWhereInput | ProductTreeScalarWhereInput[]
+    parentId?: UuidFilter<"ProductTree"> | string
+    childId?: UuidFilter<"ProductTree"> | string
+    childQuantity?: IntFilter<"ProductTree"> | number
+    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUpsertWithWhereUniqueWithoutParentInput = {
-    where: MaterialTreeWhereUniqueInput
-    update: XOR<MaterialTreeUpdateWithoutParentInput, MaterialTreeUncheckedUpdateWithoutParentInput>
-    create: XOR<MaterialTreeCreateWithoutParentInput, MaterialTreeUncheckedCreateWithoutParentInput>
+  export type ProductTreeUpsertWithWhereUniqueWithoutParentInput = {
+    where: ProductTreeWhereUniqueInput
+    update: XOR<ProductTreeUpdateWithoutParentInput, ProductTreeUncheckedUpdateWithoutParentInput>
+    create: XOR<ProductTreeCreateWithoutParentInput, ProductTreeUncheckedCreateWithoutParentInput>
   }
 
-  export type MaterialTreeUpdateWithWhereUniqueWithoutParentInput = {
-    where: MaterialTreeWhereUniqueInput
-    data: XOR<MaterialTreeUpdateWithoutParentInput, MaterialTreeUncheckedUpdateWithoutParentInput>
+  export type ProductTreeUpdateWithWhereUniqueWithoutParentInput = {
+    where: ProductTreeWhereUniqueInput
+    data: XOR<ProductTreeUpdateWithoutParentInput, ProductTreeUncheckedUpdateWithoutParentInput>
   }
 
-  export type MaterialTreeUpdateManyWithWhereWithoutParentInput = {
-    where: MaterialTreeScalarWhereInput
-    data: XOR<MaterialTreeUpdateManyMutationInput, MaterialTreeUncheckedUpdateManyWithoutParentInput>
+  export type ProductTreeUpdateManyWithWhereWithoutParentInput = {
+    where: ProductTreeScalarWhereInput
+    data: XOR<ProductTreeUpdateManyMutationInput, ProductTreeUncheckedUpdateManyWithoutParentInput>
   }
 
   export type OrderProductCreateWithoutOrderInput = {
@@ -18858,8 +18898,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductCreateNestedManyWithoutProductInput
     stock?: StockCreateNestedOneWithoutProductInput
     production?: ProductionCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeCreateNestedManyWithoutParentInput
   }
 
   export type ProductUncheckedCreateWithoutOrderProductsInput = {
@@ -18875,8 +18915,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedCreateNestedManyWithoutProductInput
     stock?: StockUncheckedCreateNestedOneWithoutProductInput
     production?: ProductionUncheckedCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeUncheckedCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeUncheckedCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeUncheckedCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ProductCreateOrConnectWithoutOrderProductsInput = {
@@ -18932,8 +18972,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUpdateManyWithoutProductNestedInput
     stock?: StockUpdateOneWithoutProductNestedInput
     production?: ProductionUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUpdateManyWithoutParentNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutOrderProductsInput = {
@@ -18949,8 +18989,8 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedUpdateManyWithoutProductNestedInput
     stock?: StockUncheckedUpdateOneWithoutProductNestedInput
     production?: ProductionUncheckedUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUncheckedUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUncheckedUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUncheckedUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type UserCreateWithoutPurchasesInput = {
@@ -19082,8 +19122,8 @@ export namespace Prisma {
     orderProducts?: OrderProductCreateNestedManyWithoutProductInput
     stock?: StockCreateNestedOneWithoutProductInput
     production?: ProductionCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeCreateNestedManyWithoutParentInput
   }
 
   export type ProductUncheckedCreateWithoutPurchaseProductsInput = {
@@ -19099,8 +19139,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUncheckedCreateNestedManyWithoutProductInput
     stock?: StockUncheckedCreateNestedOneWithoutProductInput
     production?: ProductionUncheckedCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeUncheckedCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeUncheckedCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeUncheckedCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ProductCreateOrConnectWithoutPurchaseProductsInput = {
@@ -19158,8 +19198,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUpdateManyWithoutProductNestedInput
     stock?: StockUpdateOneWithoutProductNestedInput
     production?: ProductionUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUpdateManyWithoutParentNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutPurchaseProductsInput = {
@@ -19175,8 +19215,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUncheckedUpdateManyWithoutProductNestedInput
     stock?: StockUncheckedUpdateOneWithoutProductNestedInput
     production?: ProductionUncheckedUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUncheckedUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUncheckedUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUncheckedUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ProductCreateWithoutStockInput = {
@@ -19192,8 +19232,8 @@ export namespace Prisma {
     orderProducts?: OrderProductCreateNestedManyWithoutProductInput
     purchaseProducts?: PurchaseProductCreateNestedManyWithoutProductInput
     production?: ProductionCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeCreateNestedManyWithoutParentInput
   }
 
   export type ProductUncheckedCreateWithoutStockInput = {
@@ -19209,8 +19249,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUncheckedCreateNestedManyWithoutProductInput
     purchaseProducts?: PurchaseProductUncheckedCreateNestedManyWithoutProductInput
     production?: ProductionUncheckedCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeUncheckedCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeUncheckedCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeUncheckedCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ProductCreateOrConnectWithoutStockInput = {
@@ -19242,8 +19282,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUpdateManyWithoutProductNestedInput
     purchaseProducts?: PurchaseProductUpdateManyWithoutProductNestedInput
     production?: ProductionUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUpdateManyWithoutParentNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutStockInput = {
@@ -19259,8 +19299,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUncheckedUpdateManyWithoutProductNestedInput
     purchaseProducts?: PurchaseProductUncheckedUpdateManyWithoutProductNestedInput
     production?: ProductionUncheckedUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUncheckedUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUncheckedUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUncheckedUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ProductCreateWithoutProductionInput = {
@@ -19276,8 +19316,8 @@ export namespace Prisma {
     orderProducts?: OrderProductCreateNestedManyWithoutProductInput
     purchaseProducts?: PurchaseProductCreateNestedManyWithoutProductInput
     stock?: StockCreateNestedOneWithoutProductInput
-    materialTreeChild?: MaterialTreeCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeCreateNestedManyWithoutParentInput
   }
 
   export type ProductUncheckedCreateWithoutProductionInput = {
@@ -19293,8 +19333,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUncheckedCreateNestedManyWithoutProductInput
     purchaseProducts?: PurchaseProductUncheckedCreateNestedManyWithoutProductInput
     stock?: StockUncheckedCreateNestedOneWithoutProductInput
-    materialTreeChild?: MaterialTreeUncheckedCreateNestedManyWithoutChildInput
-    materialTreeParent?: MaterialTreeUncheckedCreateNestedManyWithoutParentInput
+    ProductTreeChild?: ProductTreeUncheckedCreateNestedManyWithoutChildInput
+    ProductTreeParent?: ProductTreeUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ProductCreateOrConnectWithoutProductionInput = {
@@ -19326,8 +19366,8 @@ export namespace Prisma {
     orderProducts?: OrderProductUpdateManyWithoutProductNestedInput
     purchaseProducts?: PurchaseProductUpdateManyWithoutProductNestedInput
     stock?: StockUpdateOneWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUpdateManyWithoutParentNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutProductionInput = {
@@ -19343,11 +19383,11 @@ export namespace Prisma {
     orderProducts?: OrderProductUncheckedUpdateManyWithoutProductNestedInput
     purchaseProducts?: PurchaseProductUncheckedUpdateManyWithoutProductNestedInput
     stock?: StockUncheckedUpdateOneWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUncheckedUpdateManyWithoutChildNestedInput
-    materialTreeParent?: MaterialTreeUncheckedUpdateManyWithoutParentNestedInput
+    ProductTreeChild?: ProductTreeUncheckedUpdateManyWithoutChildNestedInput
+    ProductTreeParent?: ProductTreeUncheckedUpdateManyWithoutParentNestedInput
   }
 
-  export type ProductCreateWithoutMaterialTreeParentInput = {
+  export type ProductCreateWithoutProductTreeParentInput = {
     id?: string
     active?: boolean
     name: string
@@ -19361,10 +19401,10 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductCreateNestedManyWithoutProductInput
     stock?: StockCreateNestedOneWithoutProductInput
     production?: ProductionCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeCreateNestedManyWithoutChildInput
+    ProductTreeChild?: ProductTreeCreateNestedManyWithoutChildInput
   }
 
-  export type ProductUncheckedCreateWithoutMaterialTreeParentInput = {
+  export type ProductUncheckedCreateWithoutProductTreeParentInput = {
     id?: string
     active?: boolean
     name: string
@@ -19378,15 +19418,15 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedCreateNestedManyWithoutProductInput
     stock?: StockUncheckedCreateNestedOneWithoutProductInput
     production?: ProductionUncheckedCreateNestedManyWithoutProductInput
-    materialTreeChild?: MaterialTreeUncheckedCreateNestedManyWithoutChildInput
+    ProductTreeChild?: ProductTreeUncheckedCreateNestedManyWithoutChildInput
   }
 
-  export type ProductCreateOrConnectWithoutMaterialTreeParentInput = {
+  export type ProductCreateOrConnectWithoutProductTreeParentInput = {
     where: ProductWhereUniqueInput
-    create: XOR<ProductCreateWithoutMaterialTreeParentInput, ProductUncheckedCreateWithoutMaterialTreeParentInput>
+    create: XOR<ProductCreateWithoutProductTreeParentInput, ProductUncheckedCreateWithoutProductTreeParentInput>
   }
 
-  export type ProductCreateWithoutMaterialTreeChildInput = {
+  export type ProductCreateWithoutProductTreeChildInput = {
     id?: string
     active?: boolean
     name: string
@@ -19400,10 +19440,10 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductCreateNestedManyWithoutProductInput
     stock?: StockCreateNestedOneWithoutProductInput
     production?: ProductionCreateNestedManyWithoutProductInput
-    materialTreeParent?: MaterialTreeCreateNestedManyWithoutParentInput
+    ProductTreeParent?: ProductTreeCreateNestedManyWithoutParentInput
   }
 
-  export type ProductUncheckedCreateWithoutMaterialTreeChildInput = {
+  export type ProductUncheckedCreateWithoutProductTreeChildInput = {
     id?: string
     active?: boolean
     name: string
@@ -19417,26 +19457,26 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedCreateNestedManyWithoutProductInput
     stock?: StockUncheckedCreateNestedOneWithoutProductInput
     production?: ProductionUncheckedCreateNestedManyWithoutProductInput
-    materialTreeParent?: MaterialTreeUncheckedCreateNestedManyWithoutParentInput
+    ProductTreeParent?: ProductTreeUncheckedCreateNestedManyWithoutParentInput
   }
 
-  export type ProductCreateOrConnectWithoutMaterialTreeChildInput = {
+  export type ProductCreateOrConnectWithoutProductTreeChildInput = {
     where: ProductWhereUniqueInput
-    create: XOR<ProductCreateWithoutMaterialTreeChildInput, ProductUncheckedCreateWithoutMaterialTreeChildInput>
+    create: XOR<ProductCreateWithoutProductTreeChildInput, ProductUncheckedCreateWithoutProductTreeChildInput>
   }
 
-  export type ProductUpsertWithoutMaterialTreeParentInput = {
-    update: XOR<ProductUpdateWithoutMaterialTreeParentInput, ProductUncheckedUpdateWithoutMaterialTreeParentInput>
-    create: XOR<ProductCreateWithoutMaterialTreeParentInput, ProductUncheckedCreateWithoutMaterialTreeParentInput>
+  export type ProductUpsertWithoutProductTreeParentInput = {
+    update: XOR<ProductUpdateWithoutProductTreeParentInput, ProductUncheckedUpdateWithoutProductTreeParentInput>
+    create: XOR<ProductCreateWithoutProductTreeParentInput, ProductUncheckedCreateWithoutProductTreeParentInput>
     where?: ProductWhereInput
   }
 
-  export type ProductUpdateToOneWithWhereWithoutMaterialTreeParentInput = {
+  export type ProductUpdateToOneWithWhereWithoutProductTreeParentInput = {
     where?: ProductWhereInput
-    data: XOR<ProductUpdateWithoutMaterialTreeParentInput, ProductUncheckedUpdateWithoutMaterialTreeParentInput>
+    data: XOR<ProductUpdateWithoutProductTreeParentInput, ProductUncheckedUpdateWithoutProductTreeParentInput>
   }
 
-  export type ProductUpdateWithoutMaterialTreeParentInput = {
+  export type ProductUpdateWithoutProductTreeParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     active?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
@@ -19450,10 +19490,10 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUpdateManyWithoutProductNestedInput
     stock?: StockUpdateOneWithoutProductNestedInput
     production?: ProductionUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUpdateManyWithoutChildNestedInput
+    ProductTreeChild?: ProductTreeUpdateManyWithoutChildNestedInput
   }
 
-  export type ProductUncheckedUpdateWithoutMaterialTreeParentInput = {
+  export type ProductUncheckedUpdateWithoutProductTreeParentInput = {
     id?: StringFieldUpdateOperationsInput | string
     active?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
@@ -19467,21 +19507,21 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedUpdateManyWithoutProductNestedInput
     stock?: StockUncheckedUpdateOneWithoutProductNestedInput
     production?: ProductionUncheckedUpdateManyWithoutProductNestedInput
-    materialTreeChild?: MaterialTreeUncheckedUpdateManyWithoutChildNestedInput
+    ProductTreeChild?: ProductTreeUncheckedUpdateManyWithoutChildNestedInput
   }
 
-  export type ProductUpsertWithoutMaterialTreeChildInput = {
-    update: XOR<ProductUpdateWithoutMaterialTreeChildInput, ProductUncheckedUpdateWithoutMaterialTreeChildInput>
-    create: XOR<ProductCreateWithoutMaterialTreeChildInput, ProductUncheckedCreateWithoutMaterialTreeChildInput>
+  export type ProductUpsertWithoutProductTreeChildInput = {
+    update: XOR<ProductUpdateWithoutProductTreeChildInput, ProductUncheckedUpdateWithoutProductTreeChildInput>
+    create: XOR<ProductCreateWithoutProductTreeChildInput, ProductUncheckedCreateWithoutProductTreeChildInput>
     where?: ProductWhereInput
   }
 
-  export type ProductUpdateToOneWithWhereWithoutMaterialTreeChildInput = {
+  export type ProductUpdateToOneWithWhereWithoutProductTreeChildInput = {
     where?: ProductWhereInput
-    data: XOR<ProductUpdateWithoutMaterialTreeChildInput, ProductUncheckedUpdateWithoutMaterialTreeChildInput>
+    data: XOR<ProductUpdateWithoutProductTreeChildInput, ProductUncheckedUpdateWithoutProductTreeChildInput>
   }
 
-  export type ProductUpdateWithoutMaterialTreeChildInput = {
+  export type ProductUpdateWithoutProductTreeChildInput = {
     id?: StringFieldUpdateOperationsInput | string
     active?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
@@ -19495,10 +19535,10 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUpdateManyWithoutProductNestedInput
     stock?: StockUpdateOneWithoutProductNestedInput
     production?: ProductionUpdateManyWithoutProductNestedInput
-    materialTreeParent?: MaterialTreeUpdateManyWithoutParentNestedInput
+    ProductTreeParent?: ProductTreeUpdateManyWithoutParentNestedInput
   }
 
-  export type ProductUncheckedUpdateWithoutMaterialTreeChildInput = {
+  export type ProductUncheckedUpdateWithoutProductTreeChildInput = {
     id?: StringFieldUpdateOperationsInput | string
     active?: BoolFieldUpdateOperationsInput | boolean
     name?: StringFieldUpdateOperationsInput | string
@@ -19512,7 +19552,7 @@ export namespace Prisma {
     purchaseProducts?: PurchaseProductUncheckedUpdateManyWithoutProductNestedInput
     stock?: StockUncheckedUpdateOneWithoutProductNestedInput
     production?: ProductionUncheckedUpdateManyWithoutProductNestedInput
-    materialTreeParent?: MaterialTreeUncheckedUpdateManyWithoutParentNestedInput
+    ProductTreeParent?: ProductTreeUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type PurchaseCreateManyUserInput = {
@@ -19562,14 +19602,16 @@ export namespace Prisma {
     date?: Date | string
   }
 
-  export type MaterialTreeCreateManyChildInput = {
+  export type ProductTreeCreateManyChildInput = {
     parentId: string
     childQuantity: number
+    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeCreateManyParentInput = {
+  export type ProductTreeCreateManyParentInput = {
     childId: string
     childQuantity: number
+    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUpdateWithoutProductInput = {
@@ -19625,34 +19667,40 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MaterialTreeUpdateWithoutChildInput = {
+  export type ProductTreeUpdateWithoutChildInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    parent?: ProductUpdateOneRequiredWithoutMaterialTreeParentNestedInput
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    parent?: ProductUpdateOneRequiredWithoutProductTreeParentNestedInput
   }
 
-  export type MaterialTreeUncheckedUpdateWithoutChildInput = {
+  export type ProductTreeUncheckedUpdateWithoutChildInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUncheckedUpdateManyWithoutChildInput = {
+  export type ProductTreeUncheckedUpdateManyWithoutChildInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUpdateWithoutParentInput = {
+  export type ProductTreeUpdateWithoutParentInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    child?: ProductUpdateOneRequiredWithoutMaterialTreeChildNestedInput
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    child?: ProductUpdateOneRequiredWithoutProductTreeChildNestedInput
   }
 
-  export type MaterialTreeUncheckedUpdateWithoutParentInput = {
+  export type ProductTreeUncheckedUpdateWithoutParentInput = {
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
-  export type MaterialTreeUncheckedUpdateManyWithoutParentInput = {
+  export type ProductTreeUncheckedUpdateManyWithoutParentInput = {
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
+    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductCreateManyOrderInput = {

@@ -131,13 +131,13 @@ export function Sidebar() {
       )}
 
       <aside
-        className={`h-dvh transition-[width] duration-300 ease-in-out z-50 min-h-full pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] fixed md:relative top-0 left-0
+        className={`h-dvh transition-[width] border-r border-cyan-200 duration-300 ease-in-out z-50 min-h-full pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] fixed md:relative top-0 left-0
           ${isOpen ? "w-52" : "w-0 md:w-20"}`}
       >
         <div className="flex flex-col bg-primary min-h-full overflow-hidden">
           <div className="relative h-36 w-full shrink-0">
             <div
-              className={`absolute top-4 transition-all duration-300 ${isOpen ? "right-2" : "left-1/2 -translate-x-1/2"}`}
+              className={`absolute top-2 transition-all duration-300 ${isOpen ? "right-2" : "left-1/2 -translate-x-1/2"}`}
             >
               <button
                 onClick={() => setIsOpen((v) => !v)}
@@ -163,14 +163,14 @@ export function Sidebar() {
           </div>
 
           <div className="flex-1 w-full px-3 pb-4 overflow-y-auto overflow-x-hidden no-scrollbar">
-            <LinkWrapper title="Início" isOpen={isOpen}>
+            {/* <LinkWrapper title="Início" isOpen={isOpen}>
               <SidebarLink
                 icon={Home}
                 href="/"
                 text="Dashboard"
                 isOpen={isOpen}
               />
-            </LinkWrapper>
+            </LinkWrapper> */}
 
             <LinkWrapper title="Movimentações" isOpen={isOpen}>
               <SidebarLink
@@ -179,21 +179,21 @@ export function Sidebar() {
                 text="Vendas"
                 isOpen={isOpen}
               />
-              <SidebarLink
+              {/* <SidebarLink
                 icon={ShoppingCart}
                 href="/purchases"
                 text="Compras"
                 isOpen={isOpen}
-              />
+              /> */}
             </LinkWrapper>
 
             <LinkWrapper title="Cadastros" isOpen={isOpen}>
-              <SidebarLink
+              {/* <SidebarLink
                 icon={FileUser}
                 href="/customers"
                 text="Clientes"
                 isOpen={isOpen}
-              />
+              /> */}
 
               <SidebarLink
                 icon={Boxes}

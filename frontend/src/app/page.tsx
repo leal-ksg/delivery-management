@@ -1,11 +1,7 @@
+import { redirect } from "next/navigation";
+
 const Home = () => {
-  return (
-    <div className="self-center w-full h-full rounded-2xl">
-      <header>
-        
-      </header>
-    </div>
-  );
+  return redirect("/orders");
 };
 
 export default Home;

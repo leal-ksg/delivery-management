@@ -15,9 +15,14 @@ customerRouter.get("/", async (req: Request, res: Response) => {
 });
 
 customerRouter.get("/:id", async (req: Request, res: Response) => {
-  const { body, statusCode } = await customerController.getCustomerById(
-    req.params.id!,
-  );
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+
+  if (!id)
+    return res
+      .status(400)
+      .json({ error: "Informe um código de cliente para a busca" });
+
+  const { body, statusCode } = await customerController.getCustomerById(id);
 
   return res.status(statusCode).json(body);
 });
@@ -38,13 +43,15 @@ customerRouter.patch(
   "/:id",
   validationMiddleware(updateCustomerSchema),
   async (req: Request, res: Response) => {
-    if (!req.params.id)
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+
+    if (!id)
       return res
         .status(400)
-        .json({ error: "É necessário um ID para a atualização" });
+        .json({ error: "Informe um código de cliente para a atualização" });
 
     const { body, statusCode } = await customerController.updateCustomer(
-      req.params.id,
+      id,
       req.body,
     );
 

@@ -209,10 +209,11 @@ exports.Prisma.GeneralLogScalarFieldEnum = {
   date: 'date'
 };
 
-exports.Prisma.MaterialTreeScalarFieldEnum = {
+exports.Prisma.ProductTreeScalarFieldEnum = {
   parentId: 'parentId',
   childId: 'childId',
-  childQuantity: 'childQuantity'
+  childQuantity: 'childQuantity',
+  childUnitCost: 'childUnitCost'
 };
 
 exports.Prisma.SortOrder = {
@@ -279,7 +280,7 @@ exports.Prisma.ModelName = {
   Stock: 'Stock',
   Production: 'Production',
   GeneralLog: 'GeneralLog',
-  MaterialTree: 'MaterialTree'
+  ProductTree: 'ProductTree'
 };
 
 /**
