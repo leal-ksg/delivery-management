@@ -1,13 +1,30 @@
 import { Request, Response, Router } from "express";
-import { updateCustomerSchema } from "../schemas/customer";
 import { validationMiddleware } from "../middlewares/validation";
 import { ProductTreeRepository } from "../repositories/postgres/product-tree";
 import { ProductTreeController } from "../controllers/product-tree";
-import { productTreeSchema } from "../schemas/product-tree";
+import {
+  deleteProductTreeSchema,
+  productTreeSchema,
+} from "../schemas/product-tree";
 
 export const productTreeRouter = Router();
 const productTreeRepository = new ProductTreeRepository();
 const productTreeController = new ProductTreeController(productTreeRepository);
+
+productTreeRouter.get("/", async (req: Request, res: Response) => {
+  const itemsPerPage = req.query.itemsPerPage
+    ? Number(req.query.itemsPerPage)
+    : undefined;
+
+  const page = req.query.page ? Number(req.query.page) : undefined;
+
+  const { body, statusCode } = await productTreeController.getAllNodes(
+    itemsPerPage,
+    page,
+  );
+
+  return res.status(statusCode).json(body);
+});
 
 productTreeRouter.get("/:id", async (req: Request, res: Response) => {
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
@@ -26,7 +43,7 @@ productTreeRouter.post(
   "/",
   validationMiddleware(productTreeSchema),
   async (req: Request, res: Response) => {
-    const { body, statusCode } = await productTreeController.createProductTree(
+    const { body, statusCode } = await productTreeController.createNode(
       req.body,
     );
 
@@ -35,18 +52,22 @@ productTreeRouter.post(
 );
 
 productTreeRouter.patch(
-  "/:id",
-  validationMiddleware(updateCustomerSchema),
+  "/",
+  validationMiddleware(productTreeSchema),
   async (req: Request, res: Response) => {
-    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+    const { body, statusCode } = await productTreeController.updateNode(
+      req.body,
+    );
 
-    if (!id)
-      return res
-        .status(400)
-        .json({ error: "Informe um código de produto pai para a atualização" });
+    return res.status(statusCode).json(body);
+  },
+);
 
-    const { body, statusCode } = await productTreeController.replaceProductTree(
-      id,
+productTreeRouter.delete(
+  "/",
+  validationMiddleware(deleteProductTreeSchema),
+  async (req: Request, res: Response) => {
+    const { body, statusCode } = await productTreeController.deleteNodes(
       req.body,
     );
 

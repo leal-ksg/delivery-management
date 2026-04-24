@@ -1,9 +1,24 @@
 import { ProductTree } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
-import { IProductTreeController, IProductTreeRepository } from "./interfaces";
+import { Pagination } from "../../core/pagination";
+import { Result } from "../../core/result";
+import {
+  DeleteProductTreeDTO,
+  IProductTreeController,
+  IProductTreeRepository,
+  ProductTreeDTO,
+} from "./interfaces";
 
 export class ProductTreeController implements IProductTreeController {
   constructor(private readonly productTreeRepository: IProductTreeRepository) {}
+  async getAllNodes(
+    itemsPerPage?: number,
+    page?: number,
+  ): Promise<HttpResponse<Pagination<ProductTreeDTO>>> {
+    const result = await this.productTreeRepository.findAll(itemsPerPage, page);
+
+    return toHttpResponse(result);
+  }
 
   async getByParentId(parentId: string): Promise<HttpResponse<ProductTree[]>> {
     const result = await this.productTreeRepository.findById(parentId);
@@ -11,36 +26,21 @@ export class ProductTreeController implements IProductTreeController {
     return toHttpResponse(result);
   }
 
-  async createProductTree(
-    products: ProductTree[],
-  ): Promise<HttpResponse<ProductTree[]>> {
-    const parentId = products[0]?.parentId;
-
-    if (!products.every((p) => p.parentId === parentId)) {
-      return {
-        statusCode: 400,
-        body: { error: "Todos os filhos devem ter o mesmo produto pai" },
-      };
-    }
-
-    const result = await this.productTreeRepository.create(products);
+  async createNode(product: ProductTree): Promise<HttpResponse<ProductTree>> {
+    const result = await this.productTreeRepository.create(product);
 
     return toHttpResponse(result, 201);
   }
 
-  async replaceProductTree(
-    parentId: string,
-    products: ProductTree[],
-  ): Promise<HttpResponse<ProductTree[]>> {
-    if (!products.every((p) => p.parentId === parentId)) {
-      return {
-        statusCode: 400,
-        body: { error: "Todos os filhos devem ter o mesmo produto pai" },
-      };
-    }
-
-    const result = await this.productTreeRepository.replace(parentId, products);
+  async updateNode(product: ProductTree): Promise<HttpResponse<ProductTree>> {
+    const result = await this.productTreeRepository.update(product);
 
     return toHttpResponse(result);
+  }
+
+  async deleteNodes(
+    products: DeleteProductTreeDTO[],
+  ): Promise<HttpResponse<void>> {
+    throw new Error("Method not implemented.");
   }
 }
