@@ -10,10 +10,10 @@ export function toast(
   message: string,
   duration: number = 3500,
 ) {
-  message =
-    message.length > 100 && type === "error"
-      ? "Ocorreu um erro inesperado no sistema"
-      : message;
+  // message =
+  //   message.length > 100 && type === "error"
+  //     ? "Ocorreu um erro inesperado no sistema"
+  //     : message;
 
   switch (type) {
     case "success":
