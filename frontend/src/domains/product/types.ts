@@ -14,6 +14,7 @@ export type Product = {
   active: boolean;
   name: string;
   description: string;
+  totalCost: number;
   unitPrice: number;
   type: ProductType;
   consumptionType: ConsumptionType;

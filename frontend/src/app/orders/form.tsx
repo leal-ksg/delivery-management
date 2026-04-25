@@ -11,13 +11,11 @@ import { Order, OrderStatus } from "@/src/domains/order/types";
 import { updateOrder } from "@/src/domains/order/services/update-order";
 import { createOrder } from "@/src/domains/order/services/create-order";
 import { FormInput } from "@/src/components/FormInput";
-import { getProducts } from "@/src/domains/product/services/get-products";
-import { Option } from "@/src/domains/types";
-import debounce from "lodash.debounce";
 import { FormSearchSelect } from "@/src/components/FormSearchSelect";
 import { Button } from "@/components/ui/button";
 import { Checkout } from "./components/checkout";
 import { toast } from "@/components/ui/sonner";
+import { loadProductOptions } from "@/src/domains/product/services/load-product-options";
 
 interface OrderFormProps {
   editingOrder: Order | null;
@@ -49,39 +47,6 @@ const orderSchema = z.object({
 });
 
 type FormData = z.input<typeof orderSchema>;
-
-const fetchProducts = async (
-  inputValue: string,
-): Promise<Option<ProductOptionValue>[]> => {
-  const response = await getProducts(inputValue, 0, 20);
-
-  if (!response.ok) {
-    return [];
-  }
-
-  return response.body.list.map((p) => ({
-    label: p.name,
-    value: { name: p.name, id: p.id, unitPrice: p.unitPrice },
-  }));
-};
-
-const debouncedFetch = debounce(
-  (
-    inputValue: string,
-    resolve: (value: Option<ProductOptionValue>[]) => void,
-  ) => {
-    fetchProducts(inputValue).then(resolve);
-  },
-  1000,
-);
-
-const loadProductOptions = (
-  inputValue: string,
-): Promise<Option<ProductOptionValue>[]> => {
-  return new Promise((resolve) => {
-    debouncedFetch(inputValue, resolve);
-  });
-};
 
 const mapOrderProducts = (order: Order | null): ProductOptionValue[] => {
   if (!order) return [];

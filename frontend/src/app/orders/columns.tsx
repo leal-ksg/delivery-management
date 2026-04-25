@@ -1,8 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { orderStatusTranslation } from "@/lib/field-translations";
-import { Order, OrderStatus } from "@/src/domains/order/types";
+import { Order } from "@/src/domains/order/types";
 import { ColumnDef } from "@tanstack/react-table";
 
 export const orderColumns: ColumnDef<Order>[] = [

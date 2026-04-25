@@ -36,7 +36,7 @@ export function Checkout({ products, updateProducts }: CheckoutProps) {
           <input
             type="text"
             inputMode="decimal"
-            defaultValue={1}
+            value={p.quantity ? p.quantity : 1}
             className="w-16 h-9 text-center rounded-md border border-neutral-300 bg-white text-sm outline-none focus:ring-2 focus:ring-secondary"
             onChange={(e) => handleQuantityChange(Number(e.target.value), p.id)}
           />

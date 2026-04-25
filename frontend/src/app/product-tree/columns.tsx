@@ -1,12 +1,11 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { productTypeTranslation } from "@/lib/field-translations";
 import { formatMoney } from "@/lib/format-money";
-import { Product, ProductType } from "@/src/domains/product/types";
+import { ProductTree } from "@/src/domains/product-tree/types";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const productColumns: ColumnDef<Product>[] = [
+export const productColumns: ColumnDef<ProductTree>[] = [
   {
     id: "checkbox",
     header: ({ table }) => {
@@ -34,36 +33,28 @@ export const productColumns: ColumnDef<Product>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "active",
-    header: "Status",
-    cell: ({ cell }) => {
-      return cell.getValue() ? "Ativo" : "Inativo";
+    id: "parentName",
+    header: "Pai",
+    accessorFn: (row) => {
+      return row.parent.name;
     },
   },
   {
-    accessorKey: "name",
-    header: "Nome",
-  },
-  {
-    accessorKey: "totalCost",
-    header: "Custo total",
-    cell: ({ cell }) => {
-      return formatMoney(Number(cell.getValue())) || " - ";
+    id: "childName",
+    header: "Filho",
+    accessorFn: (row) => {
+      return row.child.name;
     },
   },
   {
-    accessorKey: "unitPrice",
-    header: "Preço unit.",
+    accessorKey: "childQuantity",
+    header: "Quantidade",
+  },
+  {
+    accessorKey: "childUnitCost",
+    header: "Custo unitário",
     cell: ({ cell }) => {
       return formatMoney(Number(cell.getValue()));
-    },
-  },
-  {
-    accessorKey: "type",
-    header: "Tipo",
-    cell: ({ cell }) => {
-      const productTypes: ProductType = cell.getValue() as ProductType;
-      return productTypeTranslation[productTypes] ?? "Não informado";
     },
   },
 ];

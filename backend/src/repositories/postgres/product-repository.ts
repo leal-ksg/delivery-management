@@ -17,33 +17,59 @@ export class ProductRepository implements IProductRepository {
     itemsPerPage = Math.min(50, Math.max(1, itemsPerPage ?? 10));
     page = Math.max(1, page ?? 1);
 
-    const where = query
-      ? { name: { contains: query, mode: "insensitive" as const } }
-      : {};
+    const search = query?.trim() ?? "";
 
     try {
       const [products, total] = await Promise.all([
-        prisma.product.findMany({
-          include: { stock: { select: { quantity: true } } },
-          where,
-          orderBy: { name: "asc" },
-          take: itemsPerPage,
-          skip: (page - 1) * itemsPerPage,
-        }),
-        prisma.product.count(),
-      ]);
+        prisma.$queryRaw<
+          (Product & {
+            stockQuantity: number | null;
+            totalCost: number;
+          })[]
+        >`
+      SELECT
+        p.*,
+        s.quantity as "stockQuantity",
+        get_product_total_cost(p.id) as "totalCost"
+      FROM "Product" p
+      LEFT JOIN "Stock" s
+        ON s."productId" = p.id
+      WHERE
+        (
+          ${search} = ''
+          OR p.name ILIKE '%' || ${search} || '%'
+        )
+      ORDER BY p.name
+      LIMIT ${itemsPerPage}
+      OFFSET ${(page - 1) * itemsPerPage}
+      `,
 
-      const productsDTO = products.map(({ stock, ...product }) => ({
-        ...product,
-        stockQuantity: stock?.quantity,
-      }));
+        prisma.product.count({
+          where: search
+            ? {
+                name: {
+                  contains: search,
+                  mode: "insensitive",
+                },
+              }
+            : {},
+        }),
+      ]);
 
       return {
         ok: true,
-        body: { list: productsDTO, total, itemsPerPage, page },
+        body: {
+          list: products,
+          total,
+          itemsPerPage,
+          page,
+        },
       };
     } catch (error) {
-      return { ok: false, error: parseDatabaseErrorMessage(error, "Produto") };
+      return {
+        ok: false,
+        error: parseDatabaseErrorMessage(error, "Produto"),
+      };
     }
   }
 

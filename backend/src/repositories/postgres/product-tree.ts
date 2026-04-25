@@ -23,7 +23,18 @@ export class ProductTreeRepository implements IProductTreeRepository {
       const [products, total] = await Promise.all([
         prisma.productTree.findMany({
           include: { parent: { select }, child: { select } },
-          orderBy: { parent: { id: "asc" }, child: { name: "asc" } },
+          orderBy: [
+            {
+              parent: {
+                id: "asc",
+              },
+            },
+            {
+              child: {
+                name: "asc",
+              },
+            },
+          ],
           take: itemsPerPage,
           skip: (page - 1) * itemsPerPage,
         }),

@@ -1,19 +1,20 @@
 "use client";
 
 import { DataTable } from "@/src/components/DataTable";
-import { orderColumns } from "./columns";
+import { productColumns } from "./columns";
 import { TableContainer } from "@/src/components/TableContainer";
 import { Toolbar } from "@/src/components/Toolbar";
 import { useCallback, useEffect, useState } from "react";
 import { EntityDialog } from "@/src/components/EntityDialog";
+import { ProductTreeForm } from "./form";
 import { toast } from "@/components/ui/sonner";
-import { Order } from "@/src/domains/order/types";
-import { getOrders } from "@/src/domains/order/services/get-orders";
-import { OrderForm } from "./form";
+import { ProductTree } from "@/src/domains/product-tree/types";
+import { getNodes } from "@/src/domains/product-tree/services/get-nodes";
+import { deleteNodes } from "@/src/domains/product-tree/services/delete-nodes";
 
-function SalesPage() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
+function ProductTreePage() {
+  const [nodes, setNodes] = useState<ProductTree[]>([]);
+  const [editingNode, setEditingNode] = useState<ProductTree | null>(null);
   const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
@@ -23,20 +24,29 @@ function SalesPage() {
 
   function handleCancel() {
     setIsFormDialogOpen(false);
-    setEditingOrder(null);
+    setEditingNode(null);
   }
 
   function handleSuccess() {
     setIsFormDialogOpen(false);
-    setEditingOrder(null);
+    setEditingNode(null);
     setReload((prev) => !prev);
   }
 
-  const handleEdit = useCallback((rows: Order[]) => {
+  const handleEdit = useCallback((rows: ProductTree[]) => {
     if (!rows || rows.length !== 1) return;
 
-    setEditingOrder(rows[0]);
+    setEditingNode(rows[0]);
     setIsFormDialogOpen(true);
+  }, []);
+
+  const handleDelete = useCallback(async (rows: ProductTree[]) => {
+    const data = rows.map((node) => ({
+      childId: node.childId,
+      parentId: node.parentId,
+    }));
+    await deleteNodes(data);
+    setReload((prev) => !prev);
   }, []);
 
   const handlePageChange = useCallback((newPage: number) => {
@@ -49,13 +59,12 @@ function SalesPage() {
   }, []);
 
   useEffect(() => {
-    async function fetchOrders() {
+    async function fetchNodes() {
       setLoading(true);
-      const result = await getOrders(page, itemsperPage);
-      console.log(result);
+      const result = await getNodes(page, itemsperPage);
 
       if (result.ok) {
-        setOrders(result.body.list);
+        setNodes(result.body.list);
         setTotal(result.body.total);
       } else {
         toast("error", result.error);
@@ -64,17 +73,18 @@ function SalesPage() {
       setLoading(false);
     }
 
-    fetchOrders();
+    fetchNodes();
   }, [itemsperPage, page, reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      <Toolbar description="Vendas" />
+      <Toolbar description="Árvore de produtos" showGoBack />
 
-      <TableContainer classname="w-3/4">
+      <TableContainer>
         <DataTable
-          columns={orderColumns}
-          data={orders}
+          columns={productColumns}
+          data={nodes}
+          onDelete={handleDelete}
           onCreate={() => setIsFormDialogOpen(true)}
           onEdit={handleEdit}
           loading={loading}
@@ -87,13 +97,17 @@ function SalesPage() {
       </TableContainer>
 
       <EntityDialog
+        classname=""
         open={isFormDialogOpen}
         onOpenChange={setIsFormDialogOpen}
-        title={editingOrder ? "Editar venda" : "Nova venda"}
-        classname="min-h-[90%]"
+        title={
+          editingNode
+            ? "Editar produto da árvore"
+            : "Adicionar produto na árvore"
+        }
       >
-        <OrderForm
-          editingOrder={editingOrder}
+        <ProductTreeForm
+          editingProduct={editingNode}
           onCancel={handleCancel}
           onSuccess={handleSuccess}
         />
@@ -102,4 +116,4 @@ function SalesPage() {
   );
 }
 
-export default SalesPage;
+export default ProductTreePage;

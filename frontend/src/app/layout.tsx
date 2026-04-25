@@ -42,9 +42,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased font-sans`}
       >
         <TooltipProvider>
-          <div className="flex h-dvh overflow-hidden relative">
+          <div className="relative flex h-dvh overflow-x-hidden bg-primary">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto transition-all duration-300">
+            <main className="flex-1 overflow-y-auto bg-[#d4d4d4] transition-all duration-300">
               {children}
             </main>
           </div>

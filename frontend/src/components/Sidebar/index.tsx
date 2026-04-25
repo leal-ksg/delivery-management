@@ -59,8 +59,41 @@ function LinkTooltip({
 }
 
 function SidebarLink({ icon: Icon, text, href, isOpen }: SidebarLinkProps) {
+  const isMobile = useIsMobile();
   const pathname = usePathname();
   const isActive = pathname === href;
+
+  if (isMobile)
+    return (
+      <Link
+        href={href}
+        className={`
+        relative flex items-center h-10 w-full rounded-lg
+        transition-colors duration-200
+        ${isActive ? "bg-secondary/80" : "hover:bg-slate-700/50"}
+      `}
+      >
+        <div
+          className={`items-center w-full h-full ${isOpen ? "flex px-4" : "hidden md:flex md:justify-center"}`}
+        >
+          {Icon && (
+            <Icon
+              size={20}
+              className={`shrink-0 ${isActive ? "text-white" : "text-cyan-400"}`}
+            />
+          )}
+          <span
+            className={`
+            whitespace-nowrap text-sm text-slate-200
+            absolute left-12
+            ${isOpen ? "block" : "hidden"}
+          `}
+          >
+            {text}
+          </span>
+        </div>
+      </Link>
+    );
 
   return (
     <LinkTooltip tip={text}>
@@ -116,8 +149,7 @@ function LinkWrapper({ title, children, isOpen }: LinkWrapperProps) {
 }
 
 export function Sidebar() {
-  const isMobile = useIsMobile();
-  const [isOpen, setIsOpen] = useState(!!isMobile);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -131,7 +163,7 @@ export function Sidebar() {
       )}
 
       <aside
-        className={`h-dvh transition-[width] border-r border-cyan-200 duration-300 ease-in-out z-50 min-h-full pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] fixed md:relative top-0 left-0
+        className={`h-dvh transition-[width] md:border-cyan-200 duration-300 ease-in-out z-50 min-h-full pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] fixed md:relative top-0 left-0
           ${isOpen ? "w-52" : "w-0 md:w-20"}`}
       >
         <div className="flex flex-col bg-primary min-h-full overflow-hidden">
@@ -204,7 +236,7 @@ export function Sidebar() {
 
               <SidebarLink
                 icon={Network}
-                href="/productStructure"
+                href="/product-tree"
                 text="Árvore de produtos"
                 isOpen={isOpen}
               />

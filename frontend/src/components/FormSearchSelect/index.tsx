@@ -11,6 +11,7 @@ interface SearchSelectProps<T> {
   label?: string;
   className?: string;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export function FormSearchSelect<T>({
@@ -20,8 +21,14 @@ export function FormSearchSelect<T>({
   label,
   placeholder,
   className,
+  disabled,
 }: SearchSelectProps<T>) {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const error = errors[name]?.message as string | undefined;
 
   return (
     <div className={cn("", className)}>
@@ -32,6 +39,7 @@ export function FormSearchSelect<T>({
         control={control}
         render={({ field }) => (
           <AsyncSelect
+            isDisabled={disabled}
             cacheOptions
             isClearable
             onChange={field.onChange}
@@ -45,6 +53,12 @@ export function FormSearchSelect<T>({
           />
         )}
       />
+
+      {error && (
+        <span className="absolute text-sm text-red-400 font-semibold">
+          {error}
+        </span>
+      )}
     </div>
   );
 }

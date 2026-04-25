@@ -33,7 +33,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Span } from "next/dist/trace";
 import { Spinner } from "@/components/ui/spinner";
 
 interface DataTableProps<TData, TValue> {
@@ -121,6 +120,7 @@ export function DataTable<TData, TValue>({
         <Input
           type="text"
           placeholder="Busque por qualquer informação..."
+          
           className="w-full md:w-[80%] placeholder:text-gray-400"
           value={globalFilter}
           onChange={(e) => handleFilterChange(String(e.target.value))}
@@ -154,7 +154,7 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-md shadow-md">
+      <div className="overflow-x-auto rounded-md">
         <Table className="table-auto">
           <TableHeader className="bg-secondary/40">
             {table.getHeaderGroups().map((headerGroup) => (

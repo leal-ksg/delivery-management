@@ -1,23 +1,19 @@
 import api, { ApiResponse } from "@/lib/api";
-import { Product } from "../types";
+import { ProductTree } from "../types";
 import axios from "axios";
 import { Pagination } from "../../types";
 
-export async function getProducts(
-  query: string,
+export async function getNodes(
   page: number,
   itemsPerPage: number,
-): Promise<ApiResponse<Pagination<Product>>> {
+): Promise<ApiResponse<Pagination<ProductTree>>> {
   try {
-    const { data } = await api.get("/product", {
+    const { data } = await api.get("/product-tree", {
       params: {
-        query,
         page,
         itemsPerPage,
       },
     });
-
-    console.log(data);
 
     return { ok: true, body: data };
   } catch (error) {
@@ -25,6 +21,6 @@ export async function getProducts(
       return { ok: false, error: JSON.stringify(error) };
     }
 
-    return { ok: false, error: "Ocorreu um erro na busca dos produtos" };
+    return { ok: false, error: "Ocorreu um erro na busca da árvore de produtos" };
   }
 }
