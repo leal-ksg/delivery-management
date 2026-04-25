@@ -1,9 +1,8 @@
-import { Prisma } from "../../../generated/prisma";
+import { Prisma, PurchaseProduct } from "../../../generated/prisma";
 import { IPurchaseProductRepository } from "../../controllers/purchase/interfaces";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
 import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
-import { PurchaseProduct } from "../../models/purchase";
 
 export class PurchaseProductRepository implements IPurchaseProductRepository {
   async findById(

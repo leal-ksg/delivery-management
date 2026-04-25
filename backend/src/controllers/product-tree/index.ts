@@ -1,7 +1,7 @@
 import { ProductTree } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
 import { Pagination } from "../../core/pagination";
-import { Result } from "../../core/result";
+
 import {
   DeleteProductTreeDTO,
   IProductTreeController,

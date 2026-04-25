@@ -14,8 +14,16 @@ async function main() {
 
   const server = express();
 
-  // TODO: add cors config
-  server.use(cors());
+  server.use(
+    cors({
+      origin: [
+        "http://localhost:3001",
+        "https://kairos-handmade-mu.vercel.app/",
+      ],
+      credentials: true,
+    }),
+  );
+
   server.use(express.json());
   server.use("/api/v1", router);
 
