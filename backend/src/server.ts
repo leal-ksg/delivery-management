@@ -17,7 +17,7 @@ async function main() {
   server.use(
     cors({
       origin: [
-        "http://192.168.1.65:3000",
+        "http://localhost:3000",
         "https://kairos-handmade-mu.vercel.app",
       ],
       credentials: true,
