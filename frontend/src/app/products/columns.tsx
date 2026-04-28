@@ -1,10 +1,12 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { productTypeTranslation } from "@/lib/field-translations";
 import { formatMoney } from "@/lib/format-money";
 import { Product, ProductType } from "@/src/domains/product/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { CircleCheck, TriangleAlert } from "lucide-react";
 
 export const productColumns: ColumnDef<Product>[] = [
   {
@@ -37,12 +39,35 @@ export const productColumns: ColumnDef<Product>[] = [
     accessorKey: "active",
     header: "Status",
     cell: ({ cell }) => {
-      return cell.getValue() ? "Ativo" : "Inativo";
+      return cell.getValue() ? (
+        <Badge>Ativo</Badge>
+      ) : (
+        <Badge variant="destructive">Inativo</Badge>
+      );
     },
   },
   {
     accessorKey: "name",
     header: "Nome",
+  },
+  {
+    accessorKey: "stockQuantity",
+    header: "Estoque",
+    cell: ({ row }) => {
+      const stock = row.original.stockQuantity;
+      const minStock = row.original.minStock;
+
+      return (
+        <span className="flex items-center gap-3 font-semibold">
+          {stock > minStock || minStock === 0 ? (
+            <CircleCheck className="text-green-400" />
+          ) : (
+            <TriangleAlert className="text-orange-500" />
+          )}
+          {stock}
+        </span>
+      );
+    },
   },
   {
     accessorKey: "totalCost",

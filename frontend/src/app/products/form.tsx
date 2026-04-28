@@ -37,10 +37,12 @@ const productSchema = z.object({
   unitPrice: z.coerce
     .number("Informe um preço unitário válido")
     .refine((val) => val !== 0, "Preço obrigatório")
+    .max(99999999, "Estoque mínimo excede os limites")
     .nonnegative("O preço unitário não pode ser negativo"),
   minStock: z.coerce
     .number("O estoque mínimo deve ser um número")
     .nonnegative("O estoque mínimo não pode ser negativo")
+    .max(9999999999, "Estoque mínimo excede os limites")
     .default(0),
   consumptionType: z
     .enum(Object.values(ConsumptionType), "Informe um tipo de consumo válido")
@@ -54,6 +56,7 @@ const productSchema = z.object({
   stockQuantity: z.coerce
     .number("Quantidade em estoque deve ser um número")
     .nonnegative("Quantidade em estoque não pode ser negativa")
+    .max(9999999999, "Estoque excede os limites")
     .optional()
     .nullable(),
   active: z.boolean().nullable().optional(),
@@ -148,7 +151,7 @@ export function ProductForm({
             options={consumptionOptions}
             name="consumptionType"
             label="Tipo de consumo"
-            defaultValue={ConsumptionType.PRODUCTION}
+            defaultValue={ConsumptionType.SALE}
           />
         </div>
 

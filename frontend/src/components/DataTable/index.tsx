@@ -16,8 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
 import { Input } from "@/components/ui/input";
 import { useMemo, useState } from "react";
+
 import {
   ChevronLeft,
   ChevronRight,
@@ -25,7 +27,9 @@ import {
   PlusIcon,
   Trash2Icon,
 } from "lucide-react";
+
 import ActionButton from "../ActionButton";
+
 import {
   Select,
   SelectContent,
@@ -33,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { Spinner } from "@/components/ui/spinner";
 
 interface DataTableProps<TData, TValue> {
@@ -42,13 +47,14 @@ interface DataTableProps<TData, TValue> {
   total?: number;
   itemsPerPage?: number;
   onDelete?: (rows: TData[]) => Promise<void>;
-  onEdit?: (row: TData[]) => void;
+  onEdit?: (rows: TData[]) => void;
   onCreate?: () => void;
   onPageChange?: (page: number) => void;
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   loading: boolean;
 }
 
+ /* @react-compiler ignore */
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -62,16 +68,16 @@ export function DataTable<TData, TValue>({
   onEdit,
   loading,
 }: DataTableProps<TData, TValue>) {
-  const [globalFilter, setGlobalFilter] = useState<string>("");
+  const [globalFilter, setGlobalFilter] = useState("");
   const [rowSelection, setRowSelection] = useState({});
 
   const totalPages = Math.ceil(total / itemsPerPage);
+
   const enablePagination = useMemo(
     () => total && itemsPerPage && page,
     [itemsPerPage, total, page],
   );
 
-  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: data ?? [],
     columns,
@@ -120,17 +126,16 @@ export function DataTable<TData, TValue>({
         <Input
           type="text"
           placeholder="Busque por qualquer informação..."
-          
           className="w-full md:w-[80%] placeholder:text-gray-400"
           value={globalFilter}
-          onChange={(e) => handleFilterChange(String(e.target.value))}
+          onChange={(e) => handleFilterChange(e.target.value)}
         />
 
         <div className="flex items-center gap-2 self-end">
           <ActionButton
             disabled={!onCreate}
             className="text-green-500 w-9"
-            onClick={onCreate ? onCreate : () => {}}
+            onClick={onCreate || (() => {})}
             icon={PlusIcon}
           />
 
@@ -154,13 +159,14 @@ export function DataTable<TData, TValue>({
         </div>
       </div>
 
-      <div className="overflow-x-auto rounded-md">
-        <Table className="table-auto">
-          <TableHeader className="bg-secondary/40">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
+      <div className="rounded-md">
+        {/* DESKTOP */}
+        <div className="hidden md:block overflow-x-auto rounded-md">
+          <Table className="table-auto">
+            <TableHeader className="bg-secondary/40">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
                       className="font-bold text-primary/60"
@@ -172,53 +178,126 @@ export function DataTable<TData, TValue>({
                             header.getContext(),
                           )}
                     </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row, index) => (
-                <TableRow
-                  className={`text-gray-600`}
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      className={`${index % 2 === 0 ? "bg-white" : "bg-gray-200"} uppercase`}
-                      key={cell.id}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center font-semibold text-lg text-gray-700"
-                >
-                  {loading ? (
-                    <span className="flex items-center justify-center gap-2">
-                      Carregando <Spinner />
-                    </span>
-                  ) : (
-                    "Nenhum registro encontrado..."
-                  )}
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row, index) => (
+                  <TableRow
+                    className="text-gray-600"
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        className={`
+                          ${index % 2 === 0 ? "bg-white" : "bg-gray-200"}
+                          uppercase
+                        `}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center font-semibold text-lg text-gray-700"
+                  >
+                    {loading ? (
+                      <span className="flex items-center justify-center gap-2">
+                        Carregando <Spinner />
+                      </span>
+                    ) : (
+                      "Nenhum registro encontrado..."
+                    )}
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+
+        {/* MOBILE */}
+        <div className="md:hidden space-y-4">
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <div
+                key={row.id}
+                className="
+                  rounded-xl
+                  border
+                  border-gray-200
+                  bg-white
+                  shadow-sm
+                  p-4
+                  space-y-3
+                "
+              >
+                {row
+                  .getVisibleCells()
+                  .filter(
+                    (
+                      cell,
+                    ): cell is typeof cell & {
+                      column: typeof cell.column & {
+                        columnDef: typeof cell.column.columnDef & {
+                          header: string;
+                        };
+                      };
+                    } => typeof cell.column.columnDef.header === "string",
+                  )
+                  .map((cell) => (
+                    <div
+                      key={cell.id}
+                      className="
+                        flex
+                        justify-between
+                        gap-4
+                        border-b-2
+                        border-gray-300
+                        last:border-none
+                        pb-2
+                      "
+                    >
+                      <span className="text-xs font-semibold text-primary/60 uppercase">
+                        {cell.column.columnDef.header}
+                      </span>
+
+                      <span className="text-sm text-right text-gray-700 font-medium">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            ))
+          ) : (
+            <div className="h-24 flex items-center justify-center font-semibold text-gray-700">
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  Carregando <Spinner />
+                </span>
+              ) : (
+                "Nenhum registro encontrado..."
+              )}
+            </div>
+          )}
+        </div>
 
         {enablePagination && onPageChange && onItemsPerPageChange ? (
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-10 lg:gap-30 xl:gap-80 p-2 md:p-8 border-t border-[#DDDDDD] bg-white w-full  md:h-10 text-gray-400 font-semibold">
+          <div className="flex flex-col md:flex-row mt-2 rounded-lg items-center shadow-md justify-center gap-4 sm:gap-10 lg:gap-30 xl:gap-80 p-2 md:p-8 border-t border-[#DDDDDD] bg-white w-full  md:h-10 text-gray-400 font-semibold">
             <span className="">{total ? total : 0} registros</span>
 
             <div className="flex gap-6">
@@ -250,7 +329,7 @@ export function DataTable<TData, TValue>({
               defaultValue="20"
               onValueChange={(value) => onItemsPerPageChange(Number(value))}
             >
-              <SelectTrigger className="w-18">
+              <SelectTrigger className="w-18 hidden md:flex">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
