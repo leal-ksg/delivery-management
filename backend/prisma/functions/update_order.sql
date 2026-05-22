@@ -43,7 +43,7 @@ begin
                    m."childId", 
                    m."childQuantity" * order_product_quantity as required_quantity,
                    array[m."parentId"] as path 
-              from "MaterialTree" m
+              from "ProductTree" m
              where m."parentId" = order_product_id
           
             union all
@@ -52,7 +52,7 @@ begin
                    m."childId", 
                    m."childQuantity" * t.required_quantity,
                    t.path || m."parentId"
-              from "MaterialTree" m 
+              from "ProductTree" m 
               join tree t on t."childId" = m."parentId"
              where not m."parentId" = any(path)
         )
@@ -112,7 +112,7 @@ begin
                    m."childId", 
                    m."childQuantity" * product.quantity as required_quantity,
                    array[m."parentId"] as path 
-              from "MaterialTree" m
+              from "ProductTree" m
              where m."parentId" = product.productId
           
             union all
@@ -121,7 +121,7 @@ begin
                    m."childId", 
                    m."childQuantity" * t.required_quantity,
                    t.path || m."parentId"
-              from "MaterialTree" m 
+              from "ProductTree" m 
               join tree t on t."childId" = m."parentId"
              where not m."parentId" = any(path)
         )

@@ -6,8 +6,16 @@ import { productRouter } from "./product";
 import { purchaseRouter } from "./purchase";
 import { productionRouter } from "./production";
 import { productTreeRouter } from "./product-tree";
+import { authMiddleware } from "../middlewares/auth";
+import { authRouter } from "./auth";
 
 export const router = Router();
+
+// Public routes
+router.use("/auth", authRouter)
+
+// Private routes
+router.use(authMiddleware)
 
 router.use("/user", userRouter);
 router.use("/customer", customerRouter);
