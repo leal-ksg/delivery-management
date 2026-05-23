@@ -1,9 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
 import { connectDb } from "./database/prisma";
-import cors from "cors";
 import { router } from "./routes";
 import { withRetry } from "./core/with-retry";
+
+import cookieParser from "cookie-parser"
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
 
 async function main() {
   dotenv.config();
@@ -13,6 +15,8 @@ async function main() {
   const PORT = process.env.PORT || 3001;
 
   const server = express();
+
+  server.use(cookieParser())
 
   server.use(
     cors({

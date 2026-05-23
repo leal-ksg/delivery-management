@@ -8,10 +8,7 @@ import jwt from "jsonwebtoken";
 export class AuthService implements IAuthService {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async login(
-    email: string,
-    password: string,
-  ): Promise<Result<AuthResponse>> {
+  async login(email: string, password: string): Promise<Result<AuthResponse>> {
     const result = await this.userRepository.findyByEmail(email);
 
     if (!result.ok) return result;
@@ -35,6 +32,6 @@ export class AuthService implements IAuthService {
       { expiresIn: "1d" },
     );
 
-    return { ok: true, body: {user: userWithoutPassword, token} };
+    return { ok: true, body: { user: userWithoutPassword, token } };
   }
 }

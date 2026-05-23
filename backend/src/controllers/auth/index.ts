@@ -1,8 +1,11 @@
+import { User } from "../../../generated/prisma";
 import { HttpResponse, toHttpResponse } from "../../core/http-response";
 import { UserRepository } from "../../repositories/postgres/user-repository";
 import { AuthService } from "../../services/auth-service";
 import { IUserRepository } from "../user/interfaces";
 import { AuthResponse, IAuthController, IAuthService } from "./interfaces";
+
+import jwt from "jsonwebtoken";
 
 export class AuthController implements IAuthController {
   private _authService: IAuthService;

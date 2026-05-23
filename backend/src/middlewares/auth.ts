@@ -13,16 +13,12 @@ export function authMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  const { authorization } = req.headers;
   const secret = process.env.JWT_SECRET;
-
-  if (!authorization)
-    return res.status(401).send({ error: "Favor realizar login" });
 
   if (!secret)
     return res.status(500).send({ error: "Falha durante a autenticação" });
 
-  const token = authorization.split(" ")[1];
+  const token = req.cookies.token
   if (!token) return res.status(401).send({ error: "Usuário não autorizado" });
 
   try {
