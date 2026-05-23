@@ -12,10 +12,10 @@ import { authRouter } from "./auth";
 export const router = Router();
 
 // Public routes
-router.use("/auth", authRouter)
+router.use("/auth", authRouter);
 
 // Private routes
-router.use(authMiddleware)
+// router.use(authMiddleware)
 
 router.use("/user", userRouter);
 router.use("/customer", customerRouter);
