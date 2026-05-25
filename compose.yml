@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: kairos-postgres
+
+    environment:
+      - POSTGRES_DB=kairos
+      - POSTGRES_USER=kairos_user
+      - POSTGRES_PASSWORD=dcscds697sa8321
+
+    ports:
+      - "5432:5432"
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: kairos-backend
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - postgres
+    
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+    container_name: kairos-frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
