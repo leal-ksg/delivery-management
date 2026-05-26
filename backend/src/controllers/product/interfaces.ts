@@ -26,11 +26,17 @@ export interface UpdateProductDTO extends Partial<Product> {
   stockQuantity?: number;
 }
 
+export interface ProductFilters {
+  active?: boolean;
+  type?: ProductType;
+}
+
 export interface IProductRepository {
   findAll(
     query?: string,
     itemsPerPage?: number,
     page?: number,
+    filters?: ProductFilters,
   ): Promise<Result<Pagination<ProductDTO>>>;
   findById(id: string): Promise<Result<Product | null>>;
   create(
@@ -50,6 +56,7 @@ export interface IProductController {
     query?: string,
     itemsPerPage?: number,
     page?: number,
+    filters?: ProductFilters,
   ): Promise<HttpResponse<Pagination<ProductDTO>>>;
   getProductById(id: string): Promise<HttpResponse<Product | null>>;
   createProduct(product: CreateProductDTO): Promise<HttpResponse<Product>>;

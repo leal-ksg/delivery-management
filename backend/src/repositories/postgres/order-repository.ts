@@ -97,12 +97,9 @@ export class OrderRepository implements IOrderRepository {
     try {
       const { products: _products, ...data } = order;
 
-      console.log(data);
-
       await prisma.$transaction(async (transaction) => {
         const productsJson = JSON.stringify(_products ?? []);
 
-        console.log(productsJson);
         await transaction.$executeRaw`
         select update_order(
           row(

@@ -2,6 +2,7 @@ import { PrismaClient, Product } from "../../../generated/prisma";
 import {
   CreateProductDTO,
   IProductRepository,
+  ProductFilters,
 } from "../../controllers/product/interfaces";
 import { Pagination } from "../../core/pagination";
 import { parseDatabaseErrorMessage } from "../../core/parse-database-error-message";
@@ -13,12 +14,16 @@ export class ProductRepository implements IProductRepository {
     query?: string,
     itemsPerPage?: number,
     page?: number,
+    filters?: ProductFilters,
   ): Promise<Result<Pagination<Product>>> {
     itemsPerPage = Math.min(50, Math.max(1, itemsPerPage ?? 10));
     page = Math.max(1, page ?? 1);
 
     const search = query?.trim() ?? "";
+    const active = filters?.active ?? null;
+    const type = filters?.type ?? null;
 
+    console.log(">>>>>>>>>", type)
     try {
       const [products, total] = await Promise.all([
         prisma.$queryRaw<
@@ -34,25 +39,26 @@ export class ProductRepository implements IProductRepository {
       FROM "Product" p
       LEFT JOIN "Stock" s
         ON s."productId" = p.id
-      WHERE
-        (
-          ${search} = ''
-          OR p.name ILIKE '%' || ${search} || '%'
-        )
+      WHERE (${search} = '' OR p.name ILIKE '%' || ${search} || '%')
+        AND (${active}::boolean IS NULL OR p.active = ${active})
+        AND (${type}::text IS NULL OR p.type = ${type}::"ProductType")
+        
       ORDER BY p.name
       LIMIT ${itemsPerPage}
       OFFSET ${(page - 1) * itemsPerPage}
       `,
 
         prisma.product.count({
-          where: search
-            ? {
-                name: {
-                  contains: search,
-                  mode: "insensitive",
-                },
-              }
-            : {},
+          where: {
+            ...(search && {
+              name: {
+                contains: search,
+                mode: "insensitive",
+              },
+            }),
+            ...(active !== null && { active }),
+            ...(type !== null && { type }),
+          },
         }),
       ]);
 
@@ -75,7 +81,6 @@ export class ProductRepository implements IProductRepository {
 
   async findById(id: string): Promise<Result<Product | null>> {
     try {
-      console.log(id);
       const product = await prisma.product.findUnique({ where: { id } });
 
       return { ok: true, body: product };

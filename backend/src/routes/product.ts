@@ -14,6 +14,9 @@ const productController = new ProductController(
 );
 
 productRouter.get("/", async (req: Request, res: Response) => {
+  console.log(req.query)
+  let filters = {};
+
   const itemsPerPage = req.query.itemsPerPage
     ? Number(req.query.itemsPerPage)
     : undefined;
@@ -21,12 +24,16 @@ productRouter.get("/", async (req: Request, res: Response) => {
   const page = req.query.page ? Number(req.query.page) : undefined;
 
   const query = req.query.query ? String(req.query.query) : undefined;
-  console.log(query);
+
+  if ("active" in req.query) filters = { active: req.query.active };
+
+  if ("type" in req.query) filters = { ...filters, type: req.query.type };
 
   const { statusCode, body } = await productController.getAllProducts(
     query,
     itemsPerPage,
     page,
+    filters,
   );
 
   return res.status(statusCode).json(body);
@@ -78,7 +85,6 @@ productRouter.patch(
 );
 
 productRouter.delete("/", async (req: Request, res: Response) => {
-  console.log(req.body);
   const { statusCode, body } = await productController.deleteProduct(req.body);
 
   return res.status(statusCode).json(body);

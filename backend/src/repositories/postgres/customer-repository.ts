@@ -56,7 +56,6 @@ export class CustomerRepository implements ICustomerRepository {
     id: string,
     customer: Partial<Customer>,
   ): Promise<Result<Customer>> {
-    console.log(customer);
     try {
       if (!Object.keys(customer).length) {
         return { ok: true, body: {} as Customer };

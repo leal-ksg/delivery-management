@@ -9,6 +9,7 @@ import {
   IProductRepository,
   IProductService,
   ProductDTO,
+  ProductFilters,
 } from "./interfaces";
 
 export class ProductController implements IProductController {
@@ -25,11 +26,13 @@ export class ProductController implements IProductController {
     query?: string,
     itemsPerPage?: number,
     page?: number,
+    filters?: ProductFilters
   ): Promise<HttpResponse<Pagination<ProductDTO>>> {
     const result = await this.productRepository.findAll(
       query,
       itemsPerPage,
       page,
+      filters
     );
 
     return toHttpResponse(result);
