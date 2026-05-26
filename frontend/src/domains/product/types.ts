@@ -37,3 +37,8 @@ export type CreateProductDTO = {
 export type UpdateProductDTO = Partial<Product> & {
   stockQuantity?: number | null;
 };
+
+export interface ProductFilters {
+  active?: boolean;
+  type?: ProductType;
+}

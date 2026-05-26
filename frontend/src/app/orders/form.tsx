@@ -181,7 +181,7 @@ export function OrderForm({
                 name="selectedProduct"
                 label="Buscar produto"
                 defaultOptions
-                loadOptions={loadProductOptions}
+                loadOptions={(value) => loadProductOptions(value, true)}
               />
 
               <Button
