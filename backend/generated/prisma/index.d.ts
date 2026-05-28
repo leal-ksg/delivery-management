@@ -14116,66 +14116,56 @@ export namespace Prisma {
 
   export type ProductTreeAvgAggregateOutputType = {
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeSumAggregateOutputType = {
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeMinAggregateOutputType = {
     parentId: string | null
     childId: string | null
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeMaxAggregateOutputType = {
     parentId: string | null
     childId: string | null
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeCountAggregateOutputType = {
     parentId: number
     childId: number
     childQuantity: number
-    childUnitCost: number
     _all: number
   }
 
 
   export type ProductTreeAvgAggregateInputType = {
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeSumAggregateInputType = {
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeMinAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeMaxAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeCountAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
-    childUnitCost?: true
     _all?: true
   }
 
@@ -14269,7 +14259,6 @@ export namespace Prisma {
     parentId: string
     childId: string
     childQuantity: number
-    childUnitCost: Decimal
     _count: ProductTreeCountAggregateOutputType | null
     _avg: ProductTreeAvgAggregateOutputType | null
     _sum: ProductTreeSumAggregateOutputType | null
@@ -14295,7 +14284,6 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productTree"]>
@@ -14304,7 +14292,6 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productTree"]>
@@ -14313,7 +14300,6 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productTree"]>
@@ -14322,10 +14308,9 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
   }
 
-  export type ProductTreeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"parentId" | "childId" | "childQuantity" | "childUnitCost", ExtArgs["result"]["productTree"]>
+  export type ProductTreeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"parentId" | "childId" | "childQuantity", ExtArgs["result"]["productTree"]>
   export type ProductTreeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
@@ -14349,7 +14334,6 @@ export namespace Prisma {
       parentId: string
       childId: string
       childQuantity: number
-      childUnitCost: Prisma.Decimal
     }, ExtArgs["result"]["productTree"]>
     composites: {}
   }
@@ -14778,7 +14762,6 @@ export namespace Prisma {
     readonly parentId: FieldRef<"ProductTree", 'String'>
     readonly childId: FieldRef<"ProductTree", 'String'>
     readonly childQuantity: FieldRef<"ProductTree", 'Int'>
-    readonly childUnitCost: FieldRef<"ProductTree", 'Decimal'>
   }
     
 
@@ -15331,8 +15314,7 @@ export namespace Prisma {
   export const ProductTreeScalarFieldEnum: {
     parentId: 'parentId',
     childId: 'childId',
-    childQuantity: 'childQuantity',
-    childUnitCost: 'childUnitCost'
+    childQuantity: 'childQuantity'
   };
 
   export type ProductTreeScalarFieldEnum = (typeof ProductTreeScalarFieldEnum)[keyof typeof ProductTreeScalarFieldEnum]
@@ -16178,7 +16160,6 @@ export namespace Prisma {
     parentId?: UuidFilter<"ProductTree"> | string
     childId?: UuidFilter<"ProductTree"> | string
     childQuantity?: IntFilter<"ProductTree"> | number
-    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
     parent?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     child?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
@@ -16187,7 +16168,6 @@ export namespace Prisma {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
     parent?: ProductOrderByWithRelationInput
     child?: ProductOrderByWithRelationInput
   }
@@ -16200,7 +16180,6 @@ export namespace Prisma {
     parentId?: UuidFilter<"ProductTree"> | string
     childId?: UuidFilter<"ProductTree"> | string
     childQuantity?: IntFilter<"ProductTree"> | number
-    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
     parent?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     child?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "childId_parentId">
@@ -16209,7 +16188,6 @@ export namespace Prisma {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
     _count?: ProductTreeCountOrderByAggregateInput
     _avg?: ProductTreeAvgOrderByAggregateInput
     _max?: ProductTreeMaxOrderByAggregateInput
@@ -16224,7 +16202,6 @@ export namespace Prisma {
     parentId?: UuidWithAggregatesFilter<"ProductTree"> | string
     childId?: UuidWithAggregatesFilter<"ProductTree"> | string
     childQuantity?: IntWithAggregatesFilter<"ProductTree"> | number
-    childUnitCost?: DecimalWithAggregatesFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
   }
 
   export type UserCreateInput = {
@@ -16859,7 +16836,6 @@ export namespace Prisma {
 
   export type ProductTreeCreateInput = {
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
     parent: ProductCreateNestedOneWithoutProductTreeParentInput
     child: ProductCreateNestedOneWithoutProductTreeChildInput
   }
@@ -16868,12 +16844,10 @@ export namespace Prisma {
     parentId: string
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpdateInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     parent?: ProductUpdateOneRequiredWithoutProductTreeParentNestedInput
     child?: ProductUpdateOneRequiredWithoutProductTreeChildNestedInput
   }
@@ -16882,26 +16856,22 @@ export namespace Prisma {
     parentId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateManyInput = {
     parentId: string
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpdateManyMutationInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUncheckedUpdateManyInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -17638,31 +17608,26 @@ export namespace Prisma {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeAvgOrderByAggregateInput = {
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeMaxOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeMinOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeSumOrderByAggregateInput = {
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type PurchaseCreateNestedManyWithoutUserInput = {
@@ -18650,14 +18615,12 @@ export namespace Prisma {
 
   export type ProductTreeCreateWithoutChildInput = {
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
     parent: ProductCreateNestedOneWithoutProductTreeParentInput
   }
 
   export type ProductTreeUncheckedCreateWithoutChildInput = {
     parentId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateOrConnectWithoutChildInput = {
@@ -18672,14 +18635,12 @@ export namespace Prisma {
 
   export type ProductTreeCreateWithoutParentInput = {
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
     child: ProductCreateNestedOneWithoutProductTreeChildInput
   }
 
   export type ProductTreeUncheckedCreateWithoutParentInput = {
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateOrConnectWithoutParentInput = {
@@ -18812,7 +18773,6 @@ export namespace Prisma {
     parentId?: UuidFilter<"ProductTree"> | string
     childId?: UuidFilter<"ProductTree"> | string
     childQuantity?: IntFilter<"ProductTree"> | number
-    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpsertWithWhereUniqueWithoutParentInput = {
@@ -19605,13 +19565,11 @@ export namespace Prisma {
   export type ProductTreeCreateManyChildInput = {
     parentId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateManyParentInput = {
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUpdateWithoutProductInput = {
@@ -19669,38 +19627,32 @@ export namespace Prisma {
 
   export type ProductTreeUpdateWithoutChildInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     parent?: ProductUpdateOneRequiredWithoutProductTreeParentNestedInput
   }
 
   export type ProductTreeUncheckedUpdateWithoutChildInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUncheckedUpdateManyWithoutChildInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpdateWithoutParentInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     child?: ProductUpdateOneRequiredWithoutProductTreeChildNestedInput
   }
 
   export type ProductTreeUncheckedUpdateWithoutParentInput = {
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUncheckedUpdateManyWithoutParentInput = {
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductCreateManyOrderInput = {

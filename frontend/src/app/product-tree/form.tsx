@@ -35,12 +35,6 @@ const productSchema = z
     childQuantity: z.coerce
       .number("Informe a quantidade do produto filho")
       .positive("A quantidade deve ser maior que zero"),
-    childUnitCost: z.preprocess(
-      (value) => (value === null ? 0 : value),
-      z.coerce
-        .number("Custo unitário inválido")
-        .nonnegative("Custo unitário não pode ser negativo"),
-    ),
   })
   .refine((data) => data.parent.value !== data.child.value, {
     message: "Produto não pode ser filho de si mesmo",
@@ -103,14 +97,13 @@ export function ProductTreeForm({
     console.log("submit");
     let response: ApiResponse<ProductTreeDTO>;
 
-    const { child, parent, childQuantity, childUnitCost } =
+    const { child, parent, childQuantity } =
       productSchema.parse(data);
 
     const parsedData = {
       parentId: parent.value,
       childId: child.value,
       childQuantity,
-      childUnitCost,
     };
 
     if (editingProduct) {
@@ -174,17 +167,6 @@ export function ProductTreeForm({
             label="Quantidade"
             type="text"
             inputMode="numeric"
-          />
-
-          <FormNumericInput
-            name="childUnitCost"
-            label="Custo unitário"
-            thousandSeparator="."
-            decimalSeparator=","
-            prefix="R$ "
-            decimalScale={2}
-            fixedDecimalScale
-            allowNegative={false}
           />
         </div>
 

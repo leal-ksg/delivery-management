@@ -85,7 +85,7 @@ export class ProductTreeRepository implements IProductTreeRepository {
 
   async update(product: ProductTree): Promise<Result<ProductTree>> {
     try {
-      const { childId, parentId, childQuantity, childUnitCost } = product;
+      const { childId, parentId, childQuantity } = product;
 
       const updatedNode = await prisma.productTree.update({
         where: {
@@ -96,7 +96,6 @@ export class ProductTreeRepository implements IProductTreeRepository {
         },
         data: {
           childQuantity,
-          childUnitCost,
         },
       });
 

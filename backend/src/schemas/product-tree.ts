@@ -9,12 +9,6 @@ export const productTreeSchema = z
         "Quantidade do produto filho não é um número ou não foi informada",
       )
       .positive("A quantidade deve ser maior que zero"),
-    childUnitCost: z.preprocess(
-      (value) => (value === null ? 0 : value),
-      z.coerce
-        .number("Custo unitário inválido")
-        .nonnegative("Custo unitário não pode ser negativo"),
-    ),
   })
   .refine((data) => data.parentId !== data.childId, {
     message: "Produto não pode ser filho de si mesmo",

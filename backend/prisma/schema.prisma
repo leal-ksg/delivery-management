@@ -163,7 +163,6 @@ model ProductTree {
   child       Product  @relation("ProductTreeChild", fields: [childId], references: [id])
 
   childQuantity   Int
-  childUnitCost   Decimal  @db.Decimal(10, 2)
 
   @@id([childId, parentId])
 }

@@ -1,7 +1,7 @@
 generator client {
   provider      = "prisma-client-js"
   output        = "../generated/prisma"
-  binaryTargets = ["native", "debian-openssl-3.0.x"]
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -163,7 +163,6 @@ model ProductTree {
   child   Product @relation("ProductTreeChild", fields: [childId], references: [id])
 
   childQuantity Int
-  childUnitCost Decimal @db.Decimal(10, 2)
 
   @@id([childId, parentId])
 }

@@ -50,11 +50,4 @@ export const productColumns: ColumnDef<ProductTree>[] = [
     accessorKey: "childQuantity",
     header: "Quantidade",
   },
-  {
-    accessorKey: "childUnitCost",
-    header: "Custo unitário",
-    cell: ({ cell }) => {
-      return formatMoney(Number(cell.getValue()));
-    },
-  },
 ];

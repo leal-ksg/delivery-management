@@ -1,4 +1,4 @@
-import { Prisma, ProductTree } from "../../../generated/prisma";
+import { ProductTree } from "../../../generated/prisma";
 import { HttpResponse } from "../../core/http-response";
 import { Pagination } from "../../core/pagination";
 import { Result } from "../../core/result";
@@ -12,7 +12,6 @@ export interface ProductTreeDTO extends ProductTree {
   parentId: string;
   childId: string;
   childQuantity: number;
-  childUnitCost: Prisma.Decimal;
   parent: { id: string; name: string; active: boolean };
   child: { id: string; name: string; active: boolean };
 }

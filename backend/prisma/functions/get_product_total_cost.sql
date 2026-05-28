@@ -7,11 +7,13 @@ WITH RECURSIVE bom AS (
     SELECT
         "childId",
         "childQuantity",
-        "childUnitCost",
+        p."unitPrice",
         "childQuantity"::numeric as accumulated_qty,
-        ("childQuantity" * "childUnitCost") as total_cost,
+        ("childQuantity" * p."unitPrice") as total_cost,
         ARRAY["parentId", "childId"] as path
-    FROM "ProductTree"
+    FROM "ProductTree" pt
+    JOIN "Product" p
+      ON pt."childId" = p."id"
     WHERE "parentId" = p_product_id
 
     UNION ALL
@@ -19,16 +21,18 @@ WITH RECURSIVE bom AS (
     SELECT
         pt."childId",
         pt."childQuantity",
-        pt."childUnitCost",
+        p."unitPrice",
 
         b.accumulated_qty * pt."childQuantity",
 
-        (b.accumulated_qty * pt."childQuantity" * pt."childUnitCost"),
+        (b.accumulated_qty * pt."childQuantity" * p."unitPrice"),
 
         b.path || pt."childId"
     FROM "ProductTree" pt
     JOIN bom b
       ON pt."parentId" = b."childId"
+    JOIN "Product" p
+      ON pt."childId" = p."id"
 
     WHERE NOT pt."childId" = ANY(b.path)
 
