@@ -265,7 +265,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Projetos\\delivery-management\\backend\\generated\\prisma",
+      "value": "C:\\Projetos\\delivery-maintenance\\backend\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -287,7 +287,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Projetos\\delivery-management\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Projetos\\delivery-maintenance\\backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
