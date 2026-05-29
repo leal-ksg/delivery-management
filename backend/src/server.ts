@@ -31,7 +31,7 @@ async function main() {
   server.use(express.json());
   server.use("/api/v1", router);
 
-  server.listen(PORT, () => {
+  server.listen(Number(PORT), "0.0.0.0", () => {
     console.log(`Server is running on port ${PORT} 🚀`);
   });
 }
