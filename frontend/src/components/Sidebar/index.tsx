@@ -6,14 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  LucideIcon,
-  HandCoins,
-  Menu,
-  X,
-  Boxes,
-  Network,
-} from "lucide-react";
+import { LucideIcon, HandCoins, Menu, X, Boxes, Network } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -86,9 +79,7 @@ function SidebarLink({
         {Icon && (
           <Icon
             size={20}
-            className={`shrink-0 ${
-              isActive ? "text-white" : "text-cyan-400"
-            }`}
+            className={`shrink-0 ${isActive ? "text-white" : "text-cyan-400"}`}
           />
         )}
 
@@ -136,7 +127,7 @@ function LinkWrapper({ title, children, isOpen }: LinkWrapperProps) {
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  const isMobile = useIsMobile();
+  const isMobile = false;
 
   const handleNavigate = () => {
     if (isMobile) {
@@ -181,9 +172,7 @@ export function Sidebar() {
           <div className="relative h-36 w-full shrink-0">
             <div
               className={`absolute top-2 transition-all duration-300 ${
-                isOpen
-                  ? "right-2"
-                  : "left-1/2 -translate-x-1/2"
+                isOpen ? "right-2" : "left-1/2 -translate-x-1/2"
               }`}
             >
               <button
@@ -193,11 +182,7 @@ export function Sidebar() {
                   !isOpen && "hidden md:block"
                 }`}
               >
-                {isOpen ? (
-                  <X size={20} />
-                ) : (
-                  <Menu size={22} strokeWidth={2} />
-                )}
+                {isOpen ? <X size={20} /> : <Menu size={22} strokeWidth={2} />}
               </button>
             </div>
 
