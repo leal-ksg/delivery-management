@@ -197,7 +197,6 @@ export function Sidebar() {
                 width={110}
                 height={40}
                 quality={1}
-                priority
                 className="object-contain translate-y-2"
               />
             </div>
