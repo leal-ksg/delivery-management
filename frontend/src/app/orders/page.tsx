@@ -52,7 +52,6 @@ function SalesPage() {
     async function fetchOrders() {
       setLoading(true);
       const result = await getOrders(page, itemsperPage);
-      console.log(result);
 
       if (result.ok) {
         setOrders(result.body.list);

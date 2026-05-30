@@ -33,32 +33,44 @@ const productSchema = z.object({
   name: z
     .string("Informe o nome do produto")
     .min(1, "Informe o nome do produto"),
+
   description: z.string("A descrição deve ser texto").nullable(),
+
   unitPrice: z.coerce
     .number("Informe um preço unitário válido")
     .refine((val) => val !== 0, "Preço obrigatório")
-    .max(99999999, "Estoque mínimo excede os limites")
+    .max(99999999, "Preço excede os limites")
     .nonnegative("O preço unitário não pode ser negativo"),
+
+  profitMargin: z.coerce
+    .number("Informe uma margem válida")
+    .min(0, "A margem não pode ser negativa")
+    .max(9999, "Margem excede os limites"),
+
   minStock: z.coerce
     .number("O estoque mínimo deve ser um número")
     .nonnegative("O estoque mínimo não pode ser negativo")
     .max(9999999999, "Estoque mínimo excede os limites")
     .default(0),
+
   consumptionType: z
     .enum(Object.values(ConsumptionType), "Informe um tipo de consumo válido")
     .nullable()
     .optional()
     .or(z.literal("").transform(() => null)),
+
   type: z
     .enum(ProductType, "Informe um tipo de produto válido")
     .nullable()
     .or(z.literal("").transform(() => null)),
+
   stockQuantity: z.coerce
     .number("Quantidade em estoque deve ser um número")
     .nonnegative("Quantidade em estoque não pode ser negativa")
     .max(9999999999, "Estoque excede os limites")
     .optional()
     .nullable(),
+
   active: z.boolean().nullable().optional(),
 });
 
@@ -70,11 +82,15 @@ export function ProductForm({
   onCancel,
 }: ProductFormProps) {
   const methods = useForm<FormData>({
-    defaultValues: editingProduct ? editingProduct : undefined,
+    defaultValues: editingProduct
+      ? ({
+          ...editingProduct,
+          profitMargin:
+            (Number(editingProduct.profitMargin) - 1) * 100,
+        } as FormData)
+      : undefined,
     resolver: zodResolver(productSchema),
   });
-
-  console.log(editingProduct);
 
   const { formState } = methods;
 
@@ -91,16 +107,21 @@ export function ProductForm({
   async function onSubmit(data: FormData) {
     let response: ApiResponse<Product>;
 
+    const parsedData = productSchema.parse(data);
+
+    const mappedData = {
+      ...parsedData,
+      profitMargin: 1 + parsedData.profitMargin / 100,
+    };
+
     if (editingProduct) {
       const { dirtyFields } = formState;
-      console.log(dirtyFields);
 
-      const parsedData = productSchema.parse(methods.getValues());
-      const dirtyData = getDirtyValues(dirtyFields, parsedData);
+      const dirtyData = getDirtyValues(dirtyFields, mappedData);
+
       response = await updateProduct(editingProduct.id, dirtyData);
     } else {
-      const parsedData = productSchema.parse(data);
-      response = await createProduct(parsedData);
+      response = await createProduct(mappedData);
     }
 
     if (response.ok) {
@@ -113,9 +134,12 @@ export function ProductForm({
       methods.reset({
         ...editingProduct,
         unitPrice: String(editingProduct.unitPrice),
+        profitMargin: String(
+          (Number(editingProduct.profitMargin) - 1) * 100,
+        ),
         minStock: String(editingProduct.minStock),
         stockQuantity: String(editingProduct.stockQuantity),
-      });
+      } as FormData);
     }
   }, [editingProduct, methods]);
 
@@ -162,6 +186,17 @@ export function ProductForm({
             thousandSeparator="."
             decimalSeparator=","
             prefix="R$ "
+            decimalScale={2}
+            fixedDecimalScale
+            allowNegative={false}
+          />
+
+          <FormNumericInput
+            name="profitMargin"
+            label="Margem de lucro (%)"
+            thousandSeparator="."
+            decimalSeparator=","
+            suffix="%"
             decimalScale={2}
             fixedDecimalScale
             allowNegative={false}

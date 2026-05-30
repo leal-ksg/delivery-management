@@ -4206,11 +4206,13 @@ export namespace Prisma {
 
   export type ProductAvgAggregateOutputType = {
     unitPrice: Decimal | null
+    profitMargin: Decimal | null
     minStock: number | null
   }
 
   export type ProductSumAggregateOutputType = {
     unitPrice: Decimal | null
+    profitMargin: Decimal | null
     minStock: number | null
   }
 
@@ -4220,6 +4222,7 @@ export namespace Prisma {
     name: string | null
     description: string | null
     unitPrice: Decimal | null
+    profitMargin: Decimal | null
     type: $Enums.ProductType | null
     consumptionType: $Enums.ConsumptionType | null
     minStock: number | null
@@ -4232,6 +4235,7 @@ export namespace Prisma {
     name: string | null
     description: string | null
     unitPrice: Decimal | null
+    profitMargin: Decimal | null
     type: $Enums.ProductType | null
     consumptionType: $Enums.ConsumptionType | null
     minStock: number | null
@@ -4244,6 +4248,7 @@ export namespace Prisma {
     name: number
     description: number
     unitPrice: number
+    profitMargin: number
     type: number
     consumptionType: number
     minStock: number
@@ -4254,11 +4259,13 @@ export namespace Prisma {
 
   export type ProductAvgAggregateInputType = {
     unitPrice?: true
+    profitMargin?: true
     minStock?: true
   }
 
   export type ProductSumAggregateInputType = {
     unitPrice?: true
+    profitMargin?: true
     minStock?: true
   }
 
@@ -4268,6 +4275,7 @@ export namespace Prisma {
     name?: true
     description?: true
     unitPrice?: true
+    profitMargin?: true
     type?: true
     consumptionType?: true
     minStock?: true
@@ -4280,6 +4288,7 @@ export namespace Prisma {
     name?: true
     description?: true
     unitPrice?: true
+    profitMargin?: true
     type?: true
     consumptionType?: true
     minStock?: true
@@ -4292,6 +4301,7 @@ export namespace Prisma {
     name?: true
     description?: true
     unitPrice?: true
+    profitMargin?: true
     type?: true
     consumptionType?: true
     minStock?: true
@@ -4391,6 +4401,7 @@ export namespace Prisma {
     name: string
     description: string | null
     unitPrice: Decimal
+    profitMargin: Decimal
     type: $Enums.ProductType
     consumptionType: $Enums.ConsumptionType
     minStock: number
@@ -4422,6 +4433,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     unitPrice?: boolean
+    profitMargin?: boolean
     type?: boolean
     consumptionType?: boolean
     minStock?: boolean
@@ -4441,6 +4453,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     unitPrice?: boolean
+    profitMargin?: boolean
     type?: boolean
     consumptionType?: boolean
     minStock?: boolean
@@ -4453,6 +4466,7 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     unitPrice?: boolean
+    profitMargin?: boolean
     type?: boolean
     consumptionType?: boolean
     minStock?: boolean
@@ -4465,13 +4479,14 @@ export namespace Prisma {
     name?: boolean
     description?: boolean
     unitPrice?: boolean
+    profitMargin?: boolean
     type?: boolean
     consumptionType?: boolean
     minStock?: boolean
     createdAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "active" | "name" | "description" | "unitPrice" | "type" | "consumptionType" | "minStock" | "createdAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "active" | "name" | "description" | "unitPrice" | "profitMargin" | "type" | "consumptionType" | "minStock" | "createdAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     orderProducts?: boolean | Product$orderProductsArgs<ExtArgs>
     purchaseProducts?: boolean | Product$purchaseProductsArgs<ExtArgs>
@@ -4500,6 +4515,7 @@ export namespace Prisma {
       name: string
       description: string | null
       unitPrice: Prisma.Decimal
+      profitMargin: Prisma.Decimal
       type: $Enums.ProductType
       consumptionType: $Enums.ConsumptionType
       minStock: number
@@ -4938,6 +4954,7 @@ export namespace Prisma {
     readonly name: FieldRef<"Product", 'String'>
     readonly description: FieldRef<"Product", 'String'>
     readonly unitPrice: FieldRef<"Product", 'Decimal'>
+    readonly profitMargin: FieldRef<"Product", 'Decimal'>
     readonly type: FieldRef<"Product", 'ProductType'>
     readonly consumptionType: FieldRef<"Product", 'ConsumptionType'>
     readonly minStock: FieldRef<"Product", 'Int'>
@@ -6593,29 +6610,39 @@ export namespace Prisma {
   export type OrderProductAvgAggregateOutputType = {
     orderId: number | null
     quantity: number | null
+    unitPrice: Decimal | null
+    profitMargin: Decimal | null
   }
 
   export type OrderProductSumAggregateOutputType = {
     orderId: number | null
     quantity: number | null
+    unitPrice: Decimal | null
+    profitMargin: Decimal | null
   }
 
   export type OrderProductMinAggregateOutputType = {
     orderId: number | null
     productId: string | null
     quantity: number | null
+    unitPrice: Decimal | null
+    profitMargin: Decimal | null
   }
 
   export type OrderProductMaxAggregateOutputType = {
     orderId: number | null
     productId: string | null
     quantity: number | null
+    unitPrice: Decimal | null
+    profitMargin: Decimal | null
   }
 
   export type OrderProductCountAggregateOutputType = {
     orderId: number
     productId: number
     quantity: number
+    unitPrice: number
+    profitMargin: number
     _all: number
   }
 
@@ -6623,29 +6650,39 @@ export namespace Prisma {
   export type OrderProductAvgAggregateInputType = {
     orderId?: true
     quantity?: true
+    unitPrice?: true
+    profitMargin?: true
   }
 
   export type OrderProductSumAggregateInputType = {
     orderId?: true
     quantity?: true
+    unitPrice?: true
+    profitMargin?: true
   }
 
   export type OrderProductMinAggregateInputType = {
     orderId?: true
     productId?: true
     quantity?: true
+    unitPrice?: true
+    profitMargin?: true
   }
 
   export type OrderProductMaxAggregateInputType = {
     orderId?: true
     productId?: true
     quantity?: true
+    unitPrice?: true
+    profitMargin?: true
   }
 
   export type OrderProductCountAggregateInputType = {
     orderId?: true
     productId?: true
     quantity?: true
+    unitPrice?: true
+    profitMargin?: true
     _all?: true
   }
 
@@ -6739,6 +6776,8 @@ export namespace Prisma {
     orderId: number
     productId: string
     quantity: number
+    unitPrice: Decimal
+    profitMargin: Decimal
     _count: OrderProductCountAggregateOutputType | null
     _avg: OrderProductAvgAggregateOutputType | null
     _sum: OrderProductSumAggregateOutputType | null
@@ -6764,6 +6803,8 @@ export namespace Prisma {
     orderId?: boolean
     productId?: boolean
     quantity?: boolean
+    unitPrice?: boolean
+    profitMargin?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["orderProduct"]>
@@ -6772,6 +6813,8 @@ export namespace Prisma {
     orderId?: boolean
     productId?: boolean
     quantity?: boolean
+    unitPrice?: boolean
+    profitMargin?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["orderProduct"]>
@@ -6780,6 +6823,8 @@ export namespace Prisma {
     orderId?: boolean
     productId?: boolean
     quantity?: boolean
+    unitPrice?: boolean
+    profitMargin?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["orderProduct"]>
@@ -6788,9 +6833,11 @@ export namespace Prisma {
     orderId?: boolean
     productId?: boolean
     quantity?: boolean
+    unitPrice?: boolean
+    profitMargin?: boolean
   }
 
-  export type OrderProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderId" | "productId" | "quantity", ExtArgs["result"]["orderProduct"]>
+  export type OrderProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"orderId" | "productId" | "quantity" | "unitPrice" | "profitMargin", ExtArgs["result"]["orderProduct"]>
   export type OrderProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -6814,6 +6861,8 @@ export namespace Prisma {
       orderId: number
       productId: string
       quantity: number
+      unitPrice: Prisma.Decimal
+      profitMargin: Prisma.Decimal
     }, ExtArgs["result"]["orderProduct"]>
     composites: {}
   }
@@ -7242,6 +7291,8 @@ export namespace Prisma {
     readonly orderId: FieldRef<"OrderProduct", 'Int'>
     readonly productId: FieldRef<"OrderProduct", 'String'>
     readonly quantity: FieldRef<"OrderProduct", 'Int'>
+    readonly unitPrice: FieldRef<"OrderProduct", 'Decimal'>
+    readonly profitMargin: FieldRef<"OrderProduct", 'Decimal'>
   }
     
 
@@ -14116,66 +14167,56 @@ export namespace Prisma {
 
   export type ProductTreeAvgAggregateOutputType = {
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeSumAggregateOutputType = {
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeMinAggregateOutputType = {
     parentId: string | null
     childId: string | null
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeMaxAggregateOutputType = {
     parentId: string | null
     childId: string | null
     childQuantity: number | null
-    childUnitCost: Decimal | null
   }
 
   export type ProductTreeCountAggregateOutputType = {
     parentId: number
     childId: number
     childQuantity: number
-    childUnitCost: number
     _all: number
   }
 
 
   export type ProductTreeAvgAggregateInputType = {
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeSumAggregateInputType = {
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeMinAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeMaxAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
-    childUnitCost?: true
   }
 
   export type ProductTreeCountAggregateInputType = {
     parentId?: true
     childId?: true
     childQuantity?: true
-    childUnitCost?: true
     _all?: true
   }
 
@@ -14269,7 +14310,6 @@ export namespace Prisma {
     parentId: string
     childId: string
     childQuantity: number
-    childUnitCost: Decimal
     _count: ProductTreeCountAggregateOutputType | null
     _avg: ProductTreeAvgAggregateOutputType | null
     _sum: ProductTreeSumAggregateOutputType | null
@@ -14295,7 +14335,6 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productTree"]>
@@ -14304,7 +14343,6 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productTree"]>
@@ -14313,7 +14351,6 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productTree"]>
@@ -14322,10 +14359,9 @@ export namespace Prisma {
     parentId?: boolean
     childId?: boolean
     childQuantity?: boolean
-    childUnitCost?: boolean
   }
 
-  export type ProductTreeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"parentId" | "childId" | "childQuantity" | "childUnitCost", ExtArgs["result"]["productTree"]>
+  export type ProductTreeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"parentId" | "childId" | "childQuantity", ExtArgs["result"]["productTree"]>
   export type ProductTreeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     parent?: boolean | ProductDefaultArgs<ExtArgs>
     child?: boolean | ProductDefaultArgs<ExtArgs>
@@ -14349,7 +14385,6 @@ export namespace Prisma {
       parentId: string
       childId: string
       childQuantity: number
-      childUnitCost: Prisma.Decimal
     }, ExtArgs["result"]["productTree"]>
     composites: {}
   }
@@ -14778,7 +14813,6 @@ export namespace Prisma {
     readonly parentId: FieldRef<"ProductTree", 'String'>
     readonly childId: FieldRef<"ProductTree", 'String'>
     readonly childQuantity: FieldRef<"ProductTree", 'Int'>
-    readonly childUnitCost: FieldRef<"ProductTree", 'Decimal'>
   }
     
 
@@ -15234,6 +15268,7 @@ export namespace Prisma {
     name: 'name',
     description: 'description',
     unitPrice: 'unitPrice',
+    profitMargin: 'profitMargin',
     type: 'type',
     consumptionType: 'consumptionType',
     minStock: 'minStock',
@@ -15256,7 +15291,9 @@ export namespace Prisma {
   export const OrderProductScalarFieldEnum: {
     orderId: 'orderId',
     productId: 'productId',
-    quantity: 'quantity'
+    quantity: 'quantity',
+    unitPrice: 'unitPrice',
+    profitMargin: 'profitMargin'
   };
 
   export type OrderProductScalarFieldEnum = (typeof OrderProductScalarFieldEnum)[keyof typeof OrderProductScalarFieldEnum]
@@ -15331,8 +15368,7 @@ export namespace Prisma {
   export const ProductTreeScalarFieldEnum: {
     parentId: 'parentId',
     childId: 'childId',
-    childQuantity: 'childQuantity',
-    childUnitCost: 'childUnitCost'
+    childQuantity: 'childQuantity'
   };
 
   export type ProductTreeScalarFieldEnum = (typeof ProductTreeScalarFieldEnum)[keyof typeof ProductTreeScalarFieldEnum]
@@ -15644,6 +15680,7 @@ export namespace Prisma {
     name?: StringFilter<"Product"> | string
     description?: StringNullableFilter<"Product"> | string | null
     unitPrice?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFilter<"Product"> | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFilter<"Product"> | $Enums.ConsumptionType
     minStock?: IntFilter<"Product"> | number
@@ -15662,6 +15699,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrderInput | SortOrder
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     type?: SortOrder
     consumptionType?: SortOrder
     minStock?: SortOrder
@@ -15683,6 +15721,7 @@ export namespace Prisma {
     name?: StringFilter<"Product"> | string
     description?: StringNullableFilter<"Product"> | string | null
     unitPrice?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFilter<"Product"> | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFilter<"Product"> | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFilter<"Product"> | $Enums.ConsumptionType
     minStock?: IntFilter<"Product"> | number
@@ -15701,6 +15740,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrderInput | SortOrder
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     type?: SortOrder
     consumptionType?: SortOrder
     minStock?: SortOrder
@@ -15721,6 +15761,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Product"> | string
     description?: StringNullableWithAggregatesFilter<"Product"> | string | null
     unitPrice?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalWithAggregatesFilter<"Product"> | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeWithAggregatesFilter<"Product"> | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeWithAggregatesFilter<"Product"> | $Enums.ConsumptionType
     minStock?: IntWithAggregatesFilter<"Product"> | number
@@ -15786,6 +15827,8 @@ export namespace Prisma {
     orderId?: IntFilter<"OrderProduct"> | number
     productId?: UuidFilter<"OrderProduct"> | string
     quantity?: IntFilter<"OrderProduct"> | number
+    unitPrice?: DecimalFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
@@ -15794,6 +15837,8 @@ export namespace Prisma {
     orderId?: SortOrder
     productId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
     order?: OrderOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
   }
@@ -15806,6 +15851,8 @@ export namespace Prisma {
     orderId?: IntFilter<"OrderProduct"> | number
     productId?: UuidFilter<"OrderProduct"> | string
     quantity?: IntFilter<"OrderProduct"> | number
+    unitPrice?: DecimalFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "orderId_productId">
@@ -15814,6 +15861,8 @@ export namespace Prisma {
     orderId?: SortOrder
     productId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
     _count?: OrderProductCountOrderByAggregateInput
     _avg?: OrderProductAvgOrderByAggregateInput
     _max?: OrderProductMaxOrderByAggregateInput
@@ -15828,6 +15877,8 @@ export namespace Prisma {
     orderId?: IntWithAggregatesFilter<"OrderProduct"> | number
     productId?: UuidWithAggregatesFilter<"OrderProduct"> | string
     quantity?: IntWithAggregatesFilter<"OrderProduct"> | number
+    unitPrice?: DecimalWithAggregatesFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalWithAggregatesFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseWhereInput = {
@@ -16178,7 +16229,6 @@ export namespace Prisma {
     parentId?: UuidFilter<"ProductTree"> | string
     childId?: UuidFilter<"ProductTree"> | string
     childQuantity?: IntFilter<"ProductTree"> | number
-    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
     parent?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     child?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }
@@ -16187,7 +16237,6 @@ export namespace Prisma {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
     parent?: ProductOrderByWithRelationInput
     child?: ProductOrderByWithRelationInput
   }
@@ -16200,7 +16249,6 @@ export namespace Prisma {
     parentId?: UuidFilter<"ProductTree"> | string
     childId?: UuidFilter<"ProductTree"> | string
     childQuantity?: IntFilter<"ProductTree"> | number
-    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
     parent?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     child?: XOR<ProductScalarRelationFilter, ProductWhereInput>
   }, "childId_parentId">
@@ -16209,7 +16257,6 @@ export namespace Prisma {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
     _count?: ProductTreeCountOrderByAggregateInput
     _avg?: ProductTreeAvgOrderByAggregateInput
     _max?: ProductTreeMaxOrderByAggregateInput
@@ -16224,7 +16271,6 @@ export namespace Prisma {
     parentId?: UuidWithAggregatesFilter<"ProductTree"> | string
     childId?: UuidWithAggregatesFilter<"ProductTree"> | string
     childQuantity?: IntWithAggregatesFilter<"ProductTree"> | number
-    childUnitCost?: DecimalWithAggregatesFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
   }
 
   export type UserCreateInput = {
@@ -16339,6 +16385,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -16357,6 +16404,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -16375,6 +16423,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -16393,6 +16442,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -16411,6 +16461,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -16423,6 +16474,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -16435,6 +16487,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -16493,6 +16546,8 @@ export namespace Prisma {
 
   export type OrderProductCreateInput = {
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     order: OrderCreateNestedOneWithoutOrderProductsInput
     product: ProductCreateNestedOneWithoutOrderProductsInput
   }
@@ -16501,10 +16556,14 @@ export namespace Prisma {
     orderId: number
     productId: string
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUpdateInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     order?: OrderUpdateOneRequiredWithoutOrderProductsNestedInput
     product?: ProductUpdateOneRequiredWithoutOrderProductsNestedInput
   }
@@ -16513,22 +16572,30 @@ export namespace Prisma {
     orderId?: IntFieldUpdateOperationsInput | number
     productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductCreateManyInput = {
     orderId: number
     productId: string
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUpdateManyMutationInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUncheckedUpdateManyInput = {
     orderId?: IntFieldUpdateOperationsInput | number
     productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseCreateInput = {
@@ -16859,7 +16926,6 @@ export namespace Prisma {
 
   export type ProductTreeCreateInput = {
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
     parent: ProductCreateNestedOneWithoutProductTreeParentInput
     child: ProductCreateNestedOneWithoutProductTreeChildInput
   }
@@ -16868,12 +16934,10 @@ export namespace Prisma {
     parentId: string
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpdateInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     parent?: ProductUpdateOneRequiredWithoutProductTreeParentNestedInput
     child?: ProductUpdateOneRequiredWithoutProductTreeChildNestedInput
   }
@@ -16882,26 +16946,22 @@ export namespace Prisma {
     parentId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateManyInput = {
     parentId: string
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpdateManyMutationInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUncheckedUpdateManyInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -17191,6 +17251,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     type?: SortOrder
     consumptionType?: SortOrder
     minStock?: SortOrder
@@ -17199,6 +17260,7 @@ export namespace Prisma {
 
   export type ProductAvgOrderByAggregateInput = {
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     minStock?: SortOrder
   }
 
@@ -17208,6 +17270,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     type?: SortOrder
     consumptionType?: SortOrder
     minStock?: SortOrder
@@ -17220,6 +17283,7 @@ export namespace Prisma {
     name?: SortOrder
     description?: SortOrder
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     type?: SortOrder
     consumptionType?: SortOrder
     minStock?: SortOrder
@@ -17228,6 +17292,7 @@ export namespace Prisma {
 
   export type ProductSumOrderByAggregateInput = {
     unitPrice?: SortOrder
+    profitMargin?: SortOrder
     minStock?: SortOrder
   }
 
@@ -17364,28 +17429,38 @@ export namespace Prisma {
     orderId?: SortOrder
     productId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
   }
 
   export type OrderProductAvgOrderByAggregateInput = {
     orderId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
   }
 
   export type OrderProductMaxOrderByAggregateInput = {
     orderId?: SortOrder
     productId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
   }
 
   export type OrderProductMinOrderByAggregateInput = {
     orderId?: SortOrder
     productId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
   }
 
   export type OrderProductSumOrderByAggregateInput = {
     orderId?: SortOrder
     quantity?: SortOrder
+    unitPrice?: SortOrder
+    profitMargin?: SortOrder
   }
 
   export type EnumPurchaseStatusFilter<$PrismaModel = never> = {
@@ -17638,31 +17713,26 @@ export namespace Prisma {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeAvgOrderByAggregateInput = {
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeMaxOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeMinOrderByAggregateInput = {
     parentId?: SortOrder
     childId?: SortOrder
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type ProductTreeSumOrderByAggregateInput = {
     childQuantity?: SortOrder
-    childUnitCost?: SortOrder
   }
 
   export type PurchaseCreateNestedManyWithoutUserInput = {
@@ -18572,12 +18642,16 @@ export namespace Prisma {
 
   export type OrderProductCreateWithoutProductInput = {
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     order: OrderCreateNestedOneWithoutOrderProductsInput
   }
 
   export type OrderProductUncheckedCreateWithoutProductInput = {
     orderId: number
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductCreateOrConnectWithoutProductInput = {
@@ -18650,14 +18724,12 @@ export namespace Prisma {
 
   export type ProductTreeCreateWithoutChildInput = {
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
     parent: ProductCreateNestedOneWithoutProductTreeParentInput
   }
 
   export type ProductTreeUncheckedCreateWithoutChildInput = {
     parentId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateOrConnectWithoutChildInput = {
@@ -18672,14 +18744,12 @@ export namespace Prisma {
 
   export type ProductTreeCreateWithoutParentInput = {
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
     child: ProductCreateNestedOneWithoutProductTreeChildInput
   }
 
   export type ProductTreeUncheckedCreateWithoutParentInput = {
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateOrConnectWithoutParentInput = {
@@ -18715,6 +18785,8 @@ export namespace Prisma {
     orderId?: IntFilter<"OrderProduct"> | number
     productId?: UuidFilter<"OrderProduct"> | string
     quantity?: IntFilter<"OrderProduct"> | number
+    unitPrice?: DecimalFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFilter<"OrderProduct"> | Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseProductUpsertWithWhereUniqueWithoutProductInput = {
@@ -18812,7 +18884,6 @@ export namespace Prisma {
     parentId?: UuidFilter<"ProductTree"> | string
     childId?: UuidFilter<"ProductTree"> | string
     childQuantity?: IntFilter<"ProductTree"> | number
-    childUnitCost?: DecimalFilter<"ProductTree"> | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpsertWithWhereUniqueWithoutParentInput = {
@@ -18833,12 +18904,16 @@ export namespace Prisma {
 
   export type OrderProductCreateWithoutOrderInput = {
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     product: ProductCreateNestedOneWithoutOrderProductsInput
   }
 
   export type OrderProductUncheckedCreateWithoutOrderInput = {
     productId: string
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductCreateOrConnectWithoutOrderInput = {
@@ -18891,6 +18966,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -18908,6 +18984,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -18965,6 +19042,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -18982,6 +19060,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19115,6 +19194,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19132,6 +19212,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19191,6 +19272,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19208,6 +19290,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19225,6 +19308,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19242,6 +19326,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19275,6 +19360,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19292,6 +19378,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19309,6 +19396,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19326,6 +19414,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19359,6 +19448,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19376,6 +19466,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19393,6 +19484,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19410,6 +19502,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19432,6 +19525,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19449,6 +19543,7 @@ export namespace Prisma {
     name: string
     description?: string | null
     unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
     type?: $Enums.ProductType
     consumptionType?: $Enums.ConsumptionType
     minStock?: number
@@ -19482,6 +19577,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19499,6 +19595,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19527,6 +19624,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19544,6 +19642,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     type?: EnumProductTypeFieldUpdateOperationsInput | $Enums.ProductType
     consumptionType?: EnumConsumptionTypeFieldUpdateOperationsInput | $Enums.ConsumptionType
     minStock?: IntFieldUpdateOperationsInput | number
@@ -19587,6 +19686,8 @@ export namespace Prisma {
   export type OrderProductCreateManyProductInput = {
     orderId: number
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseProductCreateManyProductInput = {
@@ -19605,28 +19706,32 @@ export namespace Prisma {
   export type ProductTreeCreateManyChildInput = {
     parentId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeCreateManyParentInput = {
     childId: string
     childQuantity: number
-    childUnitCost: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUpdateWithoutProductInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     order?: OrderUpdateOneRequiredWithoutOrderProductsNestedInput
   }
 
   export type OrderProductUncheckedUpdateWithoutProductInput = {
     orderId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUncheckedUpdateManyWithoutProductInput = {
     orderId?: IntFieldUpdateOperationsInput | number
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseProductUpdateWithoutProductInput = {
@@ -19669,58 +19774,60 @@ export namespace Prisma {
 
   export type ProductTreeUpdateWithoutChildInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     parent?: ProductUpdateOneRequiredWithoutProductTreeParentNestedInput
   }
 
   export type ProductTreeUncheckedUpdateWithoutChildInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUncheckedUpdateManyWithoutChildInput = {
     parentId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUpdateWithoutParentInput = {
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     child?: ProductUpdateOneRequiredWithoutProductTreeChildNestedInput
   }
 
   export type ProductTreeUncheckedUpdateWithoutParentInput = {
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductTreeUncheckedUpdateManyWithoutParentInput = {
     childId?: StringFieldUpdateOperationsInput | string
     childQuantity?: IntFieldUpdateOperationsInput | number
-    childUnitCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductCreateManyOrderInput = {
     productId: string
     quantity?: number
+    unitPrice: Decimal | DecimalJsLike | number | string
+    profitMargin?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUpdateWithoutOrderInput = {
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     product?: ProductUpdateOneRequiredWithoutOrderProductsNestedInput
   }
 
   export type OrderProductUncheckedUpdateWithoutOrderInput = {
     productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderProductUncheckedUpdateManyWithoutOrderInput = {
     productId?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    unitPrice?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    profitMargin?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type PurchaseProductCreateManyPurchaseInput = {

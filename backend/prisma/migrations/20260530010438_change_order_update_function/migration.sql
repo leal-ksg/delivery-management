@@ -106,9 +106,9 @@ begin
      where s."productId" = product.productId 
        for update;
 
-    -- if stock_quantity < product.quantity then
-    --   raise exception 'Não há estoque suficiente do produto %.', product_name;
-    -- end if; 
+    if stock_quantity < product.quantity then
+      raise exception 'Não há estoque suficiente do produto %.', product_name;
+    end if; 
   
     for child_id, child_name, child_quantity in
     (
@@ -157,8 +157,7 @@ begin
 
     update "Stock" 
     set "quantity" = "quantity" - product.quantity
-    where "productId" = product.productId
-      and "quantity" - product.quantity > 0;
+    where "productId" = product.productId;
 
     select p."unitPrice", p."profitMargin"
       into unit_price, profit_margin

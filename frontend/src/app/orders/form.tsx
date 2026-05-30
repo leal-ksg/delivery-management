@@ -27,6 +27,7 @@ export interface ProductOptionValue {
   name: string;
   id: string;
   unitPrice: number;
+  profitMargin: number;
   quantity?: number;
 }
 
@@ -39,6 +40,7 @@ const orderSchema = z.object({
         name: z.string(),
         id: z.uuid(),
         unitPrice: z.number(),
+        profitMargin: z.number(),
       }),
     })
     .nullable()
@@ -54,7 +56,8 @@ const mapOrderProducts = (order: Order | null): ProductOptionValue[] => {
   return order.orderProducts.map((p) => ({
     name: p.product.name,
     id: p.productId,
-    unitPrice: p.product.unitPrice,
+    unitPrice: p.unitPrice,
+    profitMargin: p.profitMargin,
     quantity: p.quantity,
   }));
 };
@@ -68,6 +71,7 @@ export function OrderForm({
     defaultValues: editingOrder ?? undefined,
     resolver: zodResolver(orderSchema),
   });
+
   const [selectedProducts, setSelectedProducts] = useState<
     ProductOptionValue[]
   >(mapOrderProducts(editingOrder));
@@ -79,23 +83,25 @@ export function OrderForm({
 
     if (!selectedProduct) return;
 
-    const alreadyIncluded = selectedProducts.some((p) => {
-      return p.id === selectedProduct.value.id;
-    });
+    const alreadyIncluded = selectedProducts.some(
+      (p) => p.id === selectedProduct.value.id,
+    );
 
     if (alreadyIncluded) return;
 
     setSelectedProducts((prev) => [
       ...prev,
-      { ...selectedProduct.value, quantity: 1 },
+      {
+        ...selectedProduct.value,
+        quantity: 1,
+      },
     ]);
 
     setValue("selectedProduct", null);
   }, [methods, selectedProducts, setValue]);
 
   function validateProducts() {
-    if (!selectedProducts || !selectedProducts.length)
-      return "Selecione os produtos vendidos";
+    if (!selectedProducts.length) return "Selecione os produtos vendidos";
 
     if (selectedProducts.some((p) => !p.quantity))
       return "Há um produto sem quantidade informada";
@@ -142,7 +148,7 @@ export function OrderForm({
       });
     } else {
       const parsedData = mapOrderData(orderSchema.parse(data));
-      console.log(parsedData);
+
       response = await createOrder(parsedData);
     }
 
@@ -160,6 +166,12 @@ export function OrderForm({
     }
   }, [editingOrder, methods]);
 
+  const total = selectedProducts.reduce((acc, product) => {
+    const finalPrice = Number(product.unitPrice) * Number(product.profitMargin);
+
+    return acc + (product.quantity ?? 0) * finalPrice;
+  }, 0);
+
   return (
     <FormProvider {...methods}>
       <form
@@ -167,7 +179,9 @@ export function OrderForm({
         className="max-w-6xl mx-auto lg:p-6 space-y-6"
       >
         <div
-          className={`grid grid-cols-1 ${selectedProducts && selectedProducts.length ? "lg:grid-cols-2" : ""} gap-2 lg:gap-6 lg:mt-30 items-start`}
+          className={`grid grid-cols-1 ${
+            selectedProducts.length ? "lg:grid-cols-2" : ""
+          } gap-2 lg:gap-6 lg:mt-30 items-start`}
         >
           <div className="bg-white rounded-2xl shadow-sm py-4 px-2 lg:p-6 lg:pb-20 space-y-6">
             <h2 className="text-lg font-semibold text-gray-700">
@@ -181,7 +195,7 @@ export function OrderForm({
                 name="selectedProduct"
                 label="Buscar produto"
                 defaultOptions
-                loadOptions={loadProductOptions}
+                loadOptions={(value) => loadProductOptions(value, true)}
               />
 
               <Button
@@ -195,29 +209,22 @@ export function OrderForm({
             </div>
           </div>
 
-          {selectedProducts && selectedProducts.length !== 0 && (
+          {selectedProducts.length > 0 && (
             <div className="bg-white rounded-2xl shadow-sm p-2 lg:p-6 flex flex-col">
               <div className="flex justify-between text-gray-700">
                 <h2 className="text-lg font-semibold mb-4">
                   Produtos do Pedido
                 </h2>
 
-                {selectedProducts && selectedProducts.length > 0 && (
-                  <span>
-                    Total:
-                    {selectedProducts
-                      .reduce(
-                        (acc, v) => acc + (v.quantity ?? 0) * v.unitPrice,
-                        0,
-                      )
-                      .toLocaleString("pt-br", {
-                        style: "currency",
-                        currency: "BRL",
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                  </span>
-                )}
+                <span>
+                  Total:{" "}
+                  {total.toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
               </div>
 
               <div className="flex-1 overflow-y-auto lg:pr-2">
@@ -230,7 +237,6 @@ export function OrderForm({
           )}
         </div>
 
-        {/* ACTIONS */}
         <div className="flex justify-end gap-3 pt-2 lg:pt-4">
           <ActionButton
             onClick={onCancel}
@@ -247,6 +253,7 @@ export function OrderForm({
             disabled={formState.isSubmitting}
           >
             <span>Confirmar</span>
+
             {formState.isSubmitting ? (
               <Spinner />
             ) : (

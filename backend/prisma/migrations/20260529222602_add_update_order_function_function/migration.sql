@@ -2,7 +2,6 @@ drop type if exists orderUpdateDTO cascade;
 
 create type orderUpdateDTO as (
   id         INT,
-  comment    TEXT,
   customerId UUID,
   status     "OrderStatus",
   userId     UUID,
@@ -20,19 +19,12 @@ declare
   stock_quantity   int;
   product          orderProduct;
   product_name     text;
-  unit_price        decimal(10,2);
-  profit_margin     decimal(10,4);
-
+  
   child_id         UUID;
   child_name       text; 
   child_quantity   int;
 
 begin
-
-  perform 1
-  from "Order"
-  where id = order_data.id
-  for update;
   
   for order_product_id, order_product_quantity in 
     select "productId", "quantity"
@@ -106,9 +98,9 @@ begin
      where s."productId" = product.productId 
        for update;
 
-    -- if stock_quantity < product.quantity then
-    --   raise exception 'Não há estoque suficiente do produto %.', product_name;
-    -- end if; 
+    if stock_quantity < product.quantity then
+      raise exception 'Não há estoque suficiente do produto %.', product_name;
+    end if; 
   
     for child_id, child_name, child_quantity in
     (
@@ -157,21 +149,13 @@ begin
 
     update "Stock" 
     set "quantity" = "quantity" - product.quantity
-    where "productId" = product.productId
-      and "quantity" - product.quantity > 0;
-
-    select p."unitPrice", p."profitMargin"
-      into unit_price, profit_margin
-      from "Product" as p
-     where p."id" = product.productId;
+    where "productId" = product.productId;
   
-    insert into "OrderProduct" ("orderId", "productId", "quantity", "unitPrice", "profitMargin") 
+    insert into "OrderProduct" ("orderId", "productId", "quantity") 
     values (
       order_data.id, 
       product.productId, 
-      product.quantity,
-      unit_price,
-      profit_margin
+      product.quantity
     );
 
   end loop;

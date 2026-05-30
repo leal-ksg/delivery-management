@@ -5,10 +5,8 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Spinner } from "@/components/ui/spinner";
-import { getDirtyValues } from "@/lib/get-dirty-values";
 import { ApiResponse } from "@/lib/api";
 import { useEffect } from "react";
-import { FormNumericInput } from "@/src/components/FormNumericInput";
 import { ProductTree, ProductTreeDTO } from "@/src/domains/product-tree/types";
 import { createNode } from "@/src/domains/product-tree/services/create-product-tree";
 import { updateNode } from "@/src/domains/product-tree/services/update-node";
@@ -35,13 +33,8 @@ const productSchema = z
     }),
     childQuantity: z.coerce
       .number("Informe a quantidade do produto filho")
-      .positive("A quantidade deve ser maior que zero"),
-    childUnitCost: z.preprocess(
-      (value) => (value === null ? 0 : value),
-      z.coerce
-        .number("Custo unitário inválido")
-        .nonnegative("Custo unitário não pode ser negativo"),
-    ),
+      .positive("A quantidade deve ser maior que zero")
+      .max(10000, "Quantidade excede o valor máximo (10.000)"),
   })
   .refine((data) => data.parent.value !== data.child.value, {
     message: "Produto não pode ser filho de si mesmo",
@@ -101,17 +94,14 @@ export function ProductTreeForm({
   const { formState } = methods;
 
   async function onSubmit(data: FormData) {
-    console.log("submit");
     let response: ApiResponse<ProductTreeDTO>;
 
-    const { child, parent, childQuantity, childUnitCost } =
-      productSchema.parse(data);
+    const { child, parent, childQuantity } = productSchema.parse(data);
 
     const parsedData = {
       parentId: parent.value,
       childId: child.value,
       childQuantity,
-      childUnitCost,
     };
 
     if (editingProduct) {
@@ -169,23 +159,12 @@ export function ProductTreeForm({
           </div>
         </div>
 
-        <div className="flex flex-col w-full md:w-1/2 gap-2 lg:flex-row">
+        <div className="flex flex-col w-full md:w-1/8 gap-2 lg:flex-row">
           <FormInput
             name="childQuantity"
             label="Quantidade"
             type="text"
             inputMode="numeric"
-          />
-
-          <FormNumericInput
-            name="childUnitCost"
-            label="Custo unitário"
-            thousandSeparator="."
-            decimalSeparator=","
-            prefix="R$ "
-            decimalScale={2}
-            fixedDecimalScale
-            allowNegative={false}
           />
         </div>
 
