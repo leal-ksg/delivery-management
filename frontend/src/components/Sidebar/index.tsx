@@ -1,6 +1,13 @@
 "use client";
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { LucideIcon, HandCoins, Menu, X, Boxes, Network } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -20,6 +27,29 @@ interface LinkWrapperProps {
   isOpen: boolean;
 }
 
+function LinkTooltip({
+  tip,
+  children,
+}: {
+  tip?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Tooltip delayDuration={400}>
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
+
+      {tip && (
+        <TooltipContent
+          side="right"
+          className="ml-4 bg-primary/75 text-white text-sm"
+        >
+          <p>{tip}</p>
+        </TooltipContent>
+      )}
+    </Tooltip>
+  );
+}
+
 function SidebarLink({
   icon: Icon,
   text,
@@ -31,7 +61,7 @@ function SidebarLink({
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  return (
+  const content = (
     <Link
       href={href}
       onClick={onNavigate}
@@ -65,6 +95,12 @@ function SidebarLink({
       </div>
     </Link>
   );
+
+  if (isMobile) {
+    return content;
+  }
+
+  return <LinkTooltip tip={text}>{content}</LinkTooltip>;
 }
 
 function LinkWrapper({ title, children, isOpen }: LinkWrapperProps) {
@@ -148,6 +184,22 @@ export function Sidebar() {
               >
                 {isOpen ? <X size={20} /> : <Menu size={22} strokeWidth={2} />}
               </button>
+            </div>
+
+            <div
+              className={`absolute bottom-4 left-1/2 -translate-x-1/2 transition-opacity duration-300 ${
+                isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              {/* <Image
+                src="/logo_kairos.png"
+                alt="logo"
+                width={110}
+                height={40}
+                quality={1}
+                priority
+                className="object-contain translate-y-2"
+              /> */}
             </div>
           </div>
 
