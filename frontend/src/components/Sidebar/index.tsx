@@ -191,7 +191,7 @@ export function Sidebar() {
                 isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
-              {/* <Image
+              <Image
                 src="/logo_kairos.png"
                 alt="logo"
                 width={110}
@@ -199,7 +199,7 @@ export function Sidebar() {
                 quality={1}
                 priority
                 className="object-contain translate-y-2"
-              /> */}
+              />
             </div>
           </div>
 
