@@ -4,10 +4,8 @@ services:
     container_name: kairos-postgres
     restart: unless-stopped
 
-    environment:
-      - POSTGRES_DB=kairos
-      - POSTGRES_USER=kairos_user
-      - POSTGRES_PASSWORD=dcscds697sa8321
+    env_file:
+      - ./backend/.env.docker
 
     ports:
       - "5432:5432"
@@ -23,7 +21,7 @@ services:
     expose:
       - "3001"
     env_file:
-      - ./backend/.env
+      - ./backend/.env.docker
     depends_on:
       - postgres
 
@@ -55,7 +53,6 @@ services:
     depends_on:
       - backend
       - frontend
-
 
 volumes:
   postgres_data:
