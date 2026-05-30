@@ -23,7 +23,6 @@ export class ProductRepository implements IProductRepository {
     const active = filters?.active ?? null;
     const type = filters?.type ?? null;
 
-    console.log(">>>>>>>>>", type)
     try {
       const [products, total] = await Promise.all([
         prisma.$queryRaw<

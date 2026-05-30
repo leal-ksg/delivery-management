@@ -25,7 +25,10 @@ export class OrderRepository implements IOrderRepository {
             orderProducts: {
               include: {
                 product: {
-                  select: { name: true, unitPrice: true, type: true },
+                  select: {
+                    name: true,
+                    type: true,
+                  },
                 },
               },
             },

@@ -1,3 +1,13 @@
+/*
+  Warnings:
+
+  - Added the required column `unitPrice` to the `OrderProduct` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "OrderProduct" ADD COLUMN     "profitMargin" DECIMAL(10,4) NOT NULL DEFAULT 1,
+ADD COLUMN     "unitPrice" DECIMAL(10,2) NOT NULL;
+
 DROP TYPE IF EXISTS orderCreationDTO CASCADE;
 DROP TYPE IF EXISTS orderProduct CASCADE;
 
@@ -40,9 +50,9 @@ begin
      where s."productId" = product.productId 
        for update;
 
-    -- if stock_quantity < product.quantity then
-    --   raise exception 'Não há estoque suficiente do produto %.', product_name;
-    -- end if; 
+    if stock_quantity < product.quantity then
+      raise exception 'Não há estoque suficiente do produto %.', product_name;
+    end if; 
   
     for child_id, child_name, child_quantity in
     (
@@ -91,8 +101,7 @@ begin
 
     update "Stock" 
     set "quantity" = "quantity" - product.quantity
-    where "productId" = product.productId
-      and "quantity" - product.quantity > 0;
+    where "productId" = product.productId;
 
     select p."unitPrice", p."profitMargin"
       into unit_price, profit_margin

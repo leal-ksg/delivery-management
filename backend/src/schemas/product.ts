@@ -10,6 +10,10 @@ export const productSchema = z.object({
     .transform((value) => (value === "" ? null : value))
     .nullable()
     .optional(),
+  profitMargin: z.coerce
+    .number("Informe uma margem de lucro válida")
+    .min(0, "A margem de lucro não pode ser negativa")
+    .max(9999, "Margem de lucro excede os limites"),
   unitPrice: z.coerce
     .number("Preço unitário não é um número ou não foi informado")
     .refine((value) => value !== 0, "Preço obrigatório")
