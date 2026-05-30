@@ -84,6 +84,14 @@ export const productColumns: ColumnDef<Product>[] = [
     },
   },
   {
+    accessorKey: "finalPrice",
+    header: "Preço final",
+    cell: ({ row }) => {
+      const finalPrice = Number(row.original.unitPrice) * Number(row.original.profitMargin)
+      return formatMoney(finalPrice);
+    },
+  },
+  {
     accessorKey: "type",
     header: "Tipo",
     cell: ({ cell }) => {

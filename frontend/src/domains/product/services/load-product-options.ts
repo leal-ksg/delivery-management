@@ -16,7 +16,12 @@ const fetchProducts = async (
 
   return response.body.list.map((p) => ({
     label: p.name,
-    value: { name: p.name, id: p.id, unitPrice: p.unitPrice },
+    value: {
+      name: p.name,
+      id: p.id,
+      unitPrice: p.unitPrice,
+      profitMargin: p.profitMargin,
+    },
   }));
 };
 

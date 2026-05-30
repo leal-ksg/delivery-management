@@ -16,6 +16,7 @@ export type Product = {
   description: string;
   totalCost: number;
   unitPrice: number;
+  profitMargin: number;
   type: ProductType;
   consumptionType: ConsumptionType;
   minStock: number;
@@ -28,6 +29,7 @@ export type CreateProductDTO = {
   name: string;
   description: string | null;
   unitPrice: number;
+  profitMargin: number;
   minStock: number;
   type?: ProductType | null;
   consumptionType?: ConsumptionType | null;

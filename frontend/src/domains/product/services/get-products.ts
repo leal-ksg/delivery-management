@@ -10,8 +10,7 @@ export async function getProducts(
   filters?: ProductFilters
 ): Promise<ApiResponse<Pagination<Product>>> {
   try {
-    // console.log(filters)
-    const { data, request } = await api.get("/product", {
+    const { data } = await api.get("/product", {
       params: {
         query,
         page,

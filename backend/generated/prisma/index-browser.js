@@ -142,6 +142,7 @@ exports.Prisma.ProductScalarFieldEnum = {
   name: 'name',
   description: 'description',
   unitPrice: 'unitPrice',
+  profitMargin: 'profitMargin',
   type: 'type',
   consumptionType: 'consumptionType',
   minStock: 'minStock',
@@ -158,7 +159,9 @@ exports.Prisma.OrderScalarFieldEnum = {
 exports.Prisma.OrderProductScalarFieldEnum = {
   orderId: 'orderId',
   productId: 'productId',
-  quantity: 'quantity'
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  profitMargin: 'profitMargin'
 };
 
 exports.Prisma.PurchaseScalarFieldEnum = {

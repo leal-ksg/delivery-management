@@ -65,8 +65,6 @@ export function CustomerForm({
     if (editingCustomer) {
       const { dirtyFields } = formState;
 
-      console.log(dirtyFields);
-
       const parsedData = customerSchema.parse(methods.getValues());
       const dirtyData = getDirtyValues(dirtyFields, parsedData);
       response = await updateCustomer(editingCustomer.id, dirtyData);

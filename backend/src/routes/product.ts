@@ -14,7 +14,6 @@ const productController = new ProductController(
 );
 
 productRouter.get("/", async (req: Request, res: Response) => {
-  console.log(req.query)
   let filters = {};
 
   const itemsPerPage = req.query.itemsPerPage

@@ -12,6 +12,7 @@ interface FormNumericInputProps {
   thousandSeparator?: string;
   decimalSeparator?: string;
   prefix?: string;
+  suffix?: string;
   decimalScale?: number;
   fixedDecimalScale?: boolean;
   allowNegative?: boolean;
@@ -26,6 +27,7 @@ export function FormNumericInput({
   thousandSeparator,
   decimalSeparator,
   prefix,
+  suffix,
   decimalScale,
   fixedDecimalScale,
   allowNegative,
@@ -69,6 +71,7 @@ export function FormNumericInput({
             thousandSeparator={thousandSeparator}
             decimalSeparator={decimalSeparator}
             prefix={prefix}
+            suffix={suffix}
             decimalScale={decimalScale}
             fixedDecimalScale={fixedDecimalScale}
             allowNegative={allowNegative}
