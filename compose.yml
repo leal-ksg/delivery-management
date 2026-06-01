@@ -29,16 +29,17 @@ services:
     restart: unless-stopped
     env_file:
       - ./frontend/.env
+
     build:
-      env_file:
-        - ./frontend/.env
       context: ./frontend
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_API_URL: /api/v1
+
     container_name: kairos-frontend
+
     expose:
       - "3000"
-    
+
     depends_on:
       - backend
 
