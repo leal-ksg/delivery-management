@@ -8,11 +8,13 @@ import { productionRouter } from "./production";
 import { productTreeRouter } from "./product-tree";
 import { authMiddleware } from "../middlewares/auth";
 import { authRouter } from "./auth";
+import { healthRouter } from "./health";
 
 export const router = Router();
 
 // Public routes
 router.use("/auth", authRouter);
+router.use("/health", healthRouter);
 
 // Private routes
 // router.use(authMiddleware)
