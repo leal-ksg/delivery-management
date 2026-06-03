@@ -127,7 +127,7 @@ function LinkWrapper({ title, children, isOpen }: LinkWrapperProps) {
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  const isMobile = false;
+  const isMobile = useIsMobile();
 
   const handleNavigate = () => {
     if (isMobile) {
@@ -139,7 +139,7 @@ export function Sidebar() {
     <>
       {isOpen && isMobile && (
         <div
-          className="fixed inset-0 bg-black/30 z-40"
+          className="fixed inset-0 bg-black/40 z-40"
           onClick={() => setIsOpen(false)}
         />
       )}
