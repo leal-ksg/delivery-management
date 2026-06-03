@@ -26,7 +26,7 @@ export function EntityDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "bg-light-foreground max-h-screen overflow-y-scroll md:overflow-auto",
+          "bg-light-foreground max-h-[90dvh] overflow-y-scroll md:overflow-auto",
           classname,
         )}
       >

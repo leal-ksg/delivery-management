@@ -85,8 +85,7 @@ export function ProductForm({
     defaultValues: editingProduct
       ? ({
           ...editingProduct,
-          profitMargin:
-            (Number(editingProduct.profitMargin) - 1) * 100,
+          profitMargin: (Number(editingProduct.profitMargin) - 1) * 100,
         } as FormData)
       : undefined,
     resolver: zodResolver(productSchema),
@@ -134,12 +133,14 @@ export function ProductForm({
       methods.reset({
         ...editingProduct,
         unitPrice: String(editingProduct.unitPrice),
-        profitMargin: String(
-          (Number(editingProduct.profitMargin) - 1) * 100,
-        ),
+        profitMargin: String((Number(editingProduct.profitMargin) - 1) * 100),
         minStock: String(editingProduct.minStock),
         stockQuantity: String(editingProduct.stockQuantity),
       } as FormData);
+    } else {
+      methods.reset({
+        profitMargin: 0,
+      });
     }
   }, [editingProduct, methods]);
 

@@ -54,7 +54,7 @@ interface DataTableProps<TData, TValue> {
   loading: boolean;
 }
 
- /* @react-compiler ignore */
+/* @react-compiler ignore */
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -102,6 +102,7 @@ export function DataTable<TData, TValue>({
       .rows.map((row) => row.original);
 
     await onDelete(selectedRows);
+    setRowSelection({}); // Limpa a seleção após deletar
   }
 
   function handleEdit() {
@@ -125,7 +126,7 @@ export function DataTable<TData, TValue>({
       <div className="flex flex-col-reverse md:flex-row gap-2 justify-between">
         <Input
           type="text"
-          placeholder="Busque por qualquer informação..."
+          placeholder="Pesquisar..."
           className="w-full md:w-[80%] placeholder:text-gray-400"
           value={globalFilter}
           onChange={(e) => handleFilterChange(e.target.value)}
@@ -233,16 +234,31 @@ export function DataTable<TData, TValue>({
             table.getRowModel().rows.map((row) => (
               <div
                 key={row.id}
-                className="
+                className={`
                   rounded-xl
                   border
-                  border-gray-200
-                  bg-white
                   shadow-sm
                   p-4
                   space-y-3
-                "
+                  transition-colors
+                  bg-white
+                  ${row.getIsSelected() ? "border-secondary" : "border-gray-200"}
+                `}
               >
+                {/* Cabeçalho do Card Mobile com o Checkbox */}
+                <div className="flex items-center justify-between border-b border-gray-200 pb-2 mb-2">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4.5 w-4.5 rounded border-gray-300 focus:ring-secondary accent-secondary"
+                      checked={row.getIsSelected()}
+                      disabled={!row.getCanSelect()}
+                      onChange={row.getToggleSelectedHandler()}
+                    />
+                  </div>
+                </div>
+
+                {/* Conteúdo das células (Ignorando a coluna do checkbox se ela já existir no array de colunas) */}
                 {row
                   .getVisibleCells()
                   .filter(
@@ -254,7 +270,9 @@ export function DataTable<TData, TValue>({
                           header: string;
                         };
                       };
-                    } => typeof cell.column.columnDef.header === "string",
+                    } =>
+                      typeof cell.column.columnDef.header === "string" &&
+                      cell.column.id !== "select", // Evita duplicar o checkbox caso ele venha do columns de forma nativa
                   )
                   .map((cell) => (
                     <div
@@ -264,7 +282,7 @@ export function DataTable<TData, TValue>({
                         justify-between
                         gap-4
                         border-b-2
-                        border-gray-300
+                        border-gray-100
                         last:border-none
                         pb-2
                       "

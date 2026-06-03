@@ -2,41 +2,61 @@ services:
   postgres:
     image: postgres:17
     container_name: kairos-postgres
+    restart: unless-stopped
 
-    environment:
-      - POSTGRES_DB=kairos
-      - POSTGRES_USER=kairos_user
-      - POSTGRES_PASSWORD=dcscds697sa8321
+    env_file:
+      - ./backend/.env.docker
 
     ports:
       - "5432:5432"
-    
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
+    container_name: kairos-backend
+    restart: unless-stopped
     build:
       context: ./backend
-    container_name: kairos-backend
-    ports:
-      - "3001:3001"
+    expose:
+      - "3001"
     env_file:
-      - ./backend/.env
+      - ./backend/.env.docker
     depends_on:
       - postgres
-    
+
   frontend:
+    restart: unless-stopped
+    env_file:
+      - ./frontend/.env
+
     build:
       context: ./frontend
       args:
-        NEXT_PUBLIC_API_URL: http://localhost:3001/api/v1
+        NEXT_PUBLIC_API_URL: /api/v1
+
     container_name: kairos-frontend
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./frontend/.env
+
+    expose:
+      - "3000"
+
     depends_on:
       - backend
+
+  nginx:
+    image: nginx
+    container_name: kairos-nginx
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+    depends_on:
+      - backend
+      - frontend
 
 volumes:
   postgres_data:
