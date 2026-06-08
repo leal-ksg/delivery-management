@@ -19,12 +19,6 @@ export function Checkout({ products, updateProducts }: CheckoutProps) {
   return (
     <div className="flex flex-col gap-3 w-full lg:p-3 max-h-49 lg:max-h-120 overflow-y-auto">
       {products.map((p) => {
-        const profitMarginPercentage =
-          (Number(p.profitMargin) - 1) * 100;
-
-        const finalPrice =
-          Number(p.unitPrice) * Number(p.profitMargin);
-
         return (
           <div
             key={p.id}
@@ -36,15 +30,7 @@ export function Checkout({ products, updateProducts }: CheckoutProps) {
               </span>
 
               <span className="text-xs text-neutral-500">
-                Preço base: R$ {Number(p.unitPrice).toFixed(2)}
-              </span>
-
-              <span className="text-xs text-neutral-500">
-                Margem: {profitMarginPercentage.toFixed(0)}%
-              </span>
-
-              <span className="text-sm font-semibold text-secondary">
-                Preço final: R$ {finalPrice.toFixed(2)}
+                Preço site: R$ {Number(p.unitPrice).toFixed(2)}
               </span>
             </div>
 

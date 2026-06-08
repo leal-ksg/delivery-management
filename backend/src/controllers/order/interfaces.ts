@@ -12,7 +12,6 @@ interface OrderProductDTO {
   productId: string;
   quantity: number;
   unitPrice: Prisma.Decimal;
-  profitMargin: Prisma.Decimal;
   product: {
     name: string;
     type: ProductType;

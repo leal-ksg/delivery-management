@@ -183,7 +183,7 @@ export function ProductForm({
         <div className="flex flex-col w-1/2 gap-2 lg:flex-row">
           <FormNumericInput
             name="unitPrice"
-            label="Preço unitário"
+            label="Preço site"
             thousandSeparator="."
             decimalSeparator=","
             prefix="R$ "

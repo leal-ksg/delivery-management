@@ -5,6 +5,7 @@ export const productTypeTranslation: Record<ProductType, string> = {
   PURCHASE: "Comprado",
   SALE: "Vendável",
   PACKAGING: "Embalagem",
+  SERVICE: "Serviço",
 };
 
 export const consumptionTypeTranslation: Record<ConsumptionType, string> = {

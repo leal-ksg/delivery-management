@@ -14,7 +14,6 @@ type OrderProduct = {
   productId: string;
   quantity: number;
   unitPrice: number;
-  profitMargin: number;
   product: {
     name: string;
     type: ProductType;

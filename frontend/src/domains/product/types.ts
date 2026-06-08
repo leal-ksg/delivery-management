@@ -2,6 +2,7 @@ export enum ProductType {
   PURCHASE = "PURCHASE",
   SALE = "SALE",
   PACKAGING = "PACKAGING",
+  SERVICE = "SERVICE",
 }
 
 export enum ConsumptionType {

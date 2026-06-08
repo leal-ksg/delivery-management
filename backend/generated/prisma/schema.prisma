@@ -27,6 +27,7 @@ enum ProductType {
   SALE
   PURCHASE
   PACKAGING
+  SERVICE
 }
 
 enum ConsumptionType {
@@ -91,13 +92,12 @@ model Order {
 }
 
 model OrderProduct {
-  orderId      Int
-  productId    String  @db.Uuid
-  quantity     Int     @default(1)
-  unitPrice    Decimal @db.Decimal(10, 2)
-  profitMargin Decimal @default(1) @db.Decimal(10, 4)
-  order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product      Product @relation(fields: [productId], references: [id])
+  orderId   Int
+  productId String  @db.Uuid
+  quantity  Int     @default(1)
+  unitPrice Decimal @db.Decimal(10, 2)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
 
   @@id([orderId, productId])
 }

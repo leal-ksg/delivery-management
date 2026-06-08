@@ -27,7 +27,6 @@ export interface ProductOptionValue {
   name: string;
   id: string;
   unitPrice: number;
-  profitMargin: number;
   quantity?: number;
 }
 
@@ -40,7 +39,6 @@ const orderSchema = z.object({
         name: z.string(),
         id: z.uuid(),
         unitPrice: z.number(),
-        profitMargin: z.number(),
       }),
     })
     .nullable()
@@ -57,7 +55,6 @@ const mapOrderProducts = (order: Order | null): ProductOptionValue[] => {
     name: p.product.name,
     id: p.productId,
     unitPrice: p.unitPrice,
-    profitMargin: p.profitMargin,
     quantity: p.quantity,
   }));
 };
@@ -167,9 +164,7 @@ export function OrderForm({
   }, [editingOrder, methods]);
 
   const total = selectedProducts.reduce((acc, product) => {
-    const finalPrice = Number(product.unitPrice) * Number(product.profitMargin);
-
-    return acc + (product.quantity ?? 0) * finalPrice;
+    return acc + (product.quantity ?? 0) * Number(product.unitPrice);
   }, 0);
 
   return (

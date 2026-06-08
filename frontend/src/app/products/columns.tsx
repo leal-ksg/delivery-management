@@ -70,6 +70,13 @@ export const productColumns: ColumnDef<Product>[] = [
     },
   },
   {
+    accessorKey: "unitPrice",
+    header: "Preço site",
+    cell: ({ cell }) => {
+      return formatMoney(Number(cell.getValue()));
+    },
+  },
+  {
     accessorKey: "totalCost",
     header: "Custo total",
     cell: ({ cell }) => {
@@ -77,17 +84,10 @@ export const productColumns: ColumnDef<Product>[] = [
     },
   },
   {
-    accessorKey: "unitPrice",
-    header: "Preço unit.",
-    cell: ({ cell }) => {
-      return formatMoney(Number(cell.getValue()));
-    },
-  },
-  {
     accessorKey: "finalPrice",
-    header: "Preço final",
+    header: "Preço sugerido",
     cell: ({ row }) => {
-      const finalPrice = Number(row.original.unitPrice) * Number(row.original.profitMargin)
+      const finalPrice = Number(row.original.totalCost) * Number(row.original.profitMargin)
       return formatMoney(finalPrice);
     },
   },

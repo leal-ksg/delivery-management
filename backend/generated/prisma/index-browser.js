@@ -160,8 +160,7 @@ exports.Prisma.OrderProductScalarFieldEnum = {
   orderId: 'orderId',
   productId: 'productId',
   quantity: 'quantity',
-  unitPrice: 'unitPrice',
-  profitMargin: 'profitMargin'
+  unitPrice: 'unitPrice'
 };
 
 exports.Prisma.PurchaseScalarFieldEnum = {
@@ -240,7 +239,8 @@ exports.Role = exports.$Enums.Role = {
 exports.ProductType = exports.$Enums.ProductType = {
   SALE: 'SALE',
   PURCHASE: 'PURCHASE',
-  PACKAGING: 'PACKAGING'
+  PACKAGING: 'PACKAGING',
+  SERVICE: 'SERVICE'
 };
 
 exports.ConsumptionType = exports.$Enums.ConsumptionType = {
