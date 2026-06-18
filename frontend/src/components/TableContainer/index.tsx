@@ -12,7 +12,7 @@ export function TableContainer({ children, classname }: TableContainerProps) {
   return (
     <div
       className={cn(
-        "w-[80%] min-h-[80dvh] overflow-y-hidden my-auto pt-20 pb-4 md:min-h-125 md:py-8",
+        "w-[80%] min-h-[80dvh] overflow-y-hidden pt-10 pb-4 md:min-h-125 md:py-8",
         classname,
       )}
     >

@@ -11,6 +11,7 @@ import { EntityDialog } from "@/src/components/EntityDialog";
 import { ProductForm } from "./form";
 import { toast } from "@/components/ui/sonner";
 import { deleteProducts } from "@/src/domains/product/services/delete-products";
+import { ProductFilters } from "./filters";
 
 function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -76,6 +77,8 @@ function ProductsPage() {
   return (
     <div className="flex flex-col items-center w-full min-h-full">
       <Toolbar description="Produtos" showGoBack />
+
+      <ProductFilters></ProductFilters>
 
       <TableContainer>
         <DataTable
