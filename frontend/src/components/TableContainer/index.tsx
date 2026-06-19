@@ -10,13 +10,15 @@ interface TableContainerProps {
 
 export function TableContainer({ children, classname }: TableContainerProps) {
   return (
-    <div
-      className={cn(
-        "w-[80%] min-h-[80dvh] overflow-y-hidden pt-10 pb-4 md:min-h-125 md:py-8",
-        classname,
-      )}
-    >
-      {children}
+    <div className="flex w-[80%] items-center bg-white justify-center p-4 rounded-md mt-3">
+      <div
+        className={cn(
+          "flex flex-col justify-center w-full min-h-[80dvh] overflow-y-hidden pb-4 md:min-h-125 md:pb-0",
+          classname,
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }

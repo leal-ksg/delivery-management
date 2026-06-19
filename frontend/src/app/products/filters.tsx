@@ -29,7 +29,7 @@ export function ProductFilters() {
   }));
 
   return (
-    <div className="w-[80%]  bg-white py-5 px-10 rounded-lg  mt-15">
+    <div className="w-[80%]  bg-white py-3 px-10 rounded-md">
       <FormProvider {...methods}>
         <form className="flex justify-center items-center w-full gap-2">
           <FormSelect
