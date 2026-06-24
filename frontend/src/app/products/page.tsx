@@ -1,26 +1,30 @@
 "use client";
 
 import { DataTable } from "@/src/components/DataTable";
-import { Product } from "@/src/domains/product/types";
+import { Product, ProductFilter } from "@/src/domains/product/types";
 import { productColumns } from "./columns";
 import { TableContainer } from "@/src/components/TableContainer";
-import { Toolbar } from "@/src/components/Toolbar";
 import { useCallback, useEffect, useState } from "react";
 import { getProducts } from "@/src/domains/product/services/get-products";
 import { EntityDialog } from "@/src/components/EntityDialog";
 import { ProductForm } from "./form";
 import { toast } from "@/components/ui/sonner";
 import { deleteProducts } from "@/src/domains/product/services/delete-products";
+import { ProductFilters } from "./filters";
+import { usePageToolbar } from "@/hooks/use-page-toolbar";
 
 function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filters, setFilters] = useState<ProductFilter>({});
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [reload, setReload] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [itemsperPage, setItemsPerPage] = useState<number>(20);
+
+  usePageToolbar("Produtos", true);
 
   function handleCancel() {
     setIsFormDialogOpen(false);
@@ -58,7 +62,7 @@ function ProductsPage() {
   useEffect(() => {
     async function fetchProducts() {
       setLoading(true);
-      const result = await getProducts("", page, itemsperPage);
+      const result = await getProducts("", page, itemsperPage, filters);
 
       if (result.ok) {
         setProducts(result.body.list);
@@ -71,11 +75,11 @@ function ProductsPage() {
     }
 
     fetchProducts();
-  }, [itemsperPage, page, reload]);
+  }, [filters, itemsperPage, page, reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      <Toolbar description="Produtos" showGoBack />
+      <ProductFilters onFiltersChange={setFilters} />
 
       <TableContainer>
         <DataTable

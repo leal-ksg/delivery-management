@@ -1,5 +1,5 @@
 import api, { ApiResponse } from "@/lib/api";
-import { Product, ProductFilters } from "../types";
+import { Product, ProductFilter } from "../types";
 import axios from "axios";
 import { Pagination } from "../../types";
 
@@ -7,9 +7,10 @@ export async function getProducts(
   query: string,
   page: number,
   itemsPerPage: number,
-  filters?: ProductFilters
+  filters?: ProductFilter
 ): Promise<ApiResponse<Pagination<Product>>> {
   try {
+
     const { data } = await api.get("/product", {
       params: {
         query,

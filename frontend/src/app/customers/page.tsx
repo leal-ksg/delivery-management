@@ -75,8 +75,6 @@ function CustomersPage() {
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      <Toolbar description="Clientes" showGoBack />
-
       <TableContainer>
         <DataTable
           columns={customerColumns}

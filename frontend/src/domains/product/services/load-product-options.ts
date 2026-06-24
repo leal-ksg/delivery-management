@@ -2,11 +2,11 @@ import { ProductOptionValue } from "@/src/app/orders/form";
 import { getProducts } from "./get-products";
 import debounce from "lodash.debounce";
 import { Option } from "../../types";
-import { ProductFilters, ProductType } from "../types";
+import { ProductFilter, ProductType } from "../types";
 
 const fetchProducts = async (
   inputValue: string,
-  filters?: ProductFilters,
+  filters?: ProductFilter,
 ): Promise<Option<ProductOptionValue>[]> => {
   const response = await getProducts(inputValue, 0, 20, filters);
 

@@ -3,15 +3,15 @@
 import { DataTable } from "@/src/components/DataTable";
 import { orderColumns } from "./columns";
 import { TableContainer } from "@/src/components/TableContainer";
-import { Toolbar } from "@/src/components/Toolbar";
 import { useCallback, useEffect, useState } from "react";
 import { EntityDialog } from "@/src/components/EntityDialog";
 import { toast } from "@/components/ui/sonner";
 import { Order } from "@/src/domains/order/types";
 import { getOrders } from "@/src/domains/order/services/get-orders";
 import { OrderForm } from "./form";
+import { usePageToolbar } from "@/hooks/use-page-toolbar";
 
-function SalesPage() {
+function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
@@ -20,6 +20,8 @@ function SalesPage() {
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [itemsperPage, setItemsPerPage] = useState<number>(20);
+
+  usePageToolbar("Vendas", false);
 
   function handleCancel() {
     setIsFormDialogOpen(false);
@@ -68,9 +70,7 @@ function SalesPage() {
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      <Toolbar description="Vendas" />
-
-      <TableContainer classname="w-3/4">
+      <TableContainer containerClassname="md:my-auto">
         <DataTable
           columns={orderColumns}
           data={orders}
@@ -101,4 +101,4 @@ function SalesPage() {
   );
 }
 
-export default SalesPage;
+export default OrdersPage;
