@@ -21,10 +21,13 @@ export class ProductRepository implements IProductRepository {
 
     const search = query?.trim() ?? "";
     const active = filters?.active ?? null;
-    const type = filters?.type ?? null;
+
+    const type = !filters?.type ? null : filters.type;
+
+    const stock = !filters?.stock ? null : filters.stock;
 
     try {
-      const [products, total] = await Promise.all([
+      const [products, count] = await Promise.all([
         prisma.$queryRaw<
           (Product & {
             stockQuantity: number | null;
@@ -41,31 +44,34 @@ export class ProductRepository implements IProductRepository {
       WHERE (${search} = '' OR p.name ILIKE '%' || ${search} || '%')
         AND (${active}::boolean IS NULL OR p.active = ${active})
         AND (${type}::text IS NULL OR p.type = ${type}::"ProductType")
+        AND (${stock}::text IS NULL
+             OR (${stock} = 'below' AND s.quantity <= p."minStock" and p."minStock" > 0)
+             OR (${stock} = 'above' AND s.quantity > p."minStock"))
         
       ORDER BY p.name
       LIMIT ${itemsPerPage}
       OFFSET ${(page - 1) * itemsPerPage}
       `,
 
-        prisma.product.count({
-          where: {
-            ...(search && {
-              name: {
-                contains: search,
-                mode: "insensitive",
-              },
-            }),
-            ...(active !== null && { active }),
-            ...(type !== null && { type }),
-          },
-        }),
+        prisma.$queryRaw<{ total: number }[]>`
+            SELECT COUNT(*)::int as total
+            FROM "Product" p
+            LEFT JOIN "Stock" s
+              ON s."productId" = p.id
+           WHERE (${search} = '' OR p.name ILIKE '%' || ${search} || '%')
+             AND (${active}::boolean IS NULL OR p.active = ${active})
+             AND (${type}::text IS NULL OR p.type = ${type}::"ProductType")
+             AND (${stock}::text IS NULL
+             OR (${stock} = 'below' AND s.quantity <= p."minStock")
+             OR (${stock} = 'above' AND s.quantity > p."minStock"))
+          `,
       ]);
 
       return {
         ok: true,
         body: {
           list: products,
-          total,
+          total: count[0]?.total ?? 0,
           itemsPerPage,
           page,
         },

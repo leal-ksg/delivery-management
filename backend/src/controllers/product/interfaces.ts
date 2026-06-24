@@ -29,6 +29,7 @@ export interface UpdateProductDTO extends Partial<Product> {
 export interface ProductFilters {
   active?: boolean;
   type?: ProductType;
+  stock?: "below" | "above";
 }
 
 export interface IProductRepository {

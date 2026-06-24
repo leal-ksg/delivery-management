@@ -24,9 +24,11 @@ productRouter.get("/", async (req: Request, res: Response) => {
 
   const query = req.query.query ? String(req.query.query) : undefined;
 
-  if ("active" in req.query) filters = { active: req.query.active };
+  if ("active" in req.query) filters = { active: req.query.active === "true" };
 
   if ("type" in req.query) filters = { ...filters, type: req.query.type };
+
+  if ("stock" in req.query) filters = { ...filters, stock: req.query.stock };
 
   const { statusCode, body } = await productController.getAllProducts(
     query,

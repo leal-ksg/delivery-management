@@ -4,6 +4,8 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { Sidebar } from "../components/Sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toolbar } from "../components/Toolbar";
+import { ToolbarProvider } from "@/contexts/toolbar-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,12 +44,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased font-sans`}
       >
         <TooltipProvider>
-          <div className="relative flex h-dvh overflow-x-hidden bg-primary">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto bg-[#d4d4d4] transition-all duration-300">
-              {children}
-            </main>
-          </div>
+          <ToolbarProvider>
+            <div className="flex h-dvh overflow-hidden bg-primary">
+              <Sidebar />
+
+              <div className="flex flex-1 flex-col overflow-hidden">
+                <Toolbar />
+
+                <main className="flex-1 overflow-y-auto bg-[#d4d4d4]">
+                  {children}
+                </main>
+              </div>
+            </div>
+          </ToolbarProvider>
           <Toaster />
         </TooltipProvider>
       </body>

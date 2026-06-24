@@ -3,7 +3,6 @@
 import { DataTable } from "@/src/components/DataTable";
 import { productColumns } from "./columns";
 import { TableContainer } from "@/src/components/TableContainer";
-import { Toolbar } from "@/src/components/Toolbar";
 import { useCallback, useEffect, useState } from "react";
 import { EntityDialog } from "@/src/components/EntityDialog";
 import { ProductTreeForm } from "./form";
@@ -11,6 +10,8 @@ import { toast } from "@/components/ui/sonner";
 import { ProductTree } from "@/src/domains/product-tree/types";
 import { getNodes } from "@/src/domains/product-tree/services/get-nodes";
 import { deleteNodes } from "@/src/domains/product-tree/services/delete-nodes";
+import { useToolbar } from "@/contexts/toolbar-context";
+import { usePageToolbar } from "@/hooks/use-page-toolbar";
 
 function ProductTreePage() {
   const [nodes, setNodes] = useState<ProductTree[]>([]);
@@ -21,6 +22,8 @@ function ProductTreePage() {
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
   const [itemsperPage, setItemsPerPage] = useState<number>(20);
+
+  usePageToolbar("Árvore de produtos", true);
 
   function handleCancel() {
     setIsFormDialogOpen(false);
@@ -78,9 +81,7 @@ function ProductTreePage() {
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      <Toolbar description="Árvore de produtos" showGoBack />
-
-      <TableContainer>
+      <TableContainer containerClassname="my-auto">
         <DataTable
           columns={productColumns}
           data={nodes}

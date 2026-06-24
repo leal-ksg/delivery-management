@@ -5,16 +5,17 @@ import React from "react";
 
 interface TableContainerProps {
   children: React.ReactNode;
-  classname?: string;
+  contentClassname?: string;
+  containerClassname?: string;
 }
 
-export function TableContainer({ children, classname }: TableContainerProps) {
+export function TableContainer({ children, contentClassname, containerClassname }: TableContainerProps) {
   return (
-    <div className="flex w-[80%] items-center bg-white justify-center p-4 rounded-md mt-3">
+    <div className={cn("flex w-[80%] items-center bg-white justify-center p-4 rounded-md mt-3", containerClassname)}>
       <div
         className={cn(
-          "flex flex-col justify-center w-full min-h-[80dvh] overflow-y-hidden pb-4 md:min-h-125 md:pb-0",
-          classname,
+          "flex flex-col justify-center w-full overflow-y-hidden pb-4 md:pb-0",
+          contentClassname,
         )}
       >
         {children}

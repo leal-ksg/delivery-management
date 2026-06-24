@@ -41,7 +41,14 @@ export type UpdateProductDTO = Partial<Product> & {
   stockQuantity?: number | null;
 };
 
-export interface ProductFilters {
+export interface ProductFilterForm {
+  active?: "true" | "false" | "all";
+  type?: ProductType | "all";
+  stock?: "above" | "below" | "all";
+};
+
+export interface ProductFilter {
   active?: boolean;
   type?: ProductType;
-}
+  stock?: "above" | "below";
+};
