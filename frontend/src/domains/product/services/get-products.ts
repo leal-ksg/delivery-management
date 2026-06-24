@@ -7,7 +7,7 @@ export async function getProducts(
   query: string,
   page: number,
   itemsPerPage: number,
-  filters?: ProductFilter
+  filters?: ProductFilter | null
 ): Promise<ApiResponse<Pagination<Product>>> {
   try {
 

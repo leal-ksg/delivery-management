@@ -15,7 +15,7 @@ import { usePageToolbar } from "@/hooks/use-page-toolbar";
 
 function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [filters, setFilters] = useState<ProductFilter>({});
+  const [filters, setFilters] = useState<ProductFilter | null>(null);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,6 +60,8 @@ function ProductsPage() {
   }, []);
 
   useEffect(() => {
+    if (filters === null) return;
+
     async function fetchProducts() {
       setLoading(true);
       const result = await getProducts("", page, itemsperPage, filters);
