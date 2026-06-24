@@ -6,16 +6,29 @@ import {
   ProductFilterForm,
   ProductType,
 } from "@/src/domains/product/types";
-import { Filter } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { Filter, Eraser } from "lucide-react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 
 interface ProductFiltersProps {
-  onFiltersChange: Dispatch<SetStateAction<ProductFilter>>;
+  onFiltersChange: Dispatch<SetStateAction<ProductFilter | null>>;
 }
 
 export function ProductFilters({ onFiltersChange }: ProductFiltersProps) {
-  const methods = useForm();
+  const methods = useForm<ProductFilterForm>({
+    defaultValues: {
+      active: "all",
+      type: "all",
+      stock: "all",
+    },
+  });
+
+  const [active, type, stock] = useWatch({
+    control: methods.control,
+    name: ["active", "type", "stock"],
+  });
+
+  const hasFilters = active !== "all" || type !== "all" || stock !== "all";
 
   const statusOptions = [
     {
@@ -55,17 +68,56 @@ export function ProductFilters({ onFiltersChange }: ProductFiltersProps) {
     })),
   ];
 
-  function onSubmit(data: ProductFilterForm) {
-    onFiltersChange({
+  function cleanFilters(data: ProductFilterForm) {
+    return {
       active:
         data.active === "all" || !data.active
           ? undefined
           : data.active === "true",
       type: data.type === "all" || !data.active ? undefined : data.type,
       stock: data.stock === "all" || !data.active ? undefined : data.stock,
-    });
-
+    };
   }
+
+  function onSubmit(data: ProductFilterForm) {
+    onFiltersChange(cleanFilters(data));
+    localStorage.setItem("product-filters", JSON.stringify(data));
+  }
+
+  function handleReset() {
+    methods.setValue("active", "all");
+    methods.setValue("type", "all");
+    methods.setValue("stock", "all");
+
+    const data = {
+      active: undefined,
+      type: undefined,
+      stock: undefined,
+    };
+
+    onFiltersChange(data);
+    localStorage.removeItem("product-filters");
+  }
+
+  useEffect(() => {
+    const defaultFilters = localStorage.getItem("product-filters");
+
+    if (defaultFilters) {
+      const data: ProductFilterForm = JSON.parse(defaultFilters);
+
+      console.log(data);
+
+      methods.reset({
+        active: data.active ?? "all",
+        type: data.type ?? "all",
+        stock: data.stock ?? "all",
+      });
+
+      onFiltersChange(cleanFilters(data));
+    } else {
+      onFiltersChange({});
+    }
+  }, [methods, onFiltersChange]);
 
   return (
     <div className="w-[80%]  bg-white px-4 py-3 md:px-10 rounded-md mt-8">
@@ -80,7 +132,6 @@ export function ProductFilters({ onFiltersChange }: ProductFiltersProps) {
             label="Status"
             placeholder="Selecione o filtro"
             options={statusOptions}
-            defaultValue="all"
           />
 
           <FormSelect
@@ -89,7 +140,6 @@ export function ProductFilters({ onFiltersChange }: ProductFiltersProps) {
             label="Tipo do produto"
             placeholder="Selecione o filtro"
             options={productTypeOptions}
-            defaultValue="all"
           />
 
           <FormSelect
@@ -98,10 +148,21 @@ export function ProductFilters({ onFiltersChange }: ProductFiltersProps) {
             label="Estoque"
             placeholder="Selecione o filtro"
             options={stockOptions}
-            defaultValue="all"
           />
 
-          <ActionButton type="submit" icon={Filter} className="mt-5 text-secondary" />
+          <ActionButton
+            type="submit"
+            icon={Filter}
+            className="mt-5 text-secondary"
+          />
+
+          {hasFilters && (
+            <ActionButton
+              icon={Eraser}
+              className="mt-5 text-red-300"
+              onClick={handleReset}
+            />
+          )}
         </form>
       </FormProvider>
     </div>
