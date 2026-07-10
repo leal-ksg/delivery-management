@@ -4,21 +4,32 @@ import { ProductTreeRepository } from "../repositories/postgres/product-tree";
 import { ProductTreeController } from "../controllers/product-tree";
 import {
   deleteProductTreeSchema,
-  productTreeSchema,
+  createProductTreeSchema,
+  updateProductTreeSchema,
 } from "../schemas/product-tree";
 
 export const productTreeRouter = Router();
 const productTreeRepository = new ProductTreeRepository();
 const productTreeController = new ProductTreeController(productTreeRepository);
 
-productTreeRouter.get("/", async (req: Request, res: Response) => {
+productTreeRouter.get("/:id", async (req: Request, res: Response) => {
   const itemsPerPage = req.query.itemsPerPage
     ? Number(req.query.itemsPerPage)
     : undefined;
 
   const page = req.query.page ? Number(req.query.page) : undefined;
 
-  const { body, statusCode } = await productTreeController.getAllNodes(
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+
+  console.log("parentId", req.params);
+
+  if (!id)
+    return res
+      .status(400)
+      .json({ error: "Informe um código de produto pai para a busca" });
+
+  const { body, statusCode } = await productTreeController.getByParentId(
+    id,
     itemsPerPage,
     page,
   );
@@ -26,24 +37,11 @@ productTreeRouter.get("/", async (req: Request, res: Response) => {
   return res.status(statusCode).json(body);
 });
 
-productTreeRouter.get("/:id", async (req: Request, res: Response) => {
-  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
-
-  if (!id)
-    return res
-      .status(400)
-      .json({ error: "Informe um código de produto pai para a busca" });
-
-  const { body, statusCode } = await productTreeController.getByParentId(id);
-
-  return res.status(statusCode).json(body);
-});
-
 productTreeRouter.post(
   "/",
-  validationMiddleware(productTreeSchema),
+  validationMiddleware(createProductTreeSchema),
   async (req: Request, res: Response) => {
-    const { body, statusCode } = await productTreeController.createNode(
+    const { body, statusCode } = await productTreeController.createNodes(
       req.body,
     );
 
@@ -53,7 +51,7 @@ productTreeRouter.post(
 
 productTreeRouter.patch(
   "/",
-  validationMiddleware(productTreeSchema),
+  validationMiddleware(updateProductTreeSchema),
   async (req: Request, res: Response) => {
     const { body, statusCode } = await productTreeController.updateNode(
       req.body,

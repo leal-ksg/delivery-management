@@ -315,7 +315,7 @@ export function DataTable<TData, TValue>({
         </div>
 
         {enablePagination && onPageChange && onItemsPerPageChange ? (
-          <div className="flex flex-col md:flex-row mt-2 rounded-lg items-center justify-center gap-4 sm:gap-10 lg:gap-30 xl:gap-80 border-[#DDDDDD] bg-white w-full  md:h-10 text-gray-400 font-semibold">
+          <div className="flex flex-col md:flex-row mt-2 rounded-lg items-center justify-center sm:gap-10 lg:gap-30 xl:gap-55 border-[#DDDDDD] bg-white w-full  p-1 text-gray-400 font-semibold">
             <span className="">{total ? total : 0} registros</span>
 
             <div className="flex gap-6">

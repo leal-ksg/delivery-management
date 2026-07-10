@@ -171,14 +171,14 @@ export function OrderForm({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="max-w-6xl mx-auto lg:p-6 space-y-6"
+        className="max-w-6xl mx-auto p-2 2xl:p-6 space-y-6"
       >
         <div
           className={`grid grid-cols-1 ${
             selectedProducts.length ? "lg:grid-cols-2" : ""
-          } gap-2 lg:gap-6 lg:mt-30 items-start`}
+          } gap-2 2xl:gap-6 2xl:mt-30 items-start`}
         >
-          <div className="bg-white rounded-2xl shadow-sm py-4 px-2 lg:p-6 lg:pb-20 space-y-6">
+          <div className="bg-white rounded-2xl shadow-sm py-4 px-2 lg:p-6 2xl:pb-20 space-y-6">
             <h2 className="text-lg font-semibold text-gray-700">
               Dados do Pedido
             </h2>
@@ -232,7 +232,7 @@ export function OrderForm({
           )}
         </div>
 
-        <div className="flex justify-end gap-3 pt-2 lg:pt-4">
+        <div className="flex justify-end gap-3 ">
           <ActionButton
             onClick={onCancel}
             className="bg-gray-500 hover:bg-gray-400 text-white disabled:text-white"

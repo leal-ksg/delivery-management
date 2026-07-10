@@ -4,11 +4,12 @@ import axios from "axios";
 import { Pagination } from "../../types";
 
 export async function getNodes(
+  parentId: string,
   page: number,
   itemsPerPage: number,
 ): Promise<ApiResponse<Pagination<ProductTree>>> {
   try {
-    const { data } = await api.get("/product-tree", {
+    const { data } = await api.get(`/product-tree/${parentId}`, {
       params: {
         page,
         itemsPerPage,
@@ -21,6 +22,9 @@ export async function getNodes(
       return { ok: false, error: JSON.stringify(error) };
     }
 
-    return { ok: false, error: "Ocorreu um erro na busca da árvore de produtos" };
+    return {
+      ok: false,
+      error: "Ocorreu um erro na busca da árvore de produtos",
+    };
   }
 }
