@@ -12,7 +12,7 @@ interface SearchSelectProps<T> {
   className?: string;
   placeholder?: string;
   disabled?: boolean;
-  loadOptionsConfig?: object
+  loadOptionsConfig?: object;
 }
 
 export function FormSearchSelect<T>({
@@ -47,7 +47,9 @@ export function FormSearchSelect<T>({
             value={field.value}
             defaultOptions={defaultOptions}
             styles={reactSelectTheme}
-            loadOptions={(value) => loadOptions(value)}
+            loadOptions={(value) =>
+              disabled ? Promise.resolve([]) : loadOptions(value)
+            }
             placeholder={placeholder ? placeholder : "Selecione..."}
             loadingMessage={() => "Carregando..."}
             noOptionsMessage={() => "Nenhum resultado"}

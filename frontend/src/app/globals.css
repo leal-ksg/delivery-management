@@ -45,7 +45,13 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
-  --background: #c4c4c4;
+  --background: radial-gradient(
+    circle,
+    #c7d2fe 0%,
+    #818cf8 35%,
+    #4f46e5 70%,
+    #312e81 100%
+  );
   --foreground: oklch(0.129 0.042 264.695);
 }
 
@@ -58,8 +64,7 @@ html {
 @theme inline {
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
-  --color-selection: red 
-  --color-background: var(--background);
+  --color-selection: red --color-background: var(--background);
   --color-dark-foreground: var(--foreground-dark);
   --color-light-foreground: var(--foreground-light);
   --font-sans: var(--font-geist-sans);

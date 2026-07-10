@@ -41,7 +41,7 @@ export function toast(
       });
       break;
 
-    case "success":
+    case "warning":
       rootToast.warning(message, {
         style: {
           backgroundColor: "#eab308",

@@ -17,23 +17,23 @@ export interface ProductTreeDTO extends ProductTree {
 }
 
 export interface IProductTreeRepository {
-  findAll(
+  findByParentId(
+    parentId: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<Result<Pagination<ProductTreeDTO>>>;
-  findById(parentId: string): Promise<Result<ProductTreeDTO[]>>;
-  create(product: ProductTree): Promise<Result<ProductTree>>;
+  create(products: ProductTree[]): Promise<Result<void>>;
   update(product: ProductTree): Promise<Result<ProductTree>>;
   delete(products: DeleteProductTreeDTO[]): Promise<Result<void>>;
 }
 
 export interface IProductTreeController {
-  getAllNodes(
+  getByParentId(
+    parentId: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<HttpResponse<Pagination<ProductTreeDTO>>>;
-  getByParentId(parentId: string): Promise<HttpResponse<ProductTree[]>>;
-  createNode(product: ProductTree): Promise<HttpResponse<ProductTree>>;
+  createNodes(products: ProductTree[]): Promise<HttpResponse<void>>;
   updateNode(product: ProductTree): Promise<HttpResponse<ProductTree>>;
   deleteNodes(products: DeleteProductTreeDTO[]): Promise<HttpResponse<void>>;
 }

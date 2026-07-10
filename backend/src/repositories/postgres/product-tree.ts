@@ -10,7 +10,8 @@ import { Result } from "../../core/result";
 import { prisma } from "../../database/prisma";
 
 export class ProductTreeRepository implements IProductTreeRepository {
-  async findAll(
+  async findByParentId(
+    parentId: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<Result<Pagination<ProductTreeDTO>>> {
@@ -22,6 +23,7 @@ export class ProductTreeRepository implements IProductTreeRepository {
 
       const [products, total] = await Promise.all([
         prisma.productTree.findMany({
+          where: { parentId },
           include: { parent: { select }, child: { select } },
           orderBy: [
             {
@@ -38,7 +40,9 @@ export class ProductTreeRepository implements IProductTreeRepository {
           take: itemsPerPage,
           skip: (page - 1) * itemsPerPage,
         }),
-        prisma.productTree.count(),
+        prisma.productTree.count({
+          where: { parentId },
+        }),
       ]);
 
       return {
@@ -50,31 +54,13 @@ export class ProductTreeRepository implements IProductTreeRepository {
     }
   }
 
-  async findById(parentId: string): Promise<Result<ProductTreeDTO[]>> {
+  async create(products: ProductTree[]): Promise<Result<void>> {
     try {
-      const select = { id: true, name: true, active: true };
-
-      const products = await prisma.productTree.findMany({
-        where: { parentId },
-        include: { parent: { select }, child: { select } },
+      await prisma.productTree.createMany({
+        data: products,
       });
 
-      return { ok: true, body: products };
-    } catch (error) {
-      return {
-        ok: false,
-        error: parseDatabaseErrorMessage(error, "Produto da árvore"),
-      };
-    }
-  }
-
-  async create(product: ProductTree): Promise<Result<ProductTree>> {
-    try {
-      const createdProduct = await prisma.productTree.create({
-        data: product,
-      });
-
-      return { ok: true, body: createdProduct };
+      return { ok: true, body: undefined };
     } catch (error) {
       return {
         ok: false,

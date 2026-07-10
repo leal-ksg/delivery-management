@@ -1,6 +1,23 @@
 import * as z from "zod";
 
-export const productTreeSchema = z
+export const createProductTreeSchema = z
+  .array(
+    z.object({
+      parentId: z.uuid("Informe o produto pai"),
+      childId: z.uuid("Informe o produto filho"),
+      childQuantity: z.coerce
+        .number(
+          "Quantidade do produto filho não é um número ou não foi informada",
+        )
+        .positive("A quantidade deve ser maior que zero")
+        .max(10000, "Quantidade excede o valor máximo (10.000)"),
+    }),
+  )
+  .refine((items) => items.every((item) => item.parentId !== item.childId), {
+    message: "Produto não pode ser filho de si mesmo",
+  });
+
+export const updateProductTreeSchema = z
   .object({
     parentId: z.uuid("Informe o produto pai"),
     childId: z.uuid("Informe o produto filho"),

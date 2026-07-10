@@ -5,18 +5,21 @@ import { productColumns } from "./columns";
 import { TableContainer } from "@/src/components/TableContainer";
 import { useCallback, useEffect, useState } from "react";
 import { EntityDialog } from "@/src/components/EntityDialog";
-import { ProductTreeForm } from "./form";
+import { UpdateProductTreeForm } from "./update-form";
 import { toast } from "@/components/ui/sonner";
 import { ProductTree } from "@/src/domains/product-tree/types";
 import { getNodes } from "@/src/domains/product-tree/services/get-nodes";
 import { deleteNodes } from "@/src/domains/product-tree/services/delete-nodes";
-import { useToolbar } from "@/contexts/toolbar-context";
 import { usePageToolbar } from "@/hooks/use-page-toolbar";
+import { ParentSearch } from "./parent-search";
+import { CreationProductTreeForm } from "./creation-form";
 
 function ProductTreePage() {
+  const [parentId, setParentId] = useState<string | null>(null);
   const [nodes, setNodes] = useState<ProductTree[]>([]);
   const [editingNode, setEditingNode] = useState<ProductTree | null>(null);
-  const [isFormDialogOpen, setIsFormDialogOpen] = useState<boolean>(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [reload, setReload] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
@@ -26,12 +29,14 @@ function ProductTreePage() {
   usePageToolbar("Árvore de produtos", true);
 
   function handleCancel() {
-    setIsFormDialogOpen(false);
+    setIsCreateDialogOpen(false);
+    setIsUpdateDialogOpen(false);
     setEditingNode(null);
   }
 
   function handleSuccess() {
-    setIsFormDialogOpen(false);
+    setIsCreateDialogOpen(false);
+    setIsUpdateDialogOpen(false);
     setEditingNode(null);
     setReload((prev) => !prev);
   }
@@ -40,7 +45,7 @@ function ProductTreePage() {
     if (!rows || rows.length !== 1) return;
 
     setEditingNode(rows[0]);
-    setIsFormDialogOpen(true);
+    setIsUpdateDialogOpen(true);
   }, []);
 
   const handleDelete = useCallback(async (rows: ProductTree[]) => {
@@ -61,10 +66,27 @@ function ProductTreePage() {
     setItemsPerPage(newValue);
   }, []);
 
+  const handleParentSearch = useCallback(
+    (id: string) => {
+      if (id === parentId) return;
+
+      setNodes([]);
+      setParentId(id);
+    },
+    [parentId],
+  );
+
+  useEffect(() => {
+    console.log(parentId)
+  }, [parentId])
+
   useEffect(() => {
     async function fetchNodes() {
+      if (!parentId) return;
+
       setLoading(true);
-      const result = await getNodes(page, itemsperPage);
+      console.log(parentId);
+      const result = await getNodes(parentId, page, itemsperPage);
 
       if (result.ok) {
         setNodes(result.body.list);
@@ -77,16 +99,18 @@ function ProductTreePage() {
     }
 
     fetchNodes();
-  }, [itemsperPage, page, reload]);
+  }, [itemsperPage, page, parentId, reload]);
 
   return (
     <div className="flex flex-col items-center w-full min-h-full">
-      <TableContainer containerClassname="my-auto">
+      <ParentSearch onSearch={handleParentSearch} isLoading={loading}/>
+
+      <TableContainer>
         <DataTable
           columns={productColumns}
           data={nodes}
           onDelete={handleDelete}
-          onCreate={() => setIsFormDialogOpen(true)}
+          onCreate={!parentId ? undefined : () => setIsCreateDialogOpen(true)}
           onEdit={handleEdit}
           loading={loading}
           page={page}
@@ -98,16 +122,25 @@ function ProductTreePage() {
       </TableContainer>
 
       <EntityDialog
-        classname=""
-        open={isFormDialogOpen}
-        onOpenChange={setIsFormDialogOpen}
-        title={
-          editingNode
-            ? "Editar produto da árvore"
-            : "Adicionar produto na árvore"
-        }
+        open={isCreateDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
+        title="Adicionar produtos na árvore"
       >
-        <ProductTreeForm
+        <CreationProductTreeForm
+          parentId={parentId}
+          existingProducts={nodes}
+          onCancel={handleCancel}
+          onSuccess={handleSuccess}
+        />
+      </EntityDialog>
+
+      <EntityDialog
+        open={isUpdateDialogOpen}
+        onOpenChange={setIsUpdateDialogOpen}
+        title="Editar produto na árvore"
+      >
+        <UpdateProductTreeForm
+          parentId={parentId}
           editingProduct={editingNode}
           onCancel={handleCancel}
           onSuccess={handleSuccess}

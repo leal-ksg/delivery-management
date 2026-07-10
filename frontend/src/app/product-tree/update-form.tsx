@@ -5,17 +5,17 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Spinner } from "@/components/ui/spinner";
-import { ApiResponse } from "@/lib/api";
 import { useEffect } from "react";
-import { ProductTree, ProductTreeDTO } from "@/src/domains/product-tree/types";
-import { createNode } from "@/src/domains/product-tree/services/create-product-tree";
+import { ProductTree } from "@/src/domains/product-tree/types";
 import { updateNode } from "@/src/domains/product-tree/services/update-node";
 import { FormSearchSelect } from "@/src/components/FormSearchSelect";
 import { Option } from "@/src/domains/types";
 import { getProducts } from "@/src/domains/product/services/get-products";
 import debounce from "lodash.debounce";
+import { toast } from "@/components/ui/sonner";
 
-interface ProductFormProps {
+interface UpdateProductFormProps {
+  parentId: string | null;
   editingProduct: ProductTree | null;
   onSuccess: () => void;
   onCancel: () => void;
@@ -69,11 +69,12 @@ const loadProductOptions = (inputValue: string): Promise<Option<string>[]> => {
   });
 };
 
-export function ProductTreeForm({
+export function UpdateProductTreeForm({
+  parentId,
   editingProduct,
   onSuccess,
   onCancel,
-}: ProductFormProps) {
+}: UpdateProductFormProps) {
   const methods = useForm<FormData>({
     defaultValues: editingProduct
       ? {
@@ -94,21 +95,21 @@ export function ProductTreeForm({
   const { formState } = methods;
 
   async function onSubmit(data: FormData) {
-    let response: ApiResponse<ProductTreeDTO>;
+    if (!parentId) {
+      toast("warning", "Produto pai não informado");
 
-    const { child, parent, childQuantity } = productSchema.parse(data);
+      return;
+    }
+
+    const { child, childQuantity } = productSchema.parse(data);
 
     const parsedData = {
-      parentId: parent.value,
+      parentId: parentId,
       childId: child.value,
       childQuantity,
     };
 
-    if (editingProduct) {
-      response = await updateNode(parsedData);
-    } else {
-      response = await createNode(parsedData);
-    }
+    const response = await updateNode(parsedData);
 
     if (response.ok) {
       onSuccess();
@@ -138,16 +139,6 @@ export function ProductTreeForm({
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <div className="flex flex-col w-full gap-2 lg:flex-row">
-          <div className="w-full md:w-1/2">
-            <FormSearchSelect
-              name="parent"
-              label="Produto pai"
-              defaultOptions
-              loadOptions={loadProductOptions}
-              disabled={!!editingProduct}
-            />
-          </div>
-
           <div className="w-full md:w-1/2">
             <FormSearchSelect
               name="child"

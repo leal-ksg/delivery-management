@@ -51,7 +51,7 @@ export default function RootLayout({
               <div className="flex flex-1 flex-col overflow-hidden">
                 <Toolbar />
 
-                <main className="flex-1 overflow-y-auto bg-[#d4d4d4]">
+                <main className="flex-1 pb-4 overflow-y-auto bg-[#889eb8]">
                   {children}
                 </main>
               </div>

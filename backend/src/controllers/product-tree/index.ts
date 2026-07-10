@@ -11,23 +11,22 @@ import {
 
 export class ProductTreeController implements IProductTreeController {
   constructor(private readonly productTreeRepository: IProductTreeRepository) {}
-  async getAllNodes(
+  async getByParentId(
+    parentId: string,
     itemsPerPage?: number,
     page?: number,
   ): Promise<HttpResponse<Pagination<ProductTreeDTO>>> {
-    const result = await this.productTreeRepository.findAll(itemsPerPage, page);
+    const result = await this.productTreeRepository.findByParentId(
+      parentId,
+      itemsPerPage,
+      page,
+    );
 
     return toHttpResponse(result);
   }
 
-  async getByParentId(parentId: string): Promise<HttpResponse<ProductTree[]>> {
-    const result = await this.productTreeRepository.findById(parentId);
-
-    return toHttpResponse(result);
-  }
-
-  async createNode(product: ProductTree): Promise<HttpResponse<ProductTree>> {
-    const result = await this.productTreeRepository.create(product);
+  async createNodes(products: ProductTree[]): Promise<HttpResponse<void>> {
+    const result = await this.productTreeRepository.create(products);
 
     return toHttpResponse(result, 201);
   }

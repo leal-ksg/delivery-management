@@ -11,7 +11,7 @@ interface TableContainerProps {
 
 export function TableContainer({ children, contentClassname, containerClassname }: TableContainerProps) {
   return (
-    <div className={cn("flex w-[80%] items-center bg-white justify-center p-4 rounded-md mt-3", containerClassname)}>
+    <div className={cn("flex w-[80%] items-center bg-zinc-100 justify-center p-4 rounded-md mt-3", containerClassname)}>
       <div
         className={cn(
           "flex flex-col justify-center w-full overflow-y-hidden pb-4 md:pb-0",

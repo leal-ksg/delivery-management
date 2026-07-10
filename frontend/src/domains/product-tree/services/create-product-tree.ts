@@ -3,13 +3,13 @@ import { ProductTreeDTO } from "../types";
 import { handleRequest } from "@/lib/handleRequest";
 import { toast } from "@/components/ui/sonner";
 
-export const createNode = async (
-  node: ProductTreeDTO,
+export const createNodes = async (
+  nodes: ProductTreeDTO[],
 ): Promise<ApiResponse<ProductTreeDTO>> => {
   const response = await handleRequest<ProductTreeDTO>({
-    successMessage: "Produto adicionado na árvore!",
-    defaultError: "Ocorreu um erro desconhecido ao adicionar o produto...",
-    request: api.post(`/product-tree`, node),
+    successMessage: `${nodes.length > 1 ? "Produtos adicionados" : "Produto adicionado"} na árvore!`,
+    defaultError: `Ocorreu um erro desconhecido ao adicionar ${nodes.length > 1 ? "os produtos" : "o produto"}...`,
+    request: api.post(`/product-tree`, nodes),
   });
 
   if (response.ok) {
