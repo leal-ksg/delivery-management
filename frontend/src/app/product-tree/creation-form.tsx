@@ -191,9 +191,9 @@ export function CreationProductTreeForm({
         onSubmit={methods.handleSubmit(handleProductSelection)}
       >
         <div
-          className={`grid grid-cols-1 mx-auto w-full 2xl:w-[70%] ${
+          className={`grid grid-cols-1 mx-auto w-[70%] ${
             fields.length ? "lg:grid-cols-2 w-full" : ""
-          } gap-2 2xl:gap-6 2xl:mt-20 items-start`}
+          } gap-2 2xl:gap-6 2xl:mt- items-start`}
         >
           <div className="bg-white rounded-2xl shadow-sm py-4 px-2 lg:p-6 2xl:pb-20 space-y-6">
             <h2 className="text-lg font-semibold text-gray-700">Seleção</h2>

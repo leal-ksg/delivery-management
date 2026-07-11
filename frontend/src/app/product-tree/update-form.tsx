@@ -139,7 +139,7 @@ export function UpdateProductTreeForm({
         onSubmit={methods.handleSubmit(onSubmit)}
       >
         <div className="flex flex-col w-full gap-2 lg:flex-row">
-          <div className="w-full md:w-1/2">
+          <div className="w-full">
             <FormSearchSelect
               name="child"
               label="Produto filho"
