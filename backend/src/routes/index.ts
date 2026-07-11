@@ -17,7 +17,7 @@ router.use("/auth", authRouter);
 router.use("/health", healthRouter);
 
 // Private routes
-// router.use(authMiddleware)
+router.use(authMiddleware)
 
 router.use("/user", userRouter);
 router.use("/customer", customerRouter);
