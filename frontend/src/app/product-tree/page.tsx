@@ -122,6 +122,7 @@ function ProductTreePage() {
       </TableContainer>
 
       <EntityDialog
+        classname="w-300"
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
         title="Adicionar produtos na árvore"
@@ -135,6 +136,7 @@ function ProductTreePage() {
       </EntityDialog>
 
       <EntityDialog
+        classname="w-110"
         open={isUpdateDialogOpen}
         onOpenChange={setIsUpdateDialogOpen}
         title="Editar produto na árvore"
