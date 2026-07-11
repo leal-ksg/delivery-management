@@ -35,29 +35,17 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-br">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased font-sans`}
       >
         <TooltipProvider>
-          <ToolbarProvider>
-            <div className="flex h-dvh overflow-hidden bg-primary">
-              <Sidebar />
-
-              <div className="flex flex-1 flex-col overflow-hidden">
-                <Toolbar />
-
-                <main className="flex-1 pb-4 overflow-y-auto bg-[#889eb8]">
-                  {children}
-                </main>
-              </div>
-            </div>
-          </ToolbarProvider>
           <Toaster />
+          {children}
         </TooltipProvider>
       </body>
     </html>

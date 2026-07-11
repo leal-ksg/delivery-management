@@ -1,7 +1,14 @@
+import { getCurrentUser } from "@/src/domains/user/services/get-current-user";
 import { loginRequest } from "@/src/domains/user/services/login-request";
 import { UserDTO } from "@/src/domains/user/types";
 import { useRouter } from "next/navigation";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface AuthContextData {
   login: (email: string, password: string) => Promise<void>;
@@ -36,6 +43,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   function logout(): void {
     setUser(null);
   }
+
+  useEffect(() => {
+    async function loadUser() {
+      const response = await getCurrentUser();
+
+      if (!response.ok) {
+        router.push("/login");
+        return;
+      }
+
+      setUser(response.body);
+    }
+
+    loadUser();
+  }, []);
 
   return (
     <AuthContext.Provider

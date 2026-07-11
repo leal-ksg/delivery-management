@@ -19,7 +19,7 @@ export default function DashboardLayout({
           <div className="flex flex-1 flex-col overflow-hidden">
             <Toolbar />
 
-            <main className="flex-1 overflow-y-auto bg-[#d4d4d4]">
+            <main className="flex-1 overflow-y-auto bg-[#6680a0]">
               {children}
             </main>
           </div>

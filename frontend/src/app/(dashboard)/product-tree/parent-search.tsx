@@ -20,14 +20,12 @@ export function ParentSearch({ onSearch, isLoading }: ParentSearchProps) {
   const parentId = useWatch({ control: searchForm.control, name: "parentId" });
 
   function onSubmit() {
-    console.log(parentId);
     if (!parentId) return;
 
     onSearch(parentId.value);
   }
 
   useEffect(() => {
-    console.log(parentId)
     onSearch(parentId?.value);
   }, [onSearch, parentId, parentId?.value]);
 
