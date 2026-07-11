@@ -77,15 +77,10 @@ function ProductTreePage() {
   );
 
   useEffect(() => {
-    console.log(parentId)
-  }, [parentId])
-
-  useEffect(() => {
     async function fetchNodes() {
       if (!parentId) return;
 
       setLoading(true);
-      console.log(parentId);
       const result = await getNodes(parentId, page, itemsperPage);
 
       if (result.ok) {
@@ -110,7 +105,7 @@ function ProductTreePage() {
           columns={productColumns}
           data={nodes}
           onDelete={handleDelete}
-          onCreate={!parentId ? undefined : () => setIsCreateDialogOpen(true)}
+          onCreate={!parentId || loading ? undefined : () => setIsCreateDialogOpen(true)}
           onEdit={handleEdit}
           loading={loading}
           page={page}

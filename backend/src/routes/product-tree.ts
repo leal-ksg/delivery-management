@@ -21,8 +21,6 @@ productTreeRouter.get("/:id", async (req: Request, res: Response) => {
 
   const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
 
-  console.log("parentId", req.params);
-
   if (!id)
     return res
       .status(400)

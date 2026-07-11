@@ -1,8 +1,8 @@
-import { ProductOptionValue } from "@/src/app/orders/form";
 import { getProducts } from "./get-products";
 import debounce from "lodash.debounce";
 import { Option } from "../../types";
 import { ProductFilter, ProductType } from "../types";
+import { ProductOptionValue } from "@/src/app/(dashboard)/orders/form";
 
 const fetchProducts = async (
   inputValue: string,

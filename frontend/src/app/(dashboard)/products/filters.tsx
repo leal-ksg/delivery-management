@@ -105,8 +105,6 @@ export function ProductFilters({ onFiltersChange }: ProductFiltersProps) {
     if (defaultFilters) {
       const data: ProductFilterForm = JSON.parse(defaultFilters);
 
-      console.log(data);
-
       methods.reset({
         active: data.active ?? "all",
         type: data.type ?? "all",
