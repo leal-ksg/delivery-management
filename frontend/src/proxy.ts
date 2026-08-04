@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
 
+  console.log("Proxy:", {
+    path: request.nextUrl.pathname,
+    hasToken: !!token,
+  });
+
   const isLoginPage = request.nextUrl.pathname === "/login";
 
   if (!token && !isLoginPage) {
