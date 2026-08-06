@@ -87,7 +87,13 @@ export function ProductForm({
           ...editingProduct,
           profitMargin: (Number(editingProduct.profitMargin) - 1) * 100,
         } as FormData)
-      : undefined,
+      : {
+          type: ProductType.PURCHASE,
+          consumptionType: ConsumptionType.SALE,
+          profitMargin: 0,
+          minStock: 0,
+          active: true,
+        },
     resolver: zodResolver(productSchema),
   });
 
@@ -139,7 +145,11 @@ export function ProductForm({
       } as FormData);
     } else {
       methods.reset({
+        type: ProductType.PURCHASE,
+        consumptionType: ConsumptionType.SALE,
         profitMargin: 0,
+        minStock: 0,
+        active: true,
       });
     }
   }, [editingProduct, methods]);
