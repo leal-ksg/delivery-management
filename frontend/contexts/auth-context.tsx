@@ -1,6 +1,6 @@
 import { toast } from "@/components/ui/sonner";
-import { loginAction } from "@/src/actions/auth";
-import { getCurrentUser } from "@/src/domains/user/services/get-current-user";
+import api from "@/lib/api";
+import { getCurrentUserAction, loginAction } from "@/src/actions/auth";
 import { UserDTO } from "@/src/domains/user/types";
 import { useRouter } from "next/navigation";
 import {
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     setUser(response.user);
+    api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
 
     router.push("/orders");
   }
@@ -49,7 +50,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     async function loadUser() {
-      const response = await getCurrentUser();
+      const response = await getCurrentUserAction();
 
       if (!response.ok) {
         router.push("/login");
@@ -57,6 +58,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
 
       setUser(response.body);
+      api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
     }
 
     loadUser();

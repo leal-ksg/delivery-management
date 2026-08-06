@@ -5,7 +5,7 @@ import { UserDTO } from "@/src/domains/user/types";
 
 export async function loginAction(email: string, password: string) {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/login`
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/login`;
     const response = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,8 +25,35 @@ export async function loginAction(email: string, password: string) {
       path: "/",
     });
 
-    return { ok: true, user: data.user as UserDTO };
+    return { ok: true, user: data.user as UserDTO, token: data.token };
   } catch (error) {
     return { ok: false, error: "Erro de conexão" };
+  }
+}
+
+export async function getCurrentUserAction() {
+  try {
+    const token = (await cookies()).get("token")?.value;
+
+    if (!token) {
+      return { ok: false, error: "Token não encontrado" };
+    }
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      return { ok: false, error: "Usuário não autorizado" };
+    }
+
+    const user = await response.json();
+    return { ok: true, body: user, token };
+  } catch (error) {
+    return { ok: false, error: "Erro de conexão com o servidor" };
   }
 }
