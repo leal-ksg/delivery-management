@@ -13,4 +13,4 @@ export type User = {
   role: UserRole;
 };
 
-export type UserDTO = Omit<User, "id" | "password" >;
+export type UserDTO = Omit<User, "id" | "password">

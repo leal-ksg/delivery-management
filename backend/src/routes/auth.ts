@@ -15,24 +15,17 @@ authRouter.post("/login", async (req: Request, res: Response) => {
 
   if (statusCode !== 200) return res.status(statusCode).json(body);
 
-  if ("token" in body)
-    res.cookie("token", body.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-    });
+  let token: string | undefined;
+
+  if ("token" in body) {
+    token = body.token;
+  }
 
   if ("user" in body) user = body.user;
 
-  return res.status(statusCode).json({ user });
+  return res.status(statusCode).json({ user, token });
 });
 
-authRouter.post("/logout", (req, res) => {
-  res.clearCookie("token");
-
-  return res.sendStatus(204);
-});
 
 authRouter.get("/me", authMiddleware, async (req, res) => {
   const { userId } = req;

@@ -1,5 +1,6 @@
+import { toast } from "@/components/ui/sonner";
+import { loginAction } from "@/src/actions/auth";
 import { getCurrentUser } from "@/src/domains/user/services/get-current-user";
-import { loginRequest } from "@/src/domains/user/services/login-request";
 import { UserDTO } from "@/src/domains/user/types";
 import { useRouter } from "next/navigation";
 import {
@@ -30,12 +31,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
 
   async function login(email: string, password: string): Promise<void> {
-    const response = await loginRequest(email, password);
+    const response = await loginAction(email, password);
 
-    if (!response.ok) return;
+    if (!response.ok || !response.user) {
+      toast("error", response.error);
+      return
+    }
 
-    const currentUser = response.body;
-    setUser(currentUser);
+    setUser(response.user);
 
     router.push("/orders");
   }
