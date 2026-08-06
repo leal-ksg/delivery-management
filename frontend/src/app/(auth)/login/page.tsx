@@ -41,11 +41,9 @@ export default function LoginPage() {
     <div className="flex min-h-screen bg-slate-100">
       {/* Coluna esquerda */}
       <div className="hidden w-1/3 flex-col justify-center items-center bg-linear-to-br from-[#3c4966] to-primary p-16 text-white lg:flex">
-        <Image src="/logo_kairos.png" alt="Kairos" width={320} height={320}/>
+        <Image src="/logo_kairos.png" alt="Kairos" width={320} height={320} />
 
         <div className="mt-16 h-px w-48 bg-white/30" />
-
-
       </div>
 
       {/* Coluna direita */}
@@ -63,7 +61,11 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-5"
+            autoComplete="on"
+          >
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">
                 E-mail
