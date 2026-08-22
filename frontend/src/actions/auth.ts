@@ -21,6 +21,7 @@ export async function loginAction(email: string, password: string) {
     (await cookies()).set("token", data.token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
       maxAge: 60 * 60 * 24, // 1 dia
       path: "/",
     });
