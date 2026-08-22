@@ -1,5 +1,5 @@
 import { toast } from "@/components/ui/sonner";
-import api from "@/lib/api";
+import api, { markAsRehydrated } from "@/lib/api";
 import { getCurrentUserAction, loginAction } from "@/src/actions/auth";
 import { UserDTO } from "@/src/domains/user/types";
 import { useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     if (!response.ok || !response.user) {
       toast("error", response.error);
-      return
+      return;
     }
 
     setUser(response.user);
@@ -50,15 +50,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     async function loadUser() {
-      const response = await getCurrentUserAction();
+      try {
+        const response = await getCurrentUserAction();
 
-      if (!response.ok) {
+        if (response.ok && response.body) {
+          setUser(response.body);
+          markAsRehydrated(response.token);
+        } else {
+          markAsRehydrated();
+          router.push("/login");
+        }
+      } catch (error) {
+        console.error("Erro ao recuperar sessão", error);
+        markAsRehydrated();
         router.push("/login");
-        return;
       }
-
-      setUser(response.body);
-      api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
     }
 
     loadUser();

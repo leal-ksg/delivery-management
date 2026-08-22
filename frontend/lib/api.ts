@@ -12,4 +12,31 @@ const api = axios.create({
   withCredentials: true,
 });
 
+let resolveRehydration: (value: unknown) => void;
+const rehydrationPromise = new Promise((resolve) => {
+  resolveRehydration = resolve;
+});
+
+let isRehydrated = false;
+
+export const markAsRehydrated = (token?: string) => {
+  if (token) {
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
+  isRehydrated = true;
+  resolveRehydration(true);
+};
+
+api.interceptors.request.use(
+  async (config) => {
+    if (!isRehydrated) {
+      await rehydrationPromise;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
 export default api;
