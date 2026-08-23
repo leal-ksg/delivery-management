@@ -1,5 +1,5 @@
 import { toast } from "@/components/ui/sonner";
-import api, { markAsRehydrated } from "@/lib/api";
+import api from "@/lib/api";
 import { getCurrentUserAction, loginAction } from "@/src/actions/auth";
 import { UserDTO } from "@/src/domains/user/types";
 import { useRouter } from "next/navigation";
@@ -26,6 +26,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserDTO | null>(null);
+  const [loading, setLoading] = useState(true);
   const isAuthenticated = !!user;
 
   const router = useRouter();
@@ -46,6 +47,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   function logout(): void {
     setUser(null);
+    api.defaults.headers.common["Authorization"] = ""
+    router.push("/login");
   }
 
   useEffect(() => {
@@ -53,22 +56,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       try {
         const response = await getCurrentUserAction();
 
-        if (response.ok && response.body) {
-          setUser(response.body);
-          markAsRehydrated(response.token);
-        } else {
-          markAsRehydrated();
+        if (!response.ok) {
           router.push("/login");
+          return;
         }
-      } catch (error) {
-        console.error("Erro ao recuperar sessão", error);
-        markAsRehydrated();
+
+        setUser(response.body);
+        api.defaults.headers.common["Authorization"] = `Bearer ${response.token}`;
+      } catch {
         router.push("/login");
+      } finally {
+        setLoading(false)
       }
     }
 
     loadUser();
   }, []);
+
+  if (loading) return null
 
   return (
     <AuthContext.Provider
